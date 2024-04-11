@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "mini_shell.h": "c",
+    "parsing.h": "c",
+    "minishell.h": "c",
+    "readline.h": "c",
+    "history.h": "c",
+    "types.h": "c",
+    "iterator": "c",
+    "signal.h": "c"
+  }
+}

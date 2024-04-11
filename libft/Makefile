@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/25 03:20:29 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/09 00:02:53 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/09 04:47:18 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ STR_SRC = ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c \
 	ft_striteri.c ft_strcmp.c ft_strjoin_multi.c
 TO_X_SRC = ft_tolower.c ft_toupper.c ft_toint.c
 
-SRC = \
+SRCS = \
 	$(addprefix get/, $(GET_SRC)) \
 	$(addprefix init/, $(INIT_SRC)) \
 	$(addprefix is_x/, $(IS_X_SRC)) \
@@ -52,15 +52,15 @@ SRC = \
 	$(addprefix str/, $(STR_SRC)) \
 	$(addprefix to_x/, $(TO_X_SRC)) \
 
-OBJ = $(SRC:%.c=%.o)
+OBJS = $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJS)
 	@$(AR) -rcs $@ $^
 
 clean:
-	@rm -f $(OBJ)
+	@rm -f $(OBJS)
 
 fclean: clean
 	@rm -f $(NAME)
