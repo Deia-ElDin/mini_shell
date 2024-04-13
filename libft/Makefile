@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/25 03:20:29 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/09 04:47:18 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/13 12:19:13 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PRINT_SRC = ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 STR_SRC = ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c \
 	ft_strncmp.c ft_strnstr.c ft_strdup.c ft_substr.c \
 	ft_strjoin.c ft_strtrim.c ft_split.c ft_strmapi.c \
-	ft_striteri.c ft_strcmp.c ft_strjoin_multi.c
+	ft_striteri.c ft_strcmp.c ft_strjoin_multi.c ft_strdup_n.c
 TO_X_SRC = ft_tolower.c ft_toupper.c ft_toint.c
 
 SRCS = \

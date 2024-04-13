@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.h                                               :+:      :+:    :+:   */
+/*   delete_me_print_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 12:05:42 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/13 13:21:58 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/13 13:23:56 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IS_H
-# define IS_H
+#include "../includes/minishell.h"
 
-# include "../libft.h"
+void	print_env_list(t_env *lst)
+{
+	while (lst)
+	{
+		printf("key: %s\nvalue: %s\n\n", lst->key, lst->value);
+		lst = lst->next;
+	}
+}
 
-int	ft_isalpha(int c);
-int	ft_isdigit(int c);
-int	ft_isalnum(int c);
-int	ft_isascii(int c);
-int	ft_isprint(int c);
-int	ft_issep(char s, char c);
-int	ft_isspace(int c);
-int	ft_issign(int c);
-int	ft_isdifferent_sign(int num1, int num2);
-
-#endif
+void	print_tokens(t_token *lst)
+{
+	while (lst)
+	{
+		printf("type: %d\nvalue: %s\n\n", lst->type, lst->value);
+		lst = lst->next;
+	}
+}

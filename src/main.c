@@ -6,14 +6,13 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/11 18:41:01 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/13 14:26:00 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <readline/readline.h>  
 
-void	signal_handler(int signo)
+static void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -27,22 +26,14 @@ void	signal_handler(int signo)
 		printf("Quit: 3\n");
 }
 
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
 	(void)ac;
-	data.env = env;
-	data.av = av;
-	data.exit_status = 0;
-	data.env_list = NULL;
-	data.env_list = env_to_list(env);
-	// print_env_list(data.env_list);
-	data.env = list_to_env(data.env_list);
-	data.path = get_path(data.env_list);
-	data.history = NULL;
-	data.history = init_history(data.history);
-	data.history->current = data.history->head;
+	init_data(&data);
+	set_data(&data, env, av);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (1)
@@ -50,21 +41,19 @@ int	main(int ac, char **av, char **env)
 		data.line = readline("minishell$ ");
 		if (data.line == NULL)
 			break ;
-		printf("line: %s\n", data.line);
-		// if (ft_strlen(data.line) > 0)
-		// 	add_history(data.line, data.history);
-		// data.tokens = lexer(data.line);
+		// printf("line: %s\n", data.line);
+		if (ft_strlen(data.line) > 0)
+			add_history(data.line);
+		data.tokens = lexer(data.line);
+		print_tokens(data.tokens);
 		// data.ast = parser(data.tokens);
 		// exec_ast(data.ast, &data);
 		// free_tokens(data.tokens);
 		// free_ast(data.ast);
 		// free(data.line);
 	}
-	// free_history(data.history);
-	// free_env_list(data.env_list);
-	// free_path(data.path);
-	// free_env(data.env);
-	// return (data.exit_status);
+	free_data(&data);
+	return (data.exit_status);
 }
 
 

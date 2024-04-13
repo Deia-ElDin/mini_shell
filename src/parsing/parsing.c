@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/11 14:48:35 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/12 12:21:24 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/12 18:58:19 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void    print_env_list(t_env *lst)
+void    parsing(t_data *data)
 {
-    while (lst)
-    {
-        printf("key: %s\nvalue: %s\n\n", lst->key, lst->value);
-        lst = lst->next;
-    }
+	(void)data;
 }

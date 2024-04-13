@@ -6,35 +6,34 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/11 19:55:56 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/13 13:28:25 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Delete the removing of .o files in the make rule 
+
 NAME = minishell
-BONUS_NAME = bns
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft/libft.a
 LIBS = -lreadline
-MAIN = main.c utils.c
-PARSING = env_utils.c history_utils.c
-
-# EXECUATION = execuation.c 
-
-# MANDATORY_OBJS = $(MANDATORY:.c=.o)
-# BONUS_OBJS = $(BONUS:.c=.o)
+MAIN = main.c delete_me_print_utils.c
+PARSING = parsing.c lexer.c data_utils.c env_utils.c history_utils.c token_utils.c
+EXECUTION = execution.c
+BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c utils.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
-	# $(addprefix src/execuation/, $(EXECUATION)) \
-
+	$(addprefix src/execution/, $(EXECUTION)) \
+	$(addprefix src/execution/builtins/, $(BUILTINS)) \
 	
 OBJS = $(SRCS:.c=.o) 
 
 all: $(NAME)
+	@$(MAKE) clean
 bonus: $(BONUS_NAME)
 sanitize: CFLAGS += -g3 -fsanitize=address
 sanitize: re
