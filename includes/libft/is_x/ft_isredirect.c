@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_isredirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:49:46 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/16 19:26:47 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/16 19:28:00 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "is.h"
 
-void	init_data(t_data *data, char **env)
+int	ft_isredirect(int c)
 {
-	data->env_list = NULL;
-	data->env = NULL;
-	// data->av = NULL;
-	data->path = NULL;
-	data->exit_status = 0;
-	// data->av = av;
-	data->env = env;
-	data->env_list = env_to_list(data);
-	data->env = list_to_env(data);
-	// data->path = ft_split(get_env(data, "PATH")->value, ':');
-	// if (!data->path)
-	// 	exit_failure(data);
+	return (c == '>' || c == '<');
 }
+

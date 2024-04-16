@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 17:48:20 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:50:04 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	line = NULL;
 	init_data(&data, env);
-	print_env_list(data.env_list);
+	// print_env_list(data.env_list);
 	// print_path(data.path);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
@@ -45,14 +45,14 @@ int	main(int ac, char **av, char **env)
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		if (ft_strlen(line) > 0)
+		data.line = ft_strtrim(line, WHITESPACES); // check if \n only
+		if (ft_strlen(data.line) > 0)
 			add_history(line);
-		data.line = ft_strtrim(line, WHITESPACES);
 		free(line);
 		if (!data.line)
 			exit_failure(&data);
 		data.tokens = lexer(&data);
-		// print_tokens(data.tokens);
+		print_tokens(data.tokens);
 		// data.ast = parser(&data);
 		// print_ast(data.ast);
 		// exec_ast(data.ast, &data);

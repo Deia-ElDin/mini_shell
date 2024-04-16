@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/15 20:59:25 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 23:10:35 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_env_list(t_env *lst)
 {
 	while (lst)
 	{
-		printf("key: %s\nvalue: %s\n\n", lst->key, lst->value);
+		printf("key %s\nvalue %s\n\n", lst->key, lst->value);
 		lst = lst->next;
 	}
 }
@@ -25,7 +25,7 @@ void	print_tokens(t_token *lst)
 {
 	while (lst)
 	{
-		printf("\ntype: %d, value = %s\n\n", lst->type, lst->value);
+		printf("\ntype: %d, value = %s.\n\n", lst->type, lst->value);
 		lst = lst->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:38:46 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 16:45:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:11:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,43 @@ char	**list_to_env(t_data *data)
 	return (env);
 }
 
-char	**get_env_value(t_data *data, char *key)
+t_env	*get_env(t_data *data, char *key)
 {
 	t_env	*env_list;
 	t_env	*tmp;
-	char	**ret;
 
 	env_list = data->env_list;
 	tmp = env_list;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, key))
-		{
-			ret = ft_split(tmp->value, ':');
-			if (!ret)
-				exit_failure(data);
-			return (ret);
-		}
+			return (tmp);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
+
+// char	**get_env_value(t_data *data, char *key)
+// {
+// 	t_env	*env_list;
+// 	t_env	*tmp;
+// 	char	**ret;
+
+// 	env_list = data->env_list;
+// 	tmp = env_list;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strcmp(tmp->key, key))
+// 		{
+// 			ret = ft_split(tmp->value, ':');
+// 			if (!ret)
+// 				exit_failure(data);
+// 			return (ret);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (NULL);
+// }
 
 // void	free_env_list(t_env *env_list)
 // {

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 12:08:25 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 15:57:17 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:50:31 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,5 @@ t_token	*lexer(t_data *data)
 	if (!(*data->line))
 		return (NULL);
 	tokens = create_tokens(data);
-	print_tokens(tokens);
 	return (tokens);
 }

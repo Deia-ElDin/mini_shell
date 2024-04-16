@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/16 16:47:45 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/16 23:29:12 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,11 @@ SRCS = \
 OBJS = $(SRCS:.c=.o) 
 
 all: $(NAME)
-	@$(MAKE) clean
 bonus: $(BONUS_NAME)
-sanitize: CFLAGS += -g3 -fsanitize=address
+sanitize: CFLAGS += -g3 #-fsanitize=address
 sanitize: re
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" ./$(NAME)
+	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" ./$(NAME)
 
 $(LIBFT):
 	make -C ./includes/libft

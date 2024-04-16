@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/25 03:20:29 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/16 15:43:10 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/17 00:08:43 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ AR = ar
 GET_SRC = ft_get_next_line.c
 IS_X_SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
 	ft_isprint.c ft_issep.c ft_isspace.c ft_issign.c ft_isdifferent_sign.c \
-	ft_isempty_str.c
+	ft_isempty_str.c ft_ispipe.c ft_isredirect.c ft_isdouble_redirect.c \
+	ft_isquote.c
 LEN_SRC = ft_intlen.c ft_strlen.c ft_ptrlen.c ft_uintlen_base.c 
 LST_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 	ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \

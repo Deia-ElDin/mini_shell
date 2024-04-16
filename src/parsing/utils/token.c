@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 16:20:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/17 03:43:45 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 static int	get_type(char *token)
 {
-	if (!ft_strcmp(token, "\'"))
+	if (*token == '\'')
 		return (TOKEN_SINGLE_QUOTE);
-	if (!ft_strcmp(token, "\""))
+	if (*token == '\"')
 		return (TOKEN_DOUBLE_QUOTE);
-	if (!ft_strcmp(token, "\\"))
-		return (TOKEN_ESCAPE);
 	if (!ft_strcmp(token, "<<"))
 		return (TOKEN_HEREDOC);
 	if (!ft_strcmp(token, ">>"))
@@ -32,101 +30,139 @@ static int	get_type(char *token)
 		return (TOKEN_PIPE);
 	if (!ft_strcmp(token, ";"))
 		return (TOKEN_SEMIC);
+	if (!ft_strcmp(token, "\\"))
+		return (TOKEN_ESCAPE);
 	return (TOKEN_WORD);
 }
 
-t_token	*new_token(t_data *data, int start, int len)
+static t_token	*new_token(t_data *data, int start, int len)
 {
 	t_token	*token;
 	char	*value;
 
+	token = NULL;
 	if (!data->line || !len)
 		return (NULL);
-	value = ft_substr(data->line, start, len);
-	if (ft_isempty_str(value))
+	value = ft_substr(data->line, start, (size_t)len);
+	if (ft_isempty_str(value) || !*value)
 		return (ft_free(&value, 'p'), NULL);
 	if (!value)
 		exit_failure(data);
-	// printf("value: %s\n", value);
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
 		exit_failure(data);
 	token->type = get_type(value);
 	token->value = ft_strtrim(value, WHITESPACES);
 	token->next = NULL;
-	free(value);
+	ft_free(&value, 'p');
+	if (!token->value)
+		exit_failure(data);
 	return (token);
 }
 
-t_token	*add_token(t_token **head, t_token *new_token)
+static void	add_token(t_data *data, t_token **head, int start, int len)
 {
+	t_token	*token;
 	t_token	*tmp;
 
-	// printf("new_token->value: %s\n", new_token->value);
+	token = new_token(data, start, len);
+	if (!token)
+		return ;
+	tmp = *head;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
 	if (!*head)
-		*head = new_token;
+		*head = token;
 	else
+		tmp->next = token;
+}
+
+static void	create_tokens_recursively(t_data *data, t_token **head, int start)
+{
+	int	i;
+
+	i = start;
+	while (data->line[i] && !ft_strchr(" |><\"\'", data->line[i]))
+		i++;
+	add_token(data, head, start, i - start);
+	if (!data->line[i])
+		return ;
+	if (ft_isdouble_redirect(&(data->line[i])))
+		add_token(data, head, i++, 2);
+	else if (ft_strchr(" |><", data->line[i]))
+		add_token(data, head, i, 1);
+	else if (ft_isquote(data->line[i]))
 	{
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_token;
+		start = i;
+		while (data->line[++i] && data->line[i] != data->line[start])
+			;
+		add_token(data, head, start, i - start + 1);
 	}
-	return (new_token);
+	create_tokens_recursive(data, head, i + 1);
 }
 
 t_token	*create_tokens(t_data *data)
 {
-	int		i;
-	int		start;
-	t_token	*token;
 	t_token	*head;
 
-	i = -1;
-	start = 0;
-	token = NULL;
 	head = NULL;
-	if (!*data->line)
-		return (NULL);
-	while (data->line[++i])
-	{
-		if (ft_strchr(" |><", data->line[i]))
-		{
-			if (data->line[i] == ' ')
-				add_token(&head, new_token(data, start, i - start));
-			else if (data->line[i] == '|')
-			{
-				add_token(&head, new_token(data, start, i - start));
-				add_token(&head, new_token(data, i, 1));
-			}
-			else if (data->line[i] == '>' && data->line[i + 1] == '>')
-			{
-				add_token(&head, new_token(data, start, i - start));
-				add_token(&head, new_token(data, i++, 2));
-			}
-			else if (data->line[i] == '<' && data->line[i + 1] == '<')
-			{
-				add_token(&head, new_token(data, start, i - start));
-				add_token(&head, new_token(data, i, 2));
-			}
-			else if (data->line[i] == '>')
-			{
-				add_token(&head, new_token(data, start, i - start));
-				add_token(&head, new_token(data, i, 1));
-			}
-			else if (data->line[i] == '<')
-			{
-				add_token(&head, new_token(data, start, i - start));
-				add_token(&head, new_token(data, i, 1));
-			}
-			start = i + 1;
-		}
-		if (!data->line[i + 1])
-			add_token(&head, new_token(data, start, i - start + 1));
-	}
+	create_tokens_recursive(data, &head, 0);
 	return (head);
 }
 
+// t_token	*create_tokens(t_data *data)
+// {
+// 	int		i;
+// 	int		start;
+// 	t_token	*head;
+
+// 	i = -1;
+// 	start = 0;
+// 	head = NULL;
+// 	while (data->line[++i])
+// 	{
+// 		if (ft_strchr(" |>< \"\'", data->line[i]))
+// 		{
+// 			if (ft_isquote(data->line[i]))
+// 			{
+// 				start = i;
+// 				while (data->line[++i] && data->line[i] != data->line[start])
+// 					;
+// 				add_token(data, &head, start, i - start + 1);
+// 			}
+// 			else if (ft_isspace(data->line[i]))
+// 				add_token(data, &head, start, i - start);
+// 			else if (ft_isdouble_redirect(&(data->line[i])))
+// 			{
+// 				add_token(data, &head, start, i - start);
+// 				add_token(data, &head, i++, 2);
+// 			}
+// 			else if (ft_ispipe(data->line[i]) || ft_isredirect(data->line[i]))
+// 			{
+// 				add_token(data, &head, start, i - start);
+// 				add_token(data, &head, i, 1);
+// 			}
+// 			start = i + 1;
+// 		}
+// 		else
+// 		{
+// 			while (data->line[i] && !ft_strchr(" |>< \"\'", data->line[i]))
+// 				i++;
+// 			add_token(data, &head, start, i - start);
+// 			start = i--;
+// 		}
+// 		if (!data->line[i + 1] && i >= start)
+// 			add_token(data, &head, start, i - start + 1);
+// 	}
+// 	return (head);
+// }
+
+
+// while (data->line[++i] && data->line[i] != data->line[start])
+// {
+// 	if (data->line[i] == '\\' && data->line[i + 1])
+// 	i++;
+// }
 //ls -l|a>b<c>>d<<e | f 
 // echo hi >"file1   |'|||  iknj jnjnj kmk'''''''><><><><>>>>>>>"
 // int quotes(char *str)
@@ -163,4 +199,22 @@ t_token	*create_tokens(t_data *data)
 // 			execve();
 // 		i++;
 // 	}
+// }
+
+
+// void tokenize(char *line, t_token **token)
+// {
+// 	size_t i = 0;
+
+// 	if (quote)
+// 	{
+// 		// take everything until next quote.
+// 	}
+// 	else
+// 	{
+// 		while (not_special)
+// 		i++;
+// 	}
+// 	add_token(ft_substr(original, 0, i));
+// 	tokenize(line + i, token);
 // }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 16:45:29 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:19:56 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,16 @@ t_token	*lexer(t_data *data);
 t_ast	*parser(t_data *data);
 
 // Token Utils Functions
-t_token	*new_token(t_data *data, int start, int len);
-t_token	*add_token(t_token **head, t_token *new_token);
+// t_token	*new_token(t_data *data, int start, int len);
+// t_token	*add_token(t_token **head, t_token *new_token);
 // void	free_tokens(t_token *tokens);
 t_token	*create_tokens(t_data *data);
-
-// Data Utils Functions
-// void	free_data(t_data *data);
 
 // Enviornment Utils Functions
 t_env	*env_to_list(t_data *data);
 char	**list_to_env(t_data *data);
-char	**get_env_value(t_data *data, char *key);
+t_env	*get_env(t_data *data, char *key);
+// char	**get_env_value(t_data *data, char *key);
 // void	free_env_list(t_env *env_list);
 // void	free_env(char **env);
 
