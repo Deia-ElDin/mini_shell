@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 13:15:10 by dehamad           #+#    #+#             */
-/*   Updated: 2024/01/01 13:28:04 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/16 16:48:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "../../includes/minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	init_data(t_data *data, char **env)
 {
-	ft_memset(s, 0, n);
+	data->env = NULL;
+	// data->av = NULL;
+	data->env_list = NULL;
+	data->path = NULL;
+	data->exit_status = 0;
+	// data->av = av;
+	data->env = env;
+	data->env_list = env_to_list(data);
+	data->env = list_to_env(data);
+	data->path = get_env_value(data, "PATH");
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mal.h                                              :+:      :+:    :+:   */
+/*   is.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 12:46:22 by dehamad           #+#    #+#             */
-/*   Updated: 2024/01/29 00:17:02 by dehamad          ###   ########.fr       */
+/*   Created: 2023/12/26 12:05:42 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/16 15:43:00 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAL_H
-# define MAL_H
+#ifndef IS_H
+# define IS_H
 
 # include "../libft.h"
 
-void	*ft_calloc(size_t count, size_t size);
-void	ft_free(void *address, char target);
+int	ft_isalpha(int c);
+int	ft_isdigit(int c);
+int	ft_isalnum(int c);
+int	ft_isascii(int c);
+int	ft_isprint(int c);
+int	ft_issep(char s, char c);
+int	ft_isspace(int c);
+int	ft_issign(int c);
+int	ft_isdifferent_sign(int num1, int num2);
+int	ft_isempty_str(char *str);
 
 #endif

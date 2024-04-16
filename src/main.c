@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/13 14:26:00 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:48:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,35 @@ static void	signal_handler(int signo)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
+	char	*line;
 
 	(void)ac;
-	init_data(&data);
-	set_data(&data, env, av);
+	(void)av;
+	line = NULL;
+	init_data(&data, env);
+	print_env_list(data.env_list);
+	// print_path(data.path);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
-		data.line = readline("minishell$ ");
-		if (data.line == NULL)
+		line = readline("minishell$ ");
+		if (line == NULL)
 			break ;
-		// printf("line: %s\n", data.line);
-		if (ft_strlen(data.line) > 0)
-			add_history(data.line);
-		data.tokens = lexer(data.line);
-		print_tokens(data.tokens);
-		// data.ast = parser(data.tokens);
+		if (ft_strlen(line) > 0)
+			add_history(line);
+		data.line = ft_strtrim(line, WHITESPACES);
+		free(line);
+		if (!data.line)
+			exit_failure(&data);
+		data.tokens = lexer(&data);
+		// print_tokens(data.tokens);
+		// data.ast = parser(&data);
+		// print_ast(data.ast);
 		// exec_ast(data.ast, &data);
-		// free_tokens(data.tokens);
-		// free_ast(data.ast);
-		// free(data.line);
+		free_tokens(data.tokens);
+		free_ast(data.ast);
+		free(data.line);
 	}
 	free_data(&data);
 	return (data.exit_status);

@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/25 03:20:29 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/13 12:19:13 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/16 15:43:10 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar
 
 GET_SRC = ft_get_next_line.c
-INIT_SRC = ft_bzero.c
 IS_X_SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-	ft_isprint.c ft_issep.c ft_isspace.c ft_issign.c ft_isdifferent_sign.c 
+	ft_isprint.c ft_issep.c ft_isspace.c ft_issign.c ft_isdifferent_sign.c \
+	ft_isempty_str.c
 LEN_SRC = ft_intlen.c ft_strlen.c ft_ptrlen.c ft_uintlen_base.c 
 LST_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 	ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
 	ft_lstmap.c
-MAL_SRC = ft_calloc.c ft_free.c
+MAL_SRC = ft_calloc.c ft_free.c ft_bzero.c
 MATH_SRC = ft_abs.c
 MEM_SRC = ft_memset.c ft_memcpy.c ft_memmove.c ft_memchr.c \
 	ft_memcmp.c
@@ -40,7 +40,6 @@ TO_X_SRC = ft_tolower.c ft_toupper.c ft_toint.c
 
 SRCS = \
 	$(addprefix get/, $(GET_SRC)) \
-	$(addprefix init/, $(INIT_SRC)) \
 	$(addprefix is_x/, $(IS_X_SRC)) \
 	$(addprefix len/, $(LEN_SRC)) \
 	$(addprefix lst/, $(LST_SRC)) \

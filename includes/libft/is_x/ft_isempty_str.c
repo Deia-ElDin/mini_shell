@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_isempty_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 12:21:24 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/12 18:58:19 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/16 15:42:17 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/16 15:42:45 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "is.h"
 
-void    parsing(t_data *data)
+int	ft_isempty_str(char *str)
 {
-	(void)data;
+	if (!str)
+		return (1);
+	while (*str)
+	{
+		if (!ft_isspace(*str))
+			return (0);
+		str++;
+	}
+	return (1);
 }
