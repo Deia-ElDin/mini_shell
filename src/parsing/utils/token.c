@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/17 03:43:45 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/17 04:01:22 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	create_tokens_recursively(t_data *data, t_token **head, int start)
 			;
 		add_token(data, head, start, i - start + 1);
 	}
-	create_tokens_recursive(data, head, i + 1);
+	create_tokens_recursively(data, head, i + 1);
 }
 
 t_token	*create_tokens(t_data *data)
@@ -106,7 +106,7 @@ t_token	*create_tokens(t_data *data)
 	t_token	*head;
 
 	head = NULL;
-	create_tokens_recursive(data, &head, 0);
+	create_tokens_recursively(data, &head, 0);
 	return (head);
 }
 
@@ -115,7 +115,6 @@ t_token	*create_tokens(t_data *data)
 // 	int		i;
 // 	int		start;
 // 	t_token	*head;
-
 // 	i = -1;
 // 	start = 0;
 // 	head = NULL;
@@ -157,7 +156,6 @@ t_token	*create_tokens(t_data *data)
 // 	return (head);
 // }
 
-
 // while (data->line[++i] && data->line[i] != data->line[start])
 // {
 // 	if (data->line[i] == '\\' && data->line[i + 1])
@@ -181,8 +179,6 @@ t_token	*create_tokens(t_data *data)
 // 	}
 // }
 
-
-
 //ls -l|a>b<c>>d<<e | f 
 // echo hi >"file1   |'|||  iknj jnjnj kmk'''''''><><><><>>>>>>>"
 // int quotes(char *str)
@@ -200,7 +196,6 @@ t_token	*create_tokens(t_data *data)
 // 		i++;
 // 	}
 // }
-
 
 // void tokenize(char *line, t_token **token)
 // {

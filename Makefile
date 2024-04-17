@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/16 23:29:12 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/17 03:56:12 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 bonus: $(BONUS_NAME)
-sanitize: CFLAGS += -g3 #-fsanitize=address
+sanitize: CFLAGS += -g3 -fsanitize=address
 sanitize: re
 valgrind: re
 	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" ./$(NAME)
