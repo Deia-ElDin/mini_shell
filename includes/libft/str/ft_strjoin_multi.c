@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 21:40:18 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/11 16:40:46 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/18 02:10:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ char	*ft_strjoin_multi(int total, ...)
 	va_start(args, total);
 	while (total--)
 	{
-		const char	*str = va_arg(args, const char *);
-		tmp = ft_strjoin(result, str);
+		tmp = ft_strjoin(result, va_arg(args, const char *));
 		if (!tmp)
 			return (ft_free(&result, 'p'), va_end(args), NULL);
 		ft_free(&result, 'p');

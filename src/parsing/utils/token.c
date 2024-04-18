@@ -6,13 +6,13 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/17 04:01:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/18 00:49:10 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static int	get_type(char *token)
+static int	get_token_type(char *token)
 {
 	if (*token == '\'')
 		return (TOKEN_SINGLE_QUOTE);
@@ -35,7 +35,7 @@ static int	get_type(char *token)
 	return (TOKEN_WORD);
 }
 
-static t_token	*new_token(t_data *data, int start, int len)
+static t_token	*new_token(t_data *data, unsigned int start, int len)
 {
 	t_token	*token;
 	char	*value;
@@ -44,14 +44,14 @@ static t_token	*new_token(t_data *data, int start, int len)
 	if (!data->line || !len)
 		return (NULL);
 	value = ft_substr(data->line, start, (size_t)len);
-	if (ft_isempty_str(value) || !*value)
-		return (ft_free(&value, 'p'), NULL);
 	if (!value)
 		exit_failure(data);
+	if (ft_isempty_str(value) || !*value)
+		return (ft_free(&value, 'p'), NULL);
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
 		exit_failure(data);
-	token->type = get_type(value);
+	token->type = get_token_type(value);
 	token->value = ft_strtrim(value, WHITESPACES);
 	token->next = NULL;
 	ft_free(&value, 'p');
@@ -77,9 +77,9 @@ static void	add_token(t_data *data, t_token **head, int start, int len)
 		tmp->next = token;
 }
 
-static void	create_tokens_recursively(t_data *data, t_token **head, int start)
+void	create_tokens(t_data *data, t_token **head, unsigned int start)
 {
-	int	i;
+	unsigned int	i;
 
 	i = start;
 	while (data->line[i] && !ft_strchr(" |><\"\'", data->line[i]))
@@ -98,17 +98,9 @@ static void	create_tokens_recursively(t_data *data, t_token **head, int start)
 			;
 		add_token(data, head, start, i - start + 1);
 	}
-	create_tokens_recursively(data, head, i + 1);
+	create_tokens(data, head, i + 1);
 }
 
-t_token	*create_tokens(t_data *data)
-{
-	t_token	*head;
-
-	head = NULL;
-	create_tokens_recursively(data, &head, 0);
-	return (head);
-}
 
 // t_token	*create_tokens(t_data *data)
 // {
@@ -161,6 +153,7 @@ t_token	*create_tokens(t_data *data)
 // 	if (data->line[i] == '\\' && data->line[i + 1])
 // 	i++;
 // }
+
 //ls -l|a>b<c>>d<<e | f 
 // echo hi >"file1   |'|||  iknj jnjnj kmk'''''''><><><><>>>>>>>"
 // int quotes(char *str)

@@ -6,40 +6,45 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 16:27:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/18 02:52:14 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_env_list(t_env *env_list)
+void	free_env_list(t_env **env_list)
 {
-	t_env	*tmp;
+	t_env	*crnt_node;
+	t_env	*next_node;
 
-	if (!env_list)
+	if (!env_list || !*env_list)
 		return ;
-	while (env_list)
+	crnt_node = *env_list;
+	while (crnt_node)
 	{
-		tmp = env_list;
-		env_list = env_list->next;
-		free(tmp->key);
-		free(tmp);
+		next_node = crnt_node->next;
+		free(crnt_node->key);
+		free(crnt_node);
+		crnt_node = next_node;
 	}
 }
 
-void	free_tokens(t_token *tokens)
+void	free_tokens(t_token **tokens)
 {
-	t_token	*tmp;
+	t_token	*crnt_token;
+	t_token	*next_token;
 
-	if (!tokens)
+	if (!tokens || !*tokens)
 		return ;
-	while (tokens)
+	crnt_token = *tokens;
+	while (crnt_token)
 	{
-		tmp = tokens;
-		tokens = tokens->next;
-		free(tmp->value);
-		free(tmp);
+		next_token = crnt_token->next;
+		free(crnt_token->value);
+		free(crnt_token);
+		crnt_token = next_token;
 	}
+	*tokens = NULL;
 }
 
 // void	free_path(t_env *path)
@@ -64,13 +69,39 @@ void	free_ast(t_ast *ast)
 	free(ast);
 }
 
+void	free_ptr(char **ptr)
+{
+	if (!ptr || !*ptr)
+		return ;
+	free(*ptr);
+	*ptr = NULL;
+}
+
+void	free_arr(char ***arr)
+{
+	int	i;
+
+	if (!arr || !*arr)
+		return ;
+	i = 0;
+	while ((*arr)[i])
+	{
+		free((*arr)[i]);
+		i++;
+	}
+	free(*arr);
+	*arr = NULL;
+
+}
+
 void	free_data(t_data *data)
 {
-	free_env_list(data->env_list);
-	ft_free(&(data->env), 'a');
-	ft_free(&(data->path), 'a');
-	free_tokens(data->tokens);
-	free_ast(data->ast);
-	if (data->line)
-		free(data->line);
+	printf("\n\nfree_data\n\n");
+	free_env_list(&data->env_list);
+	ft_free(&data->env, 'a');
+	ft_free(&data->path, 'a');
+	if (data->tokens)
+		free_tokens(&data->tokens);
+	// free_ast(data->ast);
+	ft_free(&data->line, 'p');
 }

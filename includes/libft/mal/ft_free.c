@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:04:05 by dehamad           #+#    #+#             */
-/*   Updated: 2024/03/17 22:15:35 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/18 02:35:44 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static void	free_ptr(void **ptr)
 
 static void	free_arr(void ***arr)
 {
-	void	**cpy;
+	int	i;
 
-	if (!arr || !(*arr))
+	if (!arr || !*arr)
 		return ;
-	cpy = *arr;
-	while (*cpy)
+	i = 0;
+	while ((*arr)[i])
 	{
-		free_ptr(cpy);
-		cpy++;
+		free((*arr)[i]);
+		i++;
 	}
 	free(*arr);
 	*arr = NULL;
@@ -53,7 +53,7 @@ void	ft_free(void *address, char target)
 	{
 		if (!ptr || !(*ptr))
 			we are checking if the ptr it self is NULL 
-			or the value it points to is NULL, \0
+        	or the value it points to is NULL, \0
 	}
 	
 	arr: Pointer to a pointer to a pointer to void (e.g., void ***).

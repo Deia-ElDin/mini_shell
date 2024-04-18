@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:50:04 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/18 02:25:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **env)
 		data.line = ft_strtrim(line, WHITESPACES); // check if \n only
 		if (ft_strlen(data.line) > 0)
 			add_history(line);
-		free(line);
+		ft_free(&line, 'p');
 		if (!data.line)
 			exit_failure(&data);
 		data.tokens = lexer(&data);
@@ -56,9 +56,9 @@ int	main(int ac, char **av, char **env)
 		// data.ast = parser(&data);
 		// print_ast(data.ast);
 		// exec_ast(data.ast, &data);
-		free_tokens(data.tokens);
-		free_ast(data.ast);
-		free(data.line);
+		free_tokens(&(data.tokens));
+		// free_ast(data.ast);
+		ft_free(&data.line, 'p');
 	}
 	free_data(&data);
 	return (data.exit_status);
