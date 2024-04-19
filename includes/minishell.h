@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/18 02:50:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 20:44:16 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define PROMPT "bash$ "
+# define ERR_PROMPT "bash: "
 # define WHITESPACES " \t\v\f\r"
 
-// echo hi > file1 > file2 > file3 hello how are we > file4 hi | ls -la | ls>file5 -la
-// echo hi >"file1     iknj jnjnj kmk'''''''><><><><>>>>>>>" >file2 > file3 hello how are we >file4 hi | ls -la | ls>file5 -la
-
-// (ls) || echo
-
-// typedef struct s_redirection
-// {
-// 	char *file;// 0 file1 1 file2
-// 	int type; // 0 IN_FILE 1 IN_FILE
-// }	t_redirection;
-
-// typedef struct s_cmd
-// {
-// 	t_redirection	*redirection; //4
-// 	int num_of_redirections;
-// 	char **cmd;
-// }	t_cmd;
+# define PIPE_ERR "syntax error near unexpected token `|'\n"
+# define QUOTES_ERR "syntax error unclosed quotes\n"
+# define REDIR_ERR "syntax error near unexpected token `newline'\n"
 
 enum
 {
@@ -112,10 +100,15 @@ typedef struct s_data
 t_token	*lexer(t_data *data);
 t_ast	*parser(t_data *data);
 
+// Validation Functions
+bool	validations(t_data *data);
+// bool	validate_pipe(t_data *data);
+
+// Validation Utils Functions
+void	skip_spaces(char **line);
+void	skip_word(char **line, char delimiter, bool *is_valid);
+
 // Token Utils Functions
-// t_token	*new_token(t_data *data, int start, int len);
-// t_token	*add_token(t_token **head, t_token *new_token);
-// void	free_tokens(t_token *tokens);
 void	create_tokens(t_data *data, t_token **head, unsigned int start);
 
 // Enviornment Utils Functions
@@ -155,6 +148,9 @@ void	free_ast(t_ast *ast);
 void	free_data(t_data *data);
 void	exit_success(t_data *data);
 void	exit_failure(t_data *data);
+
+// Error Functions
+void	print_error(char *err);
 
 // DELETE ME
 void	print_env_list(t_env *lst);

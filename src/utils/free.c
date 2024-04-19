@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_data.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/18 02:52:14 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 20:38:21 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-// void	free_path(t_env *path)
-// {
-// 	if (!path)
-// 		return ;
-// 	if (path->next)
-// 		free(path->key);
-// 	if (path->value)
-// 		free(path->value);
-// 	free(path);
-// }
-
 void	free_ast(t_ast *ast)
 {
 	if (!ast)
@@ -96,7 +85,6 @@ void	free_arr(char ***arr)
 
 void	free_data(t_data *data)
 {
-	printf("\n\nfree_data\n\n");
 	free_env_list(&data->env_list);
 	ft_free(&data->env, 'a');
 	ft_free(&data->path, 'a');
