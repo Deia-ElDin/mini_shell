@@ -6,11 +6,25 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:38:46 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:11:53 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 23:28:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+/**
+ * the purpose of this function is to convert the **envs to a linked list
+ * of t_env nodes
+ * we malloc a new t_env node 
+ * we assign the key to the first env and we increment the env pointer
+ * we won't malloc for the value
+ * we will create the value in few different steps
+ * 1- we look for the = character in the key
+ * 2- if we find it we assign the value to the address of the = character
+ * 3- we replace the = char with a \0 byte (now the key is null terminated)
+ * 4- we increment the value pointer to point to the char after the \0 byte
+ * now we have a null terminated key and a value that starts after the = char
+*/
 
 t_env	*env_to_list(t_data *data)
 {
@@ -38,6 +52,16 @@ t_env	*env_to_list(t_data *data)
 	return (env_list);
 }
 
+/**
+ * the purpose of this function is to convert the linked list to a ** array
+ * we will malloc a ** array so we need the length of the linked list
+ * we will loop through the linked list and get the i (length of the linked list)
+ * we will malloc with the length of the linked list + 1 (for the NULL)
+ * we used ft_calloc to set all the pointers to NULL (malloc and initialize)
+ * we loop through the linked list and we will join the key and value
+ * we will use the ft_strjoin_multi function to join the key, =, and value
+*/
+
 char	**list_to_env(t_data *data)
 {
 	t_env	*env_list;
@@ -63,6 +87,12 @@ char	**list_to_env(t_data *data)
 	return (env);
 }
 
+/**
+ * the purpose of this function is to get the value of the key
+ * this is a generic function that can be used whenever needed
+ * it returns the t_env node or NULL
+*/
+
 t_env	*get_env(t_data *data, char *key)
 {
 	t_env	*env_list;
@@ -78,55 +108,3 @@ t_env	*get_env(t_data *data, char *key)
 	}
 	return (NULL);
 }
-
-// char	**get_env_value(t_data *data, char *key)
-// {
-// 	t_env	*env_list;
-// 	t_env	*tmp;
-// 	char	**ret;
-
-// 	env_list = data->env_list;
-// 	tmp = env_list;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strcmp(tmp->key, key))
-// 		{
-// 			ret = ft_split(tmp->value, ':');
-// 			if (!ret)
-// 				exit_failure(data);
-// 			return (ret);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (NULL);
-// }
-
-// void	free_env_list(t_env *env_list)
-// {
-// 	t_env	*tmp;
-
-// 	while (env_list)
-// 	{
-// 		tmp = env_list;
-// 		env_list = env_list->next;
-// 		free(tmp->key);
-// 		free(tmp);
-// 	}
-// }
-
-// void	free_env(char **env)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (env[i])
-// 		free(env[i++]);
-// 	free(env);
-// }
-
-// void	free_path(t_env *path)
-// {
-// 	free(path->key);
-// 	free(path->value);
-// 	free(path);
-// }
