@@ -6,11 +6,15 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 12:08:25 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/17 23:56:59 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:08:52 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/**
+ * The purpose of this function is to create the tokens
+*/
 
 t_token	*lexer(t_data *data)
 {

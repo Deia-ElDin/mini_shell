@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 20:38:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:25:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,6 @@ void	free_ptr(char **ptr)
 	*ptr = NULL;
 }
 
-void	free_arr(char ***arr)
-{
-	int	i;
-
-	if (!arr || !*arr)
-		return ;
-	i = 0;
-	while ((*arr)[i])
-	{
-		free((*arr)[i]);
-		i++;
-	}
-	free(*arr);
-	*arr = NULL;
-
-}
-
 void	free_data(t_data *data)
 {
 	free_env_list(&data->env_list);
@@ -90,6 +73,6 @@ void	free_data(t_data *data)
 	ft_free(&data->path, 'a');
 	if (data->tokens)
 		free_tokens(&data->tokens);
-	// free_ast(data->ast);
+	free_ast(data->ast);
 	ft_free(&data->line, 'p');
 }

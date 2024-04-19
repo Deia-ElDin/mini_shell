@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 19:02:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 16:07:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:24:04 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,3 @@ void	add_ast(t_ast **ast, t_ast *new_node)
 		tmp->right = new_node;
 	}
 }
-
-

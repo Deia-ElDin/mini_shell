@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 20:44:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:21:55 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_data
 	t_ast			*ast;
 }	t_data;
 
-
 // Parsing Function
 t_token	*lexer(t_data *data);
 t_ast	*parser(t_data *data);
@@ -136,7 +135,6 @@ void	builtins(t_data *data);
 // void	export(t_data *data);
 // void	pwd(t_data *data);
 // void	unset(t_data *data);
-
 
 // Utils Functions
 void	init_data(t_data *data, char **env);
