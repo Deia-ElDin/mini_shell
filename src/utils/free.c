@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 22:25:37 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:28:17 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,6 @@ void	free_ast(t_ast *ast)
 	if (ast->right)
 		free_ast(ast->right);
 	free(ast);
-}
-
-void	free_ptr(char **ptr)
-{
-	if (!ptr || !*ptr)
-		return ;
-	free(*ptr);
-	*ptr = NULL;
 }
 
 void	free_data(t_data *data)
