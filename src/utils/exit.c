@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 20:33:36 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:24:31 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ void	exit_failure(t_data *data)
 	free_data(data);
 	exit(EXIT_FAILURE);
 }
-

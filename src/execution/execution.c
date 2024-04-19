@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void    execution(t_data *data)
+void	execution(t_data *data)
 {
 	builtins(data);
 }

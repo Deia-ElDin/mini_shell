@@ -6,11 +6,15 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/18 00:49:10 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:24:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+/**
+ * The purpose of this function is to get the token type
+*/
 
 static int	get_token_type(char *token)
 {
@@ -35,6 +39,15 @@ static int	get_token_type(char *token)
 	return (TOKEN_WORD);
 }
 
+/**
+ * The purpose of this function is to create a new token
+ * if the line is empty or the len is 0 we return NULL (protections)
+ * we get the value of the token by using ft_substr
+ * we make sure it's not an empty string ("   "), ("")
+ * if it's an empty string, we free the value and return NULL
+ * we set the token value by trimming the value (cleaning the whitespaces)
+*/
+
 static t_token	*new_token(t_data *data, unsigned int start, int len)
 {
 	t_token	*token;
@@ -46,7 +59,7 @@ static t_token	*new_token(t_data *data, unsigned int start, int len)
 	value = ft_substr(data->line, start, (size_t)len);
 	if (!value)
 		exit_failure(data);
-	if (ft_isempty_str(value) || !*value)
+	if (ft_isempty_str(value))
 		return (ft_free(&value, 'p'), NULL);
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
@@ -59,6 +72,14 @@ static t_token	*new_token(t_data *data, unsigned int start, int len)
 		exit_failure(data);
 	return (token);
 }
+
+/**
+ * The purpose of this function is to add a token to the linked list
+ * we create a new token
+ * we loop over the linked list to get the last token
+ * if the head is NULL we set the head to the token
+ * else we set the last token next to the new token
+*/
 
 static void	add_token(t_data *data, t_token **head, int start, int len)
 {
@@ -76,6 +97,16 @@ static void	add_token(t_data *data, t_token **head, int start, int len)
 	else
 		tmp->next = token;
 }
+
+/**
+ * The purpose of this function is to create the tokens (recursively)
+ * we loop over the line till we find a special char
+ * if we find a special char we create an add the token to the linked list
+ * then we check the different cases i.e (>>, <<, >, <, |, " ", ' ')
+ * if we find any of them we create and add the token to the linked list
+ * unless if it was a quote we loop over the line till we find the closing quote
+ * then we create and add the token to the linked list
+*/
 
 void	create_tokens(t_data *data, t_token **head, unsigned int start)
 {
@@ -100,7 +131,6 @@ void	create_tokens(t_data *data, t_token **head, unsigned int start)
 	}
 	create_tokens(data, head, i + 1);
 }
-
 
 // t_token	*create_tokens(t_data *data)
 // {
