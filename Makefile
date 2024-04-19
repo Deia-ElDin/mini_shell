@@ -6,26 +6,27 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/18 04:23:21 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/19 21:16:28 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Delete the removing of .o files in the make rule 
-# Delete the CFLAGS g3
+# Delete the CFLAGS -g3 -fsanitize=address
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT = includes/libft/libft.a
 LIBS = -lreadline
+
 MAIN = main.c delete_me.c
-PARSING = lexer.c parser.c 
+PARSING = lexer.c parser.c validations.c
 PARSING_UTILS = env.c token.c ast.c
 EXECUTION = execution.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
-UTILS = init.c free_data.c exit.c
+UTILS = init.c free.c exit.c error.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \

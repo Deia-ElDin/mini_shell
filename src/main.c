@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/18 02:25:48 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/19 22:04:43 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	signal_handler(int signo)
 		printf("Quit: 3\n");
 }
 
-
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -42,22 +41,24 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
-		line = readline("minishell$ ");
-		if (line == NULL)
+		line = readline(PROMPT);
+		if (!line)
 			break ;
-		data.line = ft_strtrim(line, WHITESPACES); // check if \n only
-		if (ft_strlen(data.line) > 0)
-			add_history(line);
+		add_history(line);
+		data.line = ft_strtrim(line, WHITESPACES);
 		ft_free(&line, 'p');
 		if (!data.line)
 			exit_failure(&data);
-		data.tokens = lexer(&data);
-		print_tokens(data.tokens);
-		// data.ast = parser(&data);
-		// print_ast(data.ast);
-		// exec_ast(data.ast, &data);
-		free_tokens(&(data.tokens));
-		// free_ast(data.ast);
+		if (validations(&data))
+		{
+			data.tokens = lexer(&data);
+			// print_tokens(data.tokens);
+			// data.ast = parser(&data);
+			// print_ast(data.ast);
+			// exec_ast(data.ast, &data);
+			free_tokens(&(data.tokens));
+			// free_ast(data.ast);
+		}
 		ft_free(&data.line, 'p');
 	}
 	free_data(&data);
