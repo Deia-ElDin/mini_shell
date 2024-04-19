@@ -6,15 +6,12 @@ Minishell is a simple Unix shell program that provides a command-line interface 
 
 ## Installation
 
-To compile Minishell, simply run:
+To compile Minishell, simply run: `make`
 
-bash
-make
 This will generate the executable minishell.
 
 ## Usage
-After compiling, you can run Minishell by executing the generated executable:
-./minishell
+After compiling, you can run Minishell by executing the generated executable: `./minishell`
 
 Once running, you will see a prompt where you can enter commands. Minishell supports various built-in commands as well as executing external programs.
 
