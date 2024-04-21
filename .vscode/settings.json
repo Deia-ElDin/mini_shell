@@ -31,6 +31,18 @@
     "locale": "c",
     "libft.h": "c",
     "sstream": "c",
-    "__functional_03": "c"
+    "__functional_03": "c",
+    "lst.h": "c",
+    "num.h": "c",
+    "mal.h": "c",
+    "math.h": "c",
+    "__hash_table": "c",
+    "__split_buffer": "c",
+    "initializer_list": "c",
+    "unordered_map": "c",
+    "utility": "c",
+    "__locale": "c",
+    "__functional_base_03": "c",
+    "__tuple": "c"
   }
 }

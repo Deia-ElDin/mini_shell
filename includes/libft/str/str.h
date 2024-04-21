@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 12:20:40 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/15 20:15:34 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 14:35:56 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin_multi(int total, ...);
-char	*ft_strdup_n(const char *s, size_t n);
+char	*ft_strcdup(const char *s, int c);
+char	*ft_strndup(const char *s, size_t n);
 
 #endif

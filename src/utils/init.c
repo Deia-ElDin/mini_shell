@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 23:34:17 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:59:38 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  * we will set the env to the env pointer (so we can use it inside the next 2 fn)
  * we will convert the env to a linked list
  * we will convert the same linked list we created to a ** array
- * we will use the get_env function to get the PATH t_env node
+ * we will use the get_env_node function to get the PATH t_env node
  * we will target the node value
  * then we will split the value by the : character
  * then we store the result into the path variable
@@ -44,9 +44,9 @@ void	init_data(t_data *data, char **env)
 	if (env)
 	{
 		data->env = env;
-		data->env_list = env_to_list(data);
-		data->env = list_to_env(data);
-		data->path = ft_split(get_env(data, "PATH")->value, ':');
+		env_tolst(data);
+		env_toarr(data);
+		data->path = ft_split(env_get(data, "PATH")->value, ':');
 		if (!data->path)
 			exit_failure(data);
 	}

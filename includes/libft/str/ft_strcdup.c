@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_strcdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:35:16 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/21 09:19:59 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/21 15:21:38 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "str.h"
 
-void	exit_success(t_data *data)
+char	*ft_strcdup(const char *s, int c)
 {
-	(void)data;
-	// free_data(data);
-	exit(EXIT_SUCCESS);
-}
+	char	*dup;
+	size_t	len;
 
-void	exit_failure(t_data *data)
-{
-	(void)data;
-	// free_data(data);
-	exit(EXIT_FAILURE);
+	len = 0;
+	if (!s)
+		return (NULL);
+	if (ft_strchr(s, c))
+		len = (size_t)(ft_strchr(s, c) - s);
+	else
+		len = ft_strlen(s);
+	if (!len)
+		return (NULL);
+	dup = ft_calloc(len + 1, sizeof(char));
+	if (!dup)
+		return (NULL);
+	ft_strlcpy(dup, s, len + 1);
+	return (dup);
 }
