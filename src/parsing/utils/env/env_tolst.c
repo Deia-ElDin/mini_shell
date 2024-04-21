@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 11:19:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:20:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	env_tolst(t_data *data)
 	while (data->env[++i])
 		env_add(data, env_new(data, data->env[i]));
 }
-

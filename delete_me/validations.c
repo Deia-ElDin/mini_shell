@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 04:44:36 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 19:01:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:22:28 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
  * then at the end we check if !is_char we print err depending on the target
 */
 
-// static bool	scan_context(const char *line, int i, char target, char direction)
+// static bool	scan_context(const char *line, int i, char target,
+// char direction)
 // {
 // 	int		is_char;
 

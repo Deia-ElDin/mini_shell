@@ -6,12 +6,18 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:42:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 15:07:09 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:19:39 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../../../includes/minishell.h"
+
+/**
+ * The purpose of this function is to validate the pipes
+ * we check if the previous and the next token are not pipes
+ * if they are we return false
+ * else we return true
+*/
 
 static bool	valid_pipe(t_token *crnt)
 {
@@ -22,6 +28,13 @@ static bool	valid_pipe(t_token *crnt)
 	return (true);
 }
 
+/**
+ * The purpose of this function is to validate the redirects
+ * we check if the next token is a redirect of any type or a pipe
+ * if it is we return false
+ * else we return true
+*/
+
 static bool	valid_redirect(t_token *crnt)
 {
 	if (!crnt->next)
@@ -30,6 +43,11 @@ static bool	valid_redirect(t_token *crnt)
 		return (false);
 	return (true);
 }
+
+/**
+ * The purpose of this function is to validate the tokens
+ * we validate the pipes and the redirects
+*/
 
 bool	token_validation(t_data *data)
 {
