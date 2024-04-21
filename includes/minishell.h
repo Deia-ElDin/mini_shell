@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 22:21:55 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 14:33:46 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,17 @@
 # define ERR_PROMPT "bash: "
 # define WHITESPACES " \t\v\f\r"
 
-# define PIPE_ERR "syntax error near unexpected token `|'\n"
-# define QUOTES_ERR "syntax error unclosed quotes\n"
-# define REDIR_ERR "syntax error near unexpected token `newline'\n"
+# define SYNTAX_ERR "syntax error near unexpected token"
 
 enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	TOKEN_ESCAPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
 	TOKEN_PIPE,
-	TOKEN_SEMIC,
 	TOKEN_WORD
 };
 
@@ -45,26 +41,39 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	bool			is_equal;
 	struct s_env	*next;
 }	t_env;
-
-// typedef struct s_history
-// {
-// 	char				*line;
-// 	struct s_history	*next;
-// 	struct s_history	*prev;
-// 	struct s_history	*head;
-// 	struct s_history	*current;
-// }	t_history;
 
 typedef struct s_token
 {
 	int				type;
 	char			*value;
+	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
 
-// Abstract Syntax Tree
+typedef struct s_cmd
+{
+	int		type;
+	char	*cmd;
+	char	*options;
+	char	*args;
+}	t_cmd;
+
+typedef struct s_pipe
+{
+	int		type;
+	int		*prev;
+	int		*next;
+}	t_pipe;
+
+typedef struct s_redir
+{
+	int		type;
+	char	*file;
+}	t_redir;
+
 typedef struct s_ast
 {
 	int				type;
@@ -73,18 +82,8 @@ typedef struct s_ast
 	struct s_ast	*right;
 }	t_ast;
 
-// typedef struct s_cmd
-// {
-// 	char			**av;
-// 	char			*cmd;
-// 	int				number_of_available_arguments;
-// 	int				number_of_arguments;
-// }	t_cmd;
-
 typedef struct s_data
 {
-	// int num_of_cmds;
-	// t_cmd *cmds;
 	char			*line;
 	char			**env;
 	// char			**av;
@@ -95,28 +94,36 @@ typedef struct s_data
 	t_ast			*ast;
 }	t_data;
 
-// Parsing Function
-t_token	*lexer(t_data *data);
+//  ************ Parsing Function ************  //
+bool	lexer(t_data *data);
 t_ast	*parser(t_data *data);
 
-// Validation Functions
-bool	validations(t_data *data);
-// bool	validate_pipe(t_data *data);
+// Parsing Utils Functions
+//	*-> Env Functions
+t_env	*env_new(t_data *data, char *env);
+t_env	*env_update(t_data *data, char *env);
+t_env	*env_get(t_data *data, char *key);
+t_env	*env_last(t_data *data);
+char	*env_expansion(t_data *data, char *str);
+void	env_add(t_data *data, t_env *new);
+void	env_tolst(t_data *data);
+void	env_toarr(t_data *data);
+void	env_clear(t_data *data);
+int		env_size(t_data *data);
+//	*-> Token Functions
+t_token	*token_new(t_data *data, unsigned int start, int len);
+void	token_add(t_data *data, t_token **head, int start, int len);
+void	token_tolst(t_data *data, t_token **head, unsigned int start);
+void	token_clear(t_data *data);
+bool	token_validation(t_data *data);
+int		token_type(char *token);
 
-// Validation Utils Functions
-void	skip_spaces(char **line);
-void	skip_word(char **line, char delimiter, bool *is_valid);
 
-// Token Utils Functions
-void	create_tokens(t_data *data, t_token **head, unsigned int start);
 
 // Enviornment Utils Functions
-t_env	*env_to_list(t_data *data);
-char	**list_to_env(t_data *data);
-t_env	*get_env(t_data *data, char *key);
-// char	**get_env_value(t_data *data, char *key);
-// void	free_env_list(t_env *env_list);
-// void	free_env(char **env);
+// t_env	*env_to_list(t_data *data);
+// char	**list_to_env(t_data *data);
+// t_env	*get_env_node(t_data *data, char *key);
 
 // AST Utils Functions
 t_ast	*new_ast(int type);
@@ -137,20 +144,23 @@ void	builtins(t_data *data);
 // void	unset(t_data *data);
 
 // Utils Functions
-void	init_data(t_data *data, char **env);
-void	free_env_list(t_env **env_list);
-// void	free_env(char **env);
-// void	free_path(t_env *path);
-void	free_tokens(t_token **tokens);
-void	free_ast(t_ast *ast);
-void	free_data(t_data *data);
+//	*-> error.c
+void	syntax_error(char *err);
+void	print_error(char *err);
+//	*-> exit.c
 void	exit_success(t_data *data);
 void	exit_failure(t_data *data);
-
-// Error Functions
-void	print_error(char *err);
+//	*-> free.c
+void	free_ast(t_ast *ast);
+void	free_data(t_data *data);
+//	*-> init.c
+void	init_data(t_data *data, char **env);
+//	*-> utils.c
+void	skip_spaces(const char *line, int *i);
+void	skip_quotes(const char *line, int *i);
 
 // DELETE ME
+void	print_env_array(char **env);
 void	print_env_list(t_env *lst);
 void	print_tokens(t_token *lst);
 void	print_ast(t_ast *ast);

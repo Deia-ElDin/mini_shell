@@ -6,72 +6,61 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 22:24:09 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 19:01:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+// #include "../../../includes/minishell.h"
 
 /**
  * The purpose of this function is to get the token type
 */
 
-static int	get_token_type(char *token)
-{
-	if (*token == '\'')
-		return (TOKEN_SINGLE_QUOTE);
-	if (*token == '\"')
-		return (TOKEN_DOUBLE_QUOTE);
-	if (!ft_strcmp(token, "<<"))
-		return (TOKEN_HEREDOC);
-	if (!ft_strcmp(token, ">>"))
-		return (TOKEN_APPEND);
-	if (!ft_strcmp(token, "<"))
-		return (TOKEN_REDIR_IN);
-	if (!ft_strcmp(token, ">"))
-		return (TOKEN_REDIR_OUT);
-	if (!ft_strcmp(token, "|"))
-		return (TOKEN_PIPE);
-	if (!ft_strcmp(token, ";"))
-		return (TOKEN_SEMIC);
-	if (!ft_strcmp(token, "\\"))
-		return (TOKEN_ESCAPE);
-	return (TOKEN_WORD);
-}
+// static int	get_token_type(char *token)
+// {
+// 	if (*token == '\'')
+// 		return (TOKEN_SINGLE_QUOTE);
+// 	if (*token == '\"')
+// 		return (TOKEN_DOUBLE_QUOTE);
+// 	if (!ft_strcmp(token, "<<"))
+// 		return (TOKEN_HEREDOC);
+// 	if (!ft_strcmp(token, ">>"))
+// 		return (TOKEN_APPEND);
+// 	if (!ft_strcmp(token, "<"))
+// 		return (TOKEN_REDIR_IN);
+// 	if (!ft_strcmp(token, ">"))
+// 		return (TOKEN_REDIR_OUT);
+// 	if (!ft_strcmp(token, "|"))
+// 		return (TOKEN_PIPE);
+// 	return (TOKEN_WORD);
+// }
 
-/**
- * The purpose of this function is to create a new token
- * if the line is empty or the len is 0 we return NULL (protections)
- * we get the value of the token by using ft_substr
- * we make sure it's not an empty string ("   "), ("")
- * if it's an empty string, we free the value and return NULL
- * we set the token value by trimming the value (cleaning the whitespaces)
-*/
 
-static t_token	*new_token(t_data *data, unsigned int start, int len)
-{
-	t_token	*token;
-	char	*value;
 
-	token = NULL;
-	if (!data->line || !len)
-		return (NULL);
-	value = ft_substr(data->line, start, (size_t)len);
-	if (!value)
-		exit_failure(data);
-	if (ft_isempty_str(value))
-		return (ft_free(&value, 'p'), NULL);
-	token = (t_token *)ft_calloc(1, sizeof(t_token));
-	if (!token)
-		exit_failure(data);
-	token->type = get_token_type(value);
-	token->value = ft_strtrim(value, WHITESPACES);
-	token->next = NULL;
-	ft_free(&value, 'p');
-	if (!token->value)
-		exit_failure(data);
-	return (token);
-}
+// static t_token	*new_token(t_data *data, unsigned int start, int len)
+// {
+// 	t_token	*token;
+// 	char	*value;
+
+// 	token = NULL;
+// 	if (!data->line || !len)
+// 		return (NULL);
+// 	value = ft_substr(data->line, start, (size_t)len);
+// 	if (!value)
+// 		exit_failure(data);
+// 	if (ft_isempty_str(value))
+// 		return (ft_free(&value, 'p'), NULL);
+// 	token = (t_token *)ft_calloc(1, sizeof(t_token));
+// 	if (!token)
+// 		exit_failure(data);
+// 	token->type = get_token_type(value);
+// 	token->value = ft_strtrim(value, WHITESPACES);
+// 	token->next = NULL;
+// 	ft_free(&value, 'p');
+// 	if (!token->value)
+// 		exit_failure(data);
+// 	return (token);
+// }
 
 /**
  * The purpose of this function is to add a token to the linked list
@@ -81,22 +70,22 @@ static t_token	*new_token(t_data *data, unsigned int start, int len)
  * else we set the last token next to the new token
 */
 
-static void	add_token(t_data *data, t_token **head, int start, int len)
-{
-	t_token	*token;
-	t_token	*tmp;
+// static void	add_token(t_data *data, t_token **head, int start, int len)
+// {
+// 	t_token	*token;
+// 	t_token	*tmp;
 
-	token = new_token(data, start, len);
-	if (!token)
-		return ;
-	tmp = *head;
-	while (tmp && tmp->next)
-		tmp = tmp->next;
-	if (!*head)
-		*head = token;
-	else
-		tmp->next = token;
-}
+// 	token = new_token(data, start, len);
+// 	if (!token)
+// 		return ;
+// 	tmp = *head;
+// 	while (tmp && tmp->next)
+// 		tmp = tmp->next;
+// 	if (!*head)
+// 		*head = token;
+// 	else
+// 		tmp->next = token;
+// }
 
 /**
  * The purpose of this function is to create the tokens (recursively)
@@ -108,29 +97,29 @@ static void	add_token(t_data *data, t_token **head, int start, int len)
  * then we create and add the token to the linked list
 */
 
-void	create_tokens(t_data *data, t_token **head, unsigned int start)
-{
-	unsigned int	i;
+// void	create_tokens(t_data *data, t_token **head, unsigned int start)
+// {
+// 	unsigned int	i;
 
-	i = start;
-	while (data->line[i] && !ft_strchr(" |><\"\'", data->line[i]))
-		i++;
-	add_token(data, head, start, i - start);
-	if (!data->line[i])
-		return ;
-	if (ft_isdouble_redirect(&(data->line[i])))
-		add_token(data, head, i++, 2);
-	else if (ft_strchr(" |><", data->line[i]))
-		add_token(data, head, i, 1);
-	else if (ft_isquote(data->line[i]))
-	{
-		start = i;
-		while (data->line[++i] && data->line[i] != data->line[start])
-			;
-		add_token(data, head, start, i - start + 1);
-	}
-	create_tokens(data, head, i + 1);
-}
+// 	i = start;
+// 	while (data->line[i] && !ft_strchr(" |><\"\'", data->line[i]))
+// 		i++;
+// 	add_token(data, head, start, i - start);
+// 	if (!data->line[i])
+// 		return ;
+// 	if (ft_isdouble_redirect(&(data->line[i])))
+// 		add_token(data, head, i++, 2);
+// 	else if (ft_strchr(" |><", data->line[i]))
+// 		add_token(data, head, i, 1);
+// 	else if (ft_isquote(data->line[i]))
+// 	{
+// 		start = i;
+// 		while (data->line[++i] && data->line[i] != data->line[start])
+// 			;
+// 		add_token(data, head, start, i - start + 1);
+// 	}
+// 	create_tokens(data, head, i + 1);
+// }
 
 // t_token	*create_tokens(t_data *data)
 // {

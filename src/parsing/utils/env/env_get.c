@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:35:16 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/21 08:19:25 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/21 10:06:39 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
-void	exit_success(t_data *data)
-{
-	(void)data;
-	// free_data(data);
-	exit(EXIT_SUCCESS);
-}
+/**
+ * the purpose of this function is to get the node with the given key
+*/
 
-void	exit_failure(t_data *data)
+t_env	*env_get(t_data *data, char *key)
 {
-	(void)data;
-	// free_data(data);
-	exit(EXIT_FAILURE);
+	t_env	*node;
+
+	if (!data->env_list)
+		return (NULL);
+	node = data->env_list;
+	while (node)
+	{
+		if (!ft_strcmp(node->key, key))
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
 }

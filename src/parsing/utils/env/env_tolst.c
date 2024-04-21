@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env_tolst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:35:16 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/21 11:19:43 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
-void	exit_success(t_data *data)
+/**
+ * the purpose of this function is to convert the array to a linked list
+*/
+
+void	env_tolst(t_data *data)
 {
-	(void)data;
-	// free_data(data);
-	exit(EXIT_SUCCESS);
+	int	i;
+
+	data->env_list = NULL;
+	if (!data->env)
+		return ;
+	i = -1;
+	while (data->env[++i])
+		env_add(data, env_new(data, data->env[i]));
 }
 
-void	exit_failure(t_data *data)
-{
-	(void)data;
-	// free_data(data);
-	exit(EXIT_FAILURE);
-}

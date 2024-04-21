@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env_size.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:35:16 by dehamad          ###   ########.fr       */
+/*   Created: 2023/12/22 02:51:22 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/21 11:46:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
-void	exit_success(t_data *data)
-{
-	(void)data;
-	// free_data(data);
-	exit(EXIT_SUCCESS);
-}
+/**
+ * the purpose of this function is to get the size of the linked list
+*/
 
-void	exit_failure(t_data *data)
+int	env_size(t_data *data)
 {
-	(void)data;
-	// free_data(data);
-	exit(EXIT_FAILURE);
+	int		size;
+	t_env	*crnt;
+
+	size = 0;
+	crnt = data->env_list;
+	while (crnt && ++size)
+		crnt = crnt->next;
+	return (size);
 }

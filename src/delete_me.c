@@ -6,11 +6,20 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/17 23:44:36 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:52:54 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print_env_array(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		printf("env[%d]: %s\n", i, env[i]);
+}
 
 void	print_env_list(t_env *lst)
 {
