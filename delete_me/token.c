@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 19:01:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:22:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@
 // 		return (TOKEN_PIPE);
 // 	return (TOKEN_WORD);
 // }
-
-
 
 // static t_token	*new_token(t_data *data, unsigned int start, int len)
 // {
@@ -171,42 +169,6 @@
 // {
 // 	if (data->line[i] == '\\' && data->line[i + 1])
 // 	i++;
-// }
-
-//ls -l|a>b<c>>d<<e | f 
-// echo hi >"file1   |'|||  iknj jnjnj kmk'''''''><><><><>>>>>>>"
-// int quotes(char *str)
-// {
-// 	int i = 0;
-// 	int flag = 0;
-// 	while (str[i])
-// 	{
-// 		if(str[i] == '\'' || str[i] == '\"')
-// 			flag = str[i];
-// 		else if(str[i] == flag)
-// 			flag = 0;
-// 		if(str[i] == '>' && flag == 0)
-// 			execve();
-// 		i++;
-// 	}
-// }
-
-//ls -l|a>b<c>>d<<e | f 
-// echo hi >"file1   |'|||  iknj jnjnj kmk'''''''><><><><>>>>>>>"
-// int quotes(char *str)
-// {
-// 	int i = 0;
-// 	int flag = 0;
-// 	while (str[i])
-// 	{
-// 		if(str[i] == '\'' || str[i] == '\"')
-// 			flag = str[i];
-// 		else if(str[i] == flag)
-// 			flag = 0;
-// 		if(str[i] == '>' && flag == 0)
-// 			execve();
-// 		i++;
-// 	}
 // }
 
 // void tokenize(char *line, t_token **token)

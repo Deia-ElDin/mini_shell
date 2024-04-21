@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 20:29:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/20 04:40:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:21:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	print_error(char *err)
 	ft_putstr_fd(err, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
-

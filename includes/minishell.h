@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 14:33:46 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:21:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,6 @@ void	token_tolst(t_data *data, t_token **head, unsigned int start);
 void	token_clear(t_data *data);
 bool	token_validation(t_data *data);
 int		token_type(char *token);
-
-
-
-// Enviornment Utils Functions
-// t_env	*env_to_list(t_data *data);
-// char	**list_to_env(t_data *data);
-// t_env	*get_env_node(t_data *data, char *key);
 
 // AST Utils Functions
 t_ast	*new_ast(int type);
