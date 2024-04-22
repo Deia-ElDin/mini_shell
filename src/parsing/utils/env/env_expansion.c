@@ -6,19 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:17:56 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:26:35 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
-
-// "1234 $PATH1  567"
-// "1234 $PATH  567"
-// "1234 $PATH 567"
-// "1234 $PATH 567"
-// "$PATH 4567"
-// "$PATH"
-// '$PATH'
 
 /**
  * The purpose of this function is to return the expansion

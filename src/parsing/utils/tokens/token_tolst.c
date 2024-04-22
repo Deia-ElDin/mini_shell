@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:28:31 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 18:59:50 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/22 21:32:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@
  * => we call the function recursively to continue the loop with the next i
 */
 
+/// @brief Used to create the tokens (recursively) \
+/// we loop over the line till we encounter a special char (" |><\"\'") \
+/// we create token with what we found so far till we found the special char \
+/// then we check which special char we found i.e (>>, <<, >, <, |, " ", ' ') \
+/// if we find any of them we create and add the token to the linked list \
+/// unless if it was a quote we loop over the line till we find the closing quote \
+/// then we create and add the token to the linked list
+/// @param data The main struct
+/// @param head The head of the token linked list
+/// @param start The index of where we at the string
 void	token_tolst(t_data *data, t_token **head, unsigned int start)
 {
 	unsigned int	i;
@@ -52,6 +62,8 @@ void	token_tolst(t_data *data, t_token **head, unsigned int start)
 		start = i;
 		while (data->line[++i] && data->line[i] != data->line[start])
 			;
+		if (!data->line[i])
+			return (syntax_error("quotes"), token_clear(data));
 		token_add(data, head, start, i - start + 1);
 	}
 	token_tolst(data, head, i + 1);
