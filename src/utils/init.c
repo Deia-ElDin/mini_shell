@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:59:38 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/22 12:58:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * we will set the tokens to NULL
  * we will set the ast to NULL
  * we will set the exit_status to 0
- 
+
  * if the env is not NULL
  * we will set the env to the env pointer (so we can use it inside the next 2 fn)
  * we will convert the env to a linked list
@@ -41,6 +41,7 @@ void	init_data(t_data *data, char **env)
 	data->tokens = NULL;
 	data->ast = NULL;
 	data->exit_status = 0;
+	data->next_high_token = TOKEN_AND;
 	if (env)
 	{
 		data->env = env;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:21:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/22 17:44:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,28 @@
 
 enum
 {
+	NODE_CMD,
+	NODE_REDIR_IN,
+	NODE_REDIR_OUT,
+	NODE_HEREDOC,
+	NODE_APPEND,
+	NODE_PIPE,
+	NODE_OR,
+	NODE_AND
+};
+
+enum
+{
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
 	TOKEN_PIPE,
-	TOKEN_WORD
+	TOKEN_OR,
+	TOKEN_AND
 };
 
 typedef struct s_env
@@ -84,6 +98,7 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	int				next_high_token;
 	char			*line;
 	char			**env;
 	// char			**av;
@@ -115,16 +130,19 @@ t_token	*token_new(t_data *data, unsigned int start, int len);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
 void	token_clear(t_data *data);
+void	token_del_relink(t_token **node);
 bool	token_validation(t_data *data);
 int		token_type(char *token);
 
 // AST Utils Functions
 t_ast	*new_ast(int type);
-void	add_ast(t_ast **ast, t_ast *new_node);
+void	add_left_ast(t_ast **ast, t_ast *new_node);
+void	add_right_ast(t_ast **ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);
 
 // Execution Function
 void	execution(t_data *data);
+void	exec_ast(t_ast *ast, t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);

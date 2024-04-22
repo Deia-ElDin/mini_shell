@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 15:06:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/22 17:57:03 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	main(int ac, char **av, char **env)
 				free_data(&data);
 				continue ;
 			}
-			print_tokens(data.tokens);
-			// data.ast = parser(&data);
-			// print_ast(data.ast);
+			// print_tokens(data.tokens);
+			data.ast = parser(&data);
+			print_ast(data.ast);
 			// exec_ast(data.ast, &data);
 			token_clear(&data);
 			// free_ast(data.ast);

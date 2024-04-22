@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 03:33:15 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 11:38:05 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/22 14:07:52 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,21 @@ void	token_clear(t_data *data)
 		crnt_node = next_node;
 	}
 	data->tokens = NULL;
+}
+
+/**
+ * the purpose of this function is to delete given node
+ * then relink the chain between the given nodes prev and next node
+*/
+
+void	token_del_relink(t_token **node)
+{
+	if (!node || !*node)
+		return ;
+	(*node)->prev->next = (*node)->next;
+	(*node)->next->prev = (*node)->prev;
+	free((*node)->value);
+	(*node)->value = NULL;
+	free(*node);
+	*node = NULL;
 }
