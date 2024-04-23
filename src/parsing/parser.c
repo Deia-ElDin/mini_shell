@@ -28,18 +28,20 @@ Find next highest token in the precedence and returns next head token
 static t_token	*get_next_left_node(t_data *data, t_token *tokens)
 {
 	t_token	*token_node;
+	t_token	*nav_token;
 
+	nav_token = tokens;
 	token_node = NULL;
-	while (tokens)
+	while (nav_token)
 	{
-		if (tokens->type == data->next_high_token)
-			token_node = tokens;
-		tokens = tokens->prev;
+		if (nav_token->type == data->next_high_token)
+			token_node = nav_token;
+		nav_token = nav_token->prev;
 	}
 	if (!token_node && data->next_high_token >= 0)
 	{
 		data->next_high_token--;
-		get_next_left_node(data, tokens);
+		return (get_next_left_node(data, tokens));
 	}
 	return (token_node);
 }
@@ -50,39 +52,48 @@ Find next highest token in the precedence and returns next head token
 static t_token	*get_next_right_node(t_data *data, t_token *tokens)
 {
 	t_token	*token_node;
+	t_token	*nav_token;
 
+	nav_token = tokens;
 	token_node = NULL;
-	while (tokens)
+	while (nav_token)
 	{
-		if (tokens->type == data->next_high_token)
-			token_node = tokens;
-		tokens = tokens->next;
+		if (nav_token->type == data->next_high_token)
+			token_node = nav_token;
+		nav_token = nav_token->next;
 	}
-	if (!token_node && data->next_high_token >= 0)
+	if (!token_node && data->next_high_token > 0)
 	{
 		data->next_high_token--;
-		get_next_right_node(data, tokens);
+		return (get_next_right_node(data, tokens));
 	}
 	return (token_node);
 }
 
-static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
+static int	recursive_parsing(t_data *data, t_token *token, t_ast **node)
 {
-	t_ast	*left_node;
-	t_token	*left_token;
-	t_ast	*right_node;
-	t_token	*right_token;
+	t_ast	*new_node;
+	t_token	*new_token;
 
-	if (!token)
+
+	if (!token || !*node)
 		return (1);
-	left_token = get_next_left_node(data, token);
-	left_node = new_ast(left_token->type);
-	add_left_ast(&node, left_node);
-	right_token = get_next_right_node(data, token);
-	right_node = new_ast(right_token->type);
-	add_right_ast(&node, right_node);
-	recursive_parsing(data, left_token, left_node);
-	recursive_parsing(data, right_token, right_node);
+	new_token = get_next_left_node(data, token);
+	if (new_token)
+		new_node = new_ast(new_token->type);
+	if (new_node)
+		add_left_ast(node, new_node);
+	if (new_node && new_token)
+		if (recursive_parsing(data, new_token, &new_node))
+			return (1);
+	new_token = get_next_right_node(data, token);
+	if (new_token)
+		new_node = new_ast(new_token->type);
+	if (new_node)
+		add_right_ast(node, new_node);
+	if (new_node && new_token)
+		if (recursive_parsing(data, new_token, &new_node))
+			return (1);
 	return (0);
 }
 
@@ -97,12 +108,12 @@ t_ast	*parser(t_data *data)
 			break ;
 		data->tokens = data->tokens->prev;
 	}
-	printf("DEBUG head token (%d)\n", data->tokens->type);
 	head_token = get_next_right_node(data, data->tokens);
+	printf("DEBUG head token (%p)\n", head_token);
 	head_node = NULL;
 	if (head_token)
 		head_node = new_ast(head_token->type);
-	if (!head_node || recursive_parsing(data, head_token, head_node))
+	if (!head_node || recursive_parsing(data, head_token, &head_node))
 		return (NULL);
 	return (head_node);
 }

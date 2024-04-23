@@ -63,7 +63,7 @@ int	main(int ac, char **av, char **env)
 			print_ast(data.ast);
 			// exec_ast(data.ast, &data);
 			token_clear(&data);
-			// free_ast(data.ast);
+			free_ast(data.ast);
 			ft_free(&data.line, 'p');
 		}
 	}

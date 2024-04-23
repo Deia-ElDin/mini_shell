@@ -14,9 +14,6 @@
 
 bool	lexer(t_data *data)
 {
-	t_token	*head;
-
-	head = NULL;
 	if (!data->line)
 		return (NULL);
 	token_tolst(data, &data->tokens, 0);
