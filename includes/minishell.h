@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 17:44:11 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:31:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -28,6 +30,7 @@
 
 enum
 {
+	NODE_WORD,
 	NODE_CMD,
 	NODE_REDIR_IN,
 	NODE_REDIR_OUT,
@@ -102,6 +105,8 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	int				file_fd;
+	int				redirect_flag;
 	int				saved_stdfds[2];
 	int				pipe[2];
 	int				next_high_token;
@@ -149,6 +154,9 @@ void	add_right_ast(t_ast *ast, t_ast *new_node);
 // Execution Function
 void	execution(t_data *data);
 void	exec_ast(t_ast *ast, t_data *data);
+//	*-> simple_cmd.c
+int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
+int		pipe_cmd(t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);
@@ -175,6 +183,16 @@ void	init_data(t_data *data, char **env);
 //	*-> utils.c
 void	skip_spaces(const char *line, int *i);
 void	skip_quotes(const char *line, int *i);
+//	*-> str_join.c
+char	*join_strs(char *str, char *buffer);
+void	free_2dchar(char **str);
+//	*-> env_utils.c
+char	*get_path(char **envp, char *cmd, char *var);
+char	*get_all_paths(char **envp, char *var);
+char	*get_cmd_path(char *cmd, t_data *data);
+//	*->pipe_clean.c
+char	*gnl_till_null(int *pipe_fd, char *str);
+int		reset_fds(t_data *data);
 
 // DELETE ME
 void	print_env_array(char **env);

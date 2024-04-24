@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 17:57:03 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:15:16 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,38 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	init_data(&data, env);
 
-	// t_ast left1 = {
-	// 	.end_flag = 1,
-	// 	.type = NODE_CMD,
-	// 	.cmd = "/bin/pwd",
-	// 	.args = NULL,
-	// 	.file = NULL,
-	// 	.left = NULL,
-	// 	.right = NULL
-	// };
-	// t_ast right1 = {
-	// 	.end_flag = 0,
-	// 	.type = NODE_CMD,
-	// 	.cmd = NULL,
-	// 	.args = (char *[]){NULL},
-	// 	.file = NULL,
-	// 	.left = NULL,
-	// 	.right = NULL
-	// };
-	// t_ast head1 = {
-	// 	.end_flag = 1,
-	// 	.type = NODE_CMD,
-	// 	.cmd = NULL,
-	// 	.args = NULL,
-	// 	.file = NULL,
-	// 	.left = &left1,
-	// 	.right = &right1
-	// };
+	t_ast left1 = {
+		.end_flag = 1,
+		.type = NODE_WORD,
+		.cmd = "echo",
+		.args = NULL,
+		.file = NULL,
+		.left = NULL,
+		.right = NULL
+	};
+	t_ast right1 = {
+		.end_flag = 1,
+		.type = NODE_WORD,
+		.cmd = NULL,
+		.args = (char *[]){"echo", "hello", "world", "this", "is", "a", "test", NULL},
+		.file = NULL,
+		.left = NULL,
+		.right = NULL
+	};
+	t_ast head1 = {
+		.end_flag = 1,
+		.type = NODE_CMD,
+		.cmd = NULL,
+		.args = NULL,
+		.file = NULL,
+		.left = &left1,
+		.right = &right1
+	};
 
 	t_ast left2 = {
 		.end_flag = 1,
-		.type = NODE_CMD,
-		.cmd = "/usr/bin/ls",
+		.type = NODE_WORD,
+		.cmd = "tr",
 		.args = NULL,
 		.file = NULL,
 		.left = NULL,
@@ -59,9 +59,9 @@ int	main(int ac, char **av, char **env)
 	};
 	t_ast right2 = {
 		.end_flag = 0,
-		.type = NODE_CMD,
+		.type = NODE_WORD,
 		.cmd = NULL,
-		.args = (char *[]){NULL},
+		.args = (char *[]){"tr", "e", "a", NULL},
 		.file = NULL,
 		.left = NULL,
 		.right = NULL
@@ -76,18 +76,18 @@ int	main(int ac, char **av, char **env)
 		.right = &right2
 	};
 
-	// t_ast head = {
-	// 	.end_flag = 1,
-	// 	.type = NODE_PIPE,
-	// 	.cmd = NULL,
-	// 	.args = NULL,
-	// 	.file = NULL,
-	// 	.left = &head1,
-	// 	.right = &head2
-	// };
-	exec_ast(&head2, &data);
+	t_ast head = {
+		.end_flag = 1,
+		.type = NODE_PIPE,
+		.cmd = NULL,
+		.args = NULL,
+		.file = NULL,
+		.left = &head1,
+		.right = &head2
+	};
+	exec_ast(&head, &data);
 	// token_clear(&data);
-	// free_data(&data);
+	free_data(&data);
 	return (data.exit_status);
 }
 
