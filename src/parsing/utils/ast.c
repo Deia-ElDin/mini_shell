@@ -25,30 +25,30 @@ t_ast	*new_ast(int type)
 	return (new_node);
 }
 
-void	add_left_ast(t_ast **ast, t_ast *new_node)
+void	add_left_ast(t_ast *ast, t_ast *new_node)
 {
 	t_ast	*tmp;
 
-	if (!*ast)
-		*ast = new_node;
+	if (!ast)
+		ast = new_node;
 	else
 	{
-		tmp = *ast;
+		tmp = ast;
 		while (tmp->left)
 			tmp = tmp->left;
 		tmp->left = new_node;
 	}
 }
 
-void	add_right_ast(t_ast **ast, t_ast *new_node)
+void	add_right_ast(t_ast *ast, t_ast *new_node)
 {
 	t_ast	*tmp;
 
-	if (!*ast)
-		*ast = new_node;
+	if (!ast)
+		ast = new_node;
 	else
 	{
-		tmp = *ast;
+		tmp = ast;
 		while (tmp->right)
 			tmp = tmp->right;
 		tmp->right = new_node;

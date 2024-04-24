@@ -15,6 +15,7 @@
 
 # include "./libft/libft.h"
 # include <signal.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -91,13 +92,18 @@ typedef struct s_redir
 typedef struct s_ast
 {
 	int				type;
-	char			*value;
+	int				end_flag;
+	char			*cmd;
+	char			**args;
+	char			*file;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
 
 typedef struct s_data
 {
+	int				saved_stdfds[2];
+	int				pipe[2];
 	int				next_high_token;
 	char			*line;
 	char			**env;
@@ -136,8 +142,8 @@ int		token_type(char *token);
 
 // AST Utils Functions
 t_ast	*new_ast(int type);
-void	add_left_ast(t_ast **ast, t_ast *new_node);
-void	add_right_ast(t_ast **ast, t_ast *new_node);
+void	add_left_ast(t_ast *ast, t_ast *new_node);
+void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);
 
 // Execution Function
