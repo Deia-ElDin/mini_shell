@@ -30,7 +30,7 @@ PARSING_UTILS_ENV = env_add.c env_clear.c env_get.c env_last.c env_new.c \
 PARSING_UTILS_TOKEN = token_add.c token_clear.c token_new.c token_tolst.c \
 	token_type.c token_validation.c
 EXECUTION = execution.c simple_cmd.c
-EXECUTION_UTILS = env_utils.c str_join.c pipe_clean.c
+EXECUTION_UTILS = env_utils.c str_join.c pipe_utils.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
 UTILS = init.c free.c exit.c error.c
 

@@ -36,8 +36,6 @@ void	init_data(t_data *data, char **env)
 {
 	data->file_fd = -1;
 	data->redirect_flag = 0;
-	data->saved_stdfds[0] = dup(0);
-	data->saved_stdfds[1] = dup(1);
 	data->pipe[0] = -1;
 	data->pipe[1] = -1;
 	data->line = NULL;

@@ -12,21 +12,20 @@
 
 #include "../../../includes/minishell.h"
 
-int	reset_fds(t_data *data)
+void	pipe_for_next(t_data *data)
 {
-	// if (close (data->pipe[0]))
-	// 	return (ft_putstr_fd("resetting FDs FAILED close of pipe 0\n", 2), 1);
-	// if (close (data->pipe[1]))
-	// 	return (ft_putstr_fd("resetting FDs FAILED close of pipe 1\n", 2), 1);
-	// if (dup2(data->saved_stdfds[0], 0) == -1)
-	// 	return (ft_putstr_fd("resetting FDs FAILED dup2 of 0\n", 2), 1);
-	if (dup2(data->saved_stdfds[1], 1) == -1)
-		return (ft_putstr_fd("resetting FDs FAILED dup2 of 1\n", 2), 1);
-	// if (close (data->pipe[0])) || close (data->pipe[1])
-	// 	|| dup2(data->saved_stdfds[0], 0) == -1
-	// 	|| dup2(data->saved_stdfds[1], 1) == -1)
-	// 	return (ft_putstr_fd("reset FDs FAILED\n", 2), 1);
-	return (ft_putstr_fd("resetting FDs\n", 2), 0);
+	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
+	{
+		close(data->pipe[1]);
+		dup2(data->pipe[0], 0);
+	}
+}
+
+int	check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right)
+{
+	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
+		|| !ast_left->end_flag || !ast_right->end_flag)
+		waitpid(pid, NULL, 0);
 }
 
 char	*gnl_till_null(int *pipe_fd, char *str)

@@ -107,7 +107,6 @@ typedef struct s_data
 {
 	int				file_fd;
 	int				redirect_flag;
-	int				saved_stdfds[2];
 	int				pipe[2];
 	int				next_high_token;
 	char			*line;
@@ -190,9 +189,10 @@ void	free_2dchar(char **str);
 char	*get_path(char **envp, char *cmd, char *var);
 char	*get_all_paths(char **envp, char *var);
 char	*get_cmd_path(char *cmd, t_data *data);
-//	*->pipe_clean.c
+//	*->pipe_utils.c
 char	*gnl_till_null(int *pipe_fd, char *str);
-int		reset_fds(t_data *data);
+int		check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right);
+void	pipe_for_next(t_data *data);
 
 // DELETE ME
 void	print_env_array(char **env);
