@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 12:05:42 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 22:51:47 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/24 20:25:43 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_isdifferent_sign(int num1, int num2);
 int	ft_isempty_str(char *str);
 int	ft_ispipe(int c);
 int	ft_isredirect(int c);
-int	ft_isdouble_redirect(char *str);
+int	ft_isdoubles(char *str);
 int	ft_isquote(int c);
 
 #endif

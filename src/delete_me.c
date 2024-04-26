@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:52:54 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/26 07:21:33 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	print_tokens(t_token *lst)
 {
 	while (lst)
 	{
-		printf("\ntype: %d, value = %s.\n\n", lst->type, lst->value);
+		printf("\nindex: %d type: %d, value = .%s. space = %d\n",
+			lst->index, lst->type, lst->value, lst->is_space);
 		lst = lst->next;
 	}
 }
@@ -43,9 +44,18 @@ void	print_ast(t_ast *ast)
 {
 	if (ast)
 	{
-		printf("token: %d\n", ast->type);
-		print_ast(ast->left);
-		print_ast(ast->right);
+		printf("ast index: %d, type: %d, file = %s\n",
+			ast->index, ast->type, ast->file);
+		if (ast->left)
+		{
+			printf("\ngoing left\n");
+			print_ast(ast->left);
+		}
+		if (ast->right)
+		{
+			printf("\ngoing right\n");
+			print_ast(ast->right);
+		}
 	}
 }
 

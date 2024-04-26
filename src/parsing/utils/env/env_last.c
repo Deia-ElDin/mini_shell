@@ -6,16 +6,17 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 03:10:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 10:05:56 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/26 04:24:47 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-/**
- * the purpose of this function is to get the last node of the linked list
-*/
+t_env	*env_last(t_data *data);
 
+/// @brief Used to get the last node of the linked list
+/// @param data The main struct
+/// @return The last node of the linked list
 t_env	*env_last(t_data *data)
 {
 	t_env	*last_node;

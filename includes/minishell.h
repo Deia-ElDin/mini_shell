@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:21:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/26 06:53:01 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,63 +27,65 @@
 
 enum
 {
+	NODE_CMD,
+	NODE_REDIR_IN,
+	NODE_REDIR_OUT,
+	NODE_HEREDOC,
+	NODE_APPEND,
+	NODE_PIPE,
+	NODE_OR,
+	NODE_AND
+};
+
+enum
+{
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
 	TOKEN_PIPE,
-	TOKEN_WORD
+	TOKEN_OR,
+	TOKEN_AND
 };
 
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				index;
 	bool			is_equal;
 	struct s_env	*next;
 }	t_env;
 
 typedef struct s_token
 {
-	int				type;
 	char			*value;
+	int				type;
+	int				index;
+	bool			is_space;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_cmd
-{
-	int		type;
-	char	*cmd;
-	char	*options;
-	char	*args;
-}	t_cmd;
-
-typedef struct s_pipe
-{
-	int		type;
-	int		*prev;
-	int		*next;
-}	t_pipe;
-
-typedef struct s_redir
-{
-	int		type;
-	char	*file;
-}	t_redir;
-
 typedef struct s_ast
 {
 	int				type;
-	char			*value;
+	int				index;
+	char			**cmd;
+	char			*file;
 	struct s_ast	*left;
 	struct s_ast	*right;
+	t_token			*token;
 }	t_ast;
 
 typedef struct s_data
 {
+	int				left_high_token;
+	int				right_high_token;
+	bool			error;
 	char			*line;
 	char			**env;
 	// char			**av;
@@ -96,9 +98,10 @@ typedef struct s_data
 
 //  ************ Parsing Function ************  //
 bool	lexer(t_data *data);
-t_ast	*parser(t_data *data);
+bool	parser(t_data *data);
 
-// Parsing Utils Functions
+// ***** Parsing Utils Functions ***** //
+
 //	*-> Env Functions
 t_env	*env_new(t_data *data, char *env);
 t_env	*env_update(t_data *data, char *env);
@@ -108,20 +111,21 @@ char	*env_expansion(t_data *data, char *str);
 void	env_add(t_data *data, t_env *new);
 void	env_tolst(t_data *data);
 void	env_toarr(t_data *data);
-void	env_clear(t_data *data);
-int		env_size(t_data *data);
+void	env_lstclear(t_data *data);
+int		env_lstsize(t_data *data);
+
 //	*-> Token Functions
-t_token	*token_new(t_data *data, unsigned int start, int len);
+void	token_delone(t_token **node);;
+void	token_lstclear(t_data *data);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
-void	token_clear(t_data *data);
+void	token_merge(t_data *data);
 bool	token_validation(t_data *data);
-int		token_type(char *token);
 
-// AST Utils Functions
-t_ast	*new_ast(int type);
-void	add_ast(t_ast **ast, t_ast *new_node);
-// void	free_ast(t_ast *ast);
+// *-> AST Functions
+t_ast	*ast_new(t_data *data, t_token *token);
+t_ast	*ast_head(t_data *data, t_token *token, char direction);
+void	ast_add(t_data *data, t_ast *head, char direction);
 
 // Execution Function
 void	execution(t_data *data);
@@ -136,21 +140,18 @@ void	builtins(t_data *data);
 // void	pwd(t_data *data);
 // void	unset(t_data *data);
 
-// Utils Functions
+// ***** Main Utils Functions ***** //
+//	*-> data.c
+void	data_init(t_data *data, char **env);
+void	data_reset(t_data *data);
+void	data_free(t_data *data);
+
 //	*-> error.c
 void	syntax_error(char *err);
-void	print_error(char *err);
+
 //	*-> exit.c
 void	exit_success(t_data *data);
 void	exit_failure(t_data *data);
-//	*-> free.c
-void	free_ast(t_ast *ast);
-void	free_data(t_data *data);
-//	*-> init.c
-void	init_data(t_data *data, char **env);
-//	*-> utils.c
-void	skip_spaces(const char *line, int *i);
-void	skip_quotes(const char *line, int *i);
 
 // DELETE ME
 void	print_env_array(char **env);

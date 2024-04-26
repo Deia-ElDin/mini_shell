@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/21 19:02:25 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/26 06:28:29 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,22 +23,24 @@ LIBFT = includes/libft/libft.a
 LIBS = -lreadline
 
 MAIN = main.c delete_me.c
+
 PARSING = lexer.c parser.c 
-PARSING_UTILS = ast.c
-PARSING_UTILS_ENV = env_add.c env_clear.c env_get.c env_last.c env_new.c \
-	env_size.c env_toarr.c env_tolst.c env_update.c env_expansion.c
-PARSING_UTILS_TOKEN = token_add.c token_clear.c token_new.c token_tolst.c \
-	token_type.c token_validation.c
+PARSING_UTILS_ENV = env_add.c  env_expansion.c env_get.c env_last.c env_lstclear.c \
+	env_lstsize.c env_new.c env_toarr.c env_tolst.c env_update.c
+PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
+	token_tolst.c token_validation.c
+PARSING_UTILS_AST = ast_add.c ast_head.c ast_new.c
+	
 EXECUTION = execution.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
-UTILS = init.c free.c exit.c error.c
+UTILS = error.c exit.c data.c 
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
-	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
 	$(addprefix src/parsing/utils/env/, $(PARSING_UTILS_ENV)) \
 	$(addprefix src/parsing/utils/tokens/, $(PARSING_UTILS_TOKEN)) \
+	$(addprefix src/parsing/utils/ast/, $(PARSING_UTILS_AST)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
 	$(addprefix src/utils/, $(UTILS))

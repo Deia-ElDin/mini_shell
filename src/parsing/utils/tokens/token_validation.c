@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:42:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 21:02:11 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/24 19:18:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool		token_validation(t_data *data);
 
 /// @brief Used to validate the pipes with the prev and next tokens
 /// @param crnt Current token
-/// @return true or false depends if the test pass or not
+/// @return True or false depends if the test pass or not
 static bool	valid_pipe(t_token *crnt)
 {
 	if (!crnt->prev || crnt->prev->type == TOKEN_PIPE)
@@ -30,7 +30,7 @@ static bool	valid_pipe(t_token *crnt)
 
 /// @brief Used to validate the redirects with the next token
 /// @param crnt Current token
-/// @return true or false depends if the test pass or not
+/// @return True or false depends if the test pass or not
 static bool	valid_redirect(t_token *crnt)
 {
 	if (!crnt->next)
@@ -42,7 +42,7 @@ static bool	valid_redirect(t_token *crnt)
 
 /// @brief Used to validate the tokens
 /// @param data The main struct
-/// @return true or false
+/// @return True or false
 bool	token_validation(t_data *data)
 {
 	t_token	*crnt;
