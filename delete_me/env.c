@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:38:46 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 19:01:24 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/24 20:02:10 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@
  * we will malloc with the length of the linked list + 1 (for the NULL)
  * we used ft_calloc to set all the pointers to NULL (malloc and initialize)
  * we loop through the linked list and we will join the key and value
- * we will use the ft_strjoin_multi function to join the key, =, and value
+ * we will use the ft_strnjoin function to join the key, =, and value
 */
 
 // char	**list_to_env(t_data *data)
@@ -103,7 +103,7 @@
 // 	i = 0;
 // 	while (env_list)
 // 	{
-// 		env[i] = ft_strjoin_multi(3, env_list->key, "=", env_list->value);
+// 		env[i] = ft_strnjoin(3, env_list->key, "=", env_list->value);
 // 		env_list = env_list->next;
 // 		i++;
 // 	}

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 04:44:36 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:22:28 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/26 03:43:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@
 // 	char		quotes;
 // 	int			i;
 
+//     // "  '   " '    //    123123123 
+
 // 	line = data->line;
 // 	quotes = '\0';
 // 	i = 0;
@@ -73,7 +75,7 @@
 // 		if (ft_isquote(line[i]))
 // 		{
 // 			if (!quotes)
-// 				quotes = line[i];
+// 				quotes = line[i]; // " 
 // 			else if (quotes == line[i])
 // 				quotes = '\0';
 // 		}

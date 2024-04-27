@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_multi.c                                 :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,7 +22,7 @@ static size_t	ft_total_len(int total, va_list args)
 	return (total_len);
 }
 
-char	*ft_strjoin_multi(int total, ...)
+char	*ft_strnjoin(int total, ...)
 {
 	va_list		args;
 	size_t		total_len;
