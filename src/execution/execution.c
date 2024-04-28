@@ -17,30 +17,24 @@ void	execution(t_data *data)
 	builtins(data);
 }
 
-void	exec_ast(t_ast *ast, t_data *data)
+int	exec_ast(t_ast *ast, t_data *data)
 {
 	if (!data)
-		return ;
-	if (ast->type == NODE_CMD && ast->left->type == NODE_WORD
-		&& ast->right->type == NODE_WORD)
+		return (1);
+	if (ast->type == NODE_CMD)
 		simple_cmd(ast->left, ast->right, data);
-	if (ast->type == NODE_PIPE)
-		pipe_cmd(data);
-	if (ast->left->left || ast->left->right)
-		exec_ast(ast->left, data);
-	if (ast->right->left || ast->right->right)
-		exec_ast(ast->right, data);
-	// if (ast->type == NODE_REDIR_IN)
-
-	// if (ast->type == NODE_REDIR_OUT)
-
-	// if (ast->type == NODE_HEREDOC)
-
-	// if (ast->type == NODE_APPEND)
-
-	// if (ast->type == NODE_PIPE)
-
-	// if (ast->type == NODE_OR)
-
-	// if (ast->type == NODE_AND)
+	else if (ast->type == NODE_PIPE)
+		pipe_cmd(ast, data);
+	else if (ast->type == NODE_OR)
+		or_operator(ast, data);
+	else if (ast->type == NODE_AND)
+		and_operator(ast, data);
+	else
+	{
+		if (ast->left->left || ast->left->right)
+			exec_ast(ast->left, data);
+		if (ast->right->left || ast->right->right)
+			exec_ast(ast->right, data);
+	}
+	return (0);
 }

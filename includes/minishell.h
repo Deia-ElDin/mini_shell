@@ -15,6 +15,9 @@
 
 # include "./libft/libft.h"
 # include <signal.h>
+# include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <fcntl.h>
@@ -31,11 +34,10 @@
 enum
 {
 	NODE_WORD,
-	NODE_CMD,
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
+	NODE_REDIR,
 	NODE_HEREDOC,
 	NODE_APPEND,
+	NODE_CMD,
 	NODE_PIPE,
 	NODE_OR,
 	NODE_AND
@@ -106,6 +108,7 @@ typedef struct s_ast
 typedef struct s_data
 {
 	int				file_fd;
+	int				out_fd;
 	int				redirect_flag;
 	int				pipe[2];
 	int				next_high_token;
@@ -152,10 +155,19 @@ void	add_right_ast(t_ast *ast, t_ast *new_node);
 
 // Execution Function
 void	execution(t_data *data);
-void	exec_ast(t_ast *ast, t_data *data);
+int		exec_ast(t_ast *ast, t_data *data);
+//	*-> redirections.c
+int		redirect_in(t_ast *ast, t_data *data);
+int		redirect_out(t_ast *ast, t_data *data);
+int		here_doc(t_ast *ast, t_data *data);
+int		append(t_ast *ast, t_data *data);
+int		check_for_redirs(t_ast *ast, t_data *data);
+//	*-> and_or_exec.c
+int		or_operator(t_ast *ast, t_data *data);
+int		and_operator(t_ast *ast, t_data *data);
 //	*-> simple_cmd.c
 int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
-int		pipe_cmd(t_data *data);
+int		pipe_cmd(t_ast *ast, t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);
@@ -192,7 +204,7 @@ char	*get_cmd_path(char *cmd, t_data *data);
 //	*->pipe_utils.c
 char	*gnl_till_null(int *pipe_fd, char *str);
 int		check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right);
-void	pipe_for_next(t_data *data);
+void	pipe_for_next(t_data *data, int	end_flag);
 
 // DELETE ME
 void	print_env_array(char **env);

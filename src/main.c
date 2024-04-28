@@ -31,10 +31,10 @@ int	main(int ac, char **av, char **env)
 	};
 	t_ast right1 = {
 		.end_flag = 1,
-		.type = NODE_WORD,
-		.cmd = NULL,
+		.type = NODE_REDIR,
+		.cmd = ">",
 		.args = (char *[]){"echo", "hello", "world", "this", "is", "a", "test", NULL},
-		.file = NULL,
+		.file = "fileout",
 		.left = NULL,
 		.right = NULL
 	};
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **env)
 		.right = NULL
 	};
 	t_ast right2 = {
-		.end_flag = 0,
+		.end_flag = 1,
 		.type = NODE_WORD,
 		.cmd = NULL,
 		.args = (char *[]){"tr", "e", "a", NULL},
@@ -76,7 +76,7 @@ int	main(int ac, char **av, char **env)
 		.right = &right2
 	};
 
-	t_ast head = {
+	t_ast pipe1 = {
 		.end_flag = 1,
 		.type = NODE_PIPE,
 		.cmd = NULL,
@@ -85,7 +85,45 @@ int	main(int ac, char **av, char **env)
 		.left = &head1,
 		.right = &head2
 	};
-	exec_ast(&head, &data);
+
+	t_ast left3 = {
+		.end_flag = 1,
+		.type = NODE_WORD,
+		.cmd = "tr",
+		.args = NULL,
+		.file = NULL,
+		.left = NULL,
+		.right = NULL
+	};
+	t_ast right3 = {
+		.end_flag = 0,
+		.type = NODE_WORD,
+		.cmd = NULL,
+		.args = (char *[]){"tr", "l", "p", NULL},
+		.file = NULL,
+		.left = NULL,
+		.right = NULL
+	};
+	t_ast head3 = {
+		.end_flag = 1,
+		.type = NODE_CMD,
+		.cmd = NULL,
+		.args = NULL,
+		.file = NULL,
+		.left = &left3,
+		.right = &right3
+	};
+
+	t_ast pipe = {
+		.end_flag = 1,
+		.type = NODE_PIPE,
+		.cmd = NULL,
+		.args = NULL,
+		.file = NULL,
+		.left = &pipe1,
+		.right = &head3
+	};
+	exec_ast(&head1, &data);
 	// token_clear(&data);
 	free_data(&data);
 	return (data.exit_status);

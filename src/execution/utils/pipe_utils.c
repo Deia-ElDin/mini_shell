@@ -12,7 +12,7 @@
 
 #include "../../../includes/minishell.h"
 
-void	pipe_for_next(t_data *data)
+void	pipe_for_next(t_data *data, int	end_flag)
 {
 	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
 	{
@@ -23,9 +23,15 @@ void	pipe_for_next(t_data *data)
 
 int	check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right)
 {
+	int status;
+
+	status = 0;
 	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
 		|| !ast_left->end_flag || !ast_right->end_flag)
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+	else
+		waitpid(pid, &status, WNOHANG);
+	return (status);
 }
 
 char	*gnl_till_null(int *pipe_fd, char *str)
