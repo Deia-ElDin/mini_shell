@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/28 19:44:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:54:45 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ typedef struct s_token
 	int				index;
 	bool			is_space;
 	bool			is_taken;
+	int				type;
+	int				index;
+	bool			is_space;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -84,6 +87,9 @@ typedef struct s_ast
 typedef struct s_data
 {
 	int				highest_token;
+	bool			error;
+	int				left_high_token;
+	int				right_high_token;
 	bool			error;
 	char			*line;
 	char			**env;
@@ -119,6 +125,7 @@ void	token_delone(t_token **node);
 void	token_lstclear(t_data *data);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
+void	token_merge(t_data *data);
 void	token_merge(t_data *data);
 bool	token_validation(t_data *data);
 

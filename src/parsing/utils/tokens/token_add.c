@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/27 08:02:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:59:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,98 @@ static t_token	*token_new(t_data *data, int start, int len)
 		exit_failure(data);
 	if (ft_isempty_str(value))
 		return (ft_free(&value, 'p'), NULL);
+	return (token_values(data, value, start + len));
+}
+
+static int		token_type(char *token);
+static t_token	*token_values(t_data *data, char *value, int index);
+static t_token	*token_new(t_data *data, int start, int len);
+void			token_add(t_data *data, t_token **head, int start, int len);
+
+/// @brief Used to get the type of the token
+/// @param token The token to be checked
+/// @return The type of the token
+static int	token_type(char *token)
+{
+	if (*token == '\'')
+		return (TOKEN_SINGLE_QUOTE);
+	if (*token == '\"')
+		return (TOKEN_DOUBLE_QUOTE);
+	if (!ft_strcmp(token, "&&"))
+		return (TOKEN_AND);
+	if (!ft_strcmp(token, "||"))
+		return (TOKEN_OR);
+	if (!ft_strcmp(token, "<<"))
+		return (TOKEN_HEREDOC);
+	if (!ft_strcmp(token, ">>"))
+		return (TOKEN_APPEND);
+	if (!ft_strcmp(token, "<"))
+		return (TOKEN_REDIR_IN);
+	if (!ft_strcmp(token, ">"))
+		return (TOKEN_REDIR_OUT);
+	if (!ft_strcmp(token, "|"))
+		return (TOKEN_PIPE);
+	return (TOKEN_WORD);
+}
+
+/// @brief Used to set the token struct values
+/// @param data The main struct
+/// @param value The value of the token
+/// @param index The index at which the token ends (sum + len)
+/// @return The new token values
+static t_token	*token_values(t_data *data, char *value, int index)
+{
+	t_token	*token;
+
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
+	if (!token)
+		exit_failure(data);
+	token->type = token_type(value);
+	if (ft_strchr(value, '$') && token->type != TOKEN_SINGLE_QUOTE)
+		token->value = env_expansion(data, value);
+	else
+		token->value = ft_strtrim(value, WHITESPACES);
+	ft_free(&value, 'p');
+	if (!token->value)
+		exit_failure(data);
+	if (data->line[index] == ' ')
+		token->is_space = true;
+	else
+		token->is_space = false;
+	token->prev = NULL;
+	token->next = NULL;
+	return (token);
+}
+
+/**
+ * The purpose of this function is to set the token struct values
+ * we check if the value has a '$' and the token is not a single quote
+ * which means it's either a TOKEN_DOUBLE_QUOTE or TOKEN_WORD
+ * we set the value of the token by expanding the env variables
+ * else we trim the value to remove the whitespaces
+ * we check if the next char is a space or not, for example 
+ * echo "hi""there" => hithere, echo "hi" "there" => hi there
+ * so we need to find out if there's a space between them or not
+ * once we clean the token_lst we will either add a space or not
+*/
+
+/// @brief Used to create a new token
+/// @param data The main struct
+/// @param start The head of the token linked list
+/// @param len The starting index of the token at the line
+/// @return The new token
+static t_token	*token_new(t_data *data, int start, int len)
+{
+	char	*value;
+
+	if (!data->line || !len)
+		return (NULL);
+	value = ft_substr(data->line, start, (size_t)len);
+	if (!value)
+		exit_failure(data);
+	if (ft_isempty_str(value))
+		return (ft_free(&value, 'p'), NULL);
+
 	return (token_values(data, value, start + len));
 }
 

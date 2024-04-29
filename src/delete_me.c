@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/28 19:50:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:55:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		printf("\n\ntype: %d\n", ast->type);
-		printf("value: %s\n", ast->token->value);
-		printf("index: %d\n", ast->token->index);
+		printf("value: %s\n", ast->ast index: %d, type->value);
+		printf("index: %d, file = %s\n",
+			ast->index, ast->token->index);
 		if (ast->cmd)
 			printf("cmd: %s\n", ast->cmd[0]);
 		{
@@ -63,16 +64,24 @@ void	print_ast(t_ast *ast)
 		if (ast->left)
 		{
 			printf("\ngoing left: \n");
-			printf("head: %s, %d\n", ast->token->value, ast->token->index);
-			print_ast(ast->left);
+			printf("head: %s, %d\n", ast->token->value, ast->token->index, ast->file);
+		if (ast->left)
+		{
+			printf("\ngoing left\n");
+				print_ast(ast->left);
 		}
 		if (ast->right)
 		{
 			printf("\ngoing right: \n");
 			printf("head: %s, %d\n", ast->token->value, ast->token->index);
+			}
+		if (ast->right)
+		{
+			printf("\ngoing right\n");
 			print_ast(ast->right);
+			}
 		}
-	}
+}
 }
 
 void	print_path(char **path)
