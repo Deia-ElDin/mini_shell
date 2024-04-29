@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/24 18:15:16 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:39:01 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	main(int ac, char **av, char **env)
 	};
 	t_ast right1 = {
 		.end_flag = 1,
-		.type = NODE_REDIR,
-		.cmd = ">",
+		.type = NODE_WORD,
+		.cmd = NULL,
 		.args = (char *[]){"echo", "hello", "world", "this", "is", "a", "test", NULL},
-		.file = "fileout",
+		.file = NULL,
 		.left = NULL,
 		.right = NULL
 	};
@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **env)
 	t_ast left3 = {
 		.end_flag = 1,
 		.type = NODE_WORD,
-		.cmd = "tr",
+		.cmd = "grep",
 		.args = NULL,
 		.file = NULL,
 		.left = NULL,
@@ -99,7 +99,7 @@ int	main(int ac, char **av, char **env)
 		.end_flag = 0,
 		.type = NODE_WORD,
 		.cmd = NULL,
-		.args = (char *[]){"tr", "l", "p", NULL},
+		.args = (char *[]){"grep", "a", NULL},
 		.file = NULL,
 		.left = NULL,
 		.right = NULL
@@ -123,7 +123,12 @@ int	main(int ac, char **av, char **env)
 		.left = &pipe1,
 		.right = &head3
 	};
-	exec_ast(&head1, &data);
+	exec_ast(&pipe, &data);
+	if (data.pipe[0] >= 0 || data.pipe[1] >= 0)
+	{
+		close(data.pipe[0]);
+		close(data.pipe[1]);
+	}
 	// token_clear(&data);
 	free_data(&data);
 	return (data.exit_status);

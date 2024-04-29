@@ -1,36 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_clean.c                                       :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:32:54 by melshafi          #+#    #+#             */
-/*   Updated: 2024/04/24 17:00:59 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:48:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	pipe_for_next(t_data *data, int	end_flag)
+void	pipe_for_next(t_data *data, int last)
 {
+	if (data->redirect_flag != 0)
+		data->redirect_flag = 0;
 	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
 	{
 		close(data->pipe[1]);
-		dup2(data->pipe[0], 0);
+		if (last)
+		{
+			dup2(data->pipe[0], 0);
+			close(data->pipe[0]);
+		}
+		else
+			close(data->pipe[0]);
 	}
 }
 
-int	check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right)
+int	check_for_sleep(int pid, char *cmd, int last)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
-		|| !ast_left->end_flag || !ast_right->end_flag)
+		|| !last)
 		waitpid(pid, &status, 0);
 	else
-		waitpid(pid, &status, WNOHANG);
+		waitpid(pid, &status, 0);
 	return (status);
 }
 

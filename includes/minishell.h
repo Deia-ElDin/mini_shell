@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/24 14:31:51 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:39:57 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ char	*get_all_paths(char **envp, char *var);
 char	*get_cmd_path(char *cmd, t_data *data);
 //	*->pipe_utils.c
 char	*gnl_till_null(int *pipe_fd, char *str);
-int		check_for_sleep(int pid, char *cmd, t_ast *ast_left, t_ast *ast_right);
-void	pipe_for_next(t_data *data, int	end_flag);
+int		check_for_sleep(int pid, char *cmd, int last);
+void	pipe_for_next(t_data *data, int end_flag);
 
 // DELETE ME
 void	print_env_array(char **env);

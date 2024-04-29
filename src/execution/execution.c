@@ -29,12 +29,5 @@ int	exec_ast(t_ast *ast, t_data *data)
 		or_operator(ast, data);
 	else if (ast->type == NODE_AND)
 		and_operator(ast, data);
-	else
-	{
-		if (ast->left->left || ast->left->right)
-			exec_ast(ast->left, data);
-		if (ast->right->left || ast->right->right)
-			exec_ast(ast->right, data);
-	}
 	return (0);
 }
