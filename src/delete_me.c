@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 22:55:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 23:32:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,46 +42,37 @@ void	print_tokens(t_token *lst)
 
 void	print_ast(t_ast *ast)
 {
+	int	i;
+
 	if (ast)
 	{
-		printf("\n\ntype: %d\n", ast->type);
-		printf("value: %s\n", ast->ast index: %d, type->value);
-		printf("index: %d, file = %s\n",
-			ast->index, ast->token->index);
+		// printf("type: %d\n", ast->type);
+		printf("\nhead => value:  %s, index = %d\n",
+			ast->token->value, ast->token->index);
 		if (ast->cmd)
-			printf("cmd: %s\n", ast->cmd[0]);
 		{
-			printf("tree \n");
-			if (ast->left)
-				printf("left: %s, %d\n", ast->left->token->value, ast->left->token->index);
-			else
-				printf("left: NULL\n");
-			if (ast->right)
-				printf("right: %s, %d\n", ast->right->token->value, ast->right->token->index);
-			else
-				printf("right: NULL\n");
+			i = -1;
+			while (ast->cmd[++i])
+				printf("cmd[%d]: %s\n", i, ast->cmd[i]);
 		}
+		printf("\n");
+		if (ast->left)
+			printf("	left => value:  %s, index = %d\n",
+				ast->left->token->value, ast->left->token->index);
+		if (ast->right)
+			printf("	right => value: %s, index = %d\n",
+				ast->right->token->value, ast->right->token->index);
 		if (ast->left)
 		{
-			printf("\ngoing left: \n");
-			printf("head: %s, %d\n", ast->token->value, ast->token->index, ast->file);
-		if (ast->left)
-		{
-			printf("\ngoing left\n");
-				print_ast(ast->left);
+			printf("\nGoing left ---> \n");
+			print_ast(ast->left);
 		}
 		if (ast->right)
 		{
-			printf("\ngoing right: \n");
-			printf("head: %s, %d\n", ast->token->value, ast->token->index);
-			}
-		if (ast->right)
-		{
-			printf("\ngoing right\n");
+			printf("\nGoing right ---> \n");
 			print_ast(ast->right);
-			}
 		}
-}
+	}
 }
 
 void	print_path(char **path)

@@ -1,14 +1,13 @@
-total 264
-drwxr-xr-x  13 dehamad  2023_abu-dhabi     442 Apr 28 19:49 .
-drwxr-xr-x   8 dehamad  2023_abu-dhabi     272 Apr 27 07:44 ..
-drwxr-xr-x  12 dehamad  2023_abu-dhabi     408 Apr 27 08:00 .git
-drwxr-xr-x   5 dehamad  2023_abu-dhabi     170 Apr 27 16:50 .vscode
--rw-r--r--   1 dehamad  2023_abu-dhabi    2798 Apr 28 19:45 Makefile
--rw-r--r--   1 dehamad  2023_abu-dhabi    2369 Apr 27 07:44 README.md
-drwxr-xr-x   6 dehamad  2023_abu-dhabi     204 Apr 27 07:44 delete_me
--rw-r--r--   1 dehamad  2023_abu-dhabi       0 Apr 28 19:49 file.txt
--rw-r--r--   1 dehamad  2023_abu-dhabi       0 Apr 28 19:49 file2.txt
-drwxr-xr-x   4 dehamad  2023_abu-dhabi     136 Apr 27 08:00 includes
--rwxr-xr-x   1 dehamad  2023_abu-dhabi  124320 Apr 28 19:49 minishell
-drwxr-xr-x   3 dehamad  2023_abu-dhabi     102 Apr 27 07:44 rules
-drwxr-xr-x   9 dehamad  2023_abu-dhabi     306 Apr 28 19:49 src
+total 16
+drwxr-xr-x  12 dehamad  2023_abu-dhabi   408 Apr 29 23:02 .
+drwxr-xr-x   8 dehamad  2023_abu-dhabi   272 Apr 27 07:44 ..
+drwxr-xr-x  15 dehamad  2023_abu-dhabi   510 Apr 29 23:05 .git
+drwxr-xr-x   5 dehamad  2023_abu-dhabi   170 Apr 29 23:02 .vscode
+-rw-r--r--   1 dehamad  2023_abu-dhabi  3176 Apr 29 23:02 Makefile
+-rw-r--r--   1 dehamad  2023_abu-dhabi  2369 Apr 27 07:44 README.md
+drwxr-xr-x   6 dehamad  2023_abu-dhabi   204 Apr 29 23:02 delete_me
+-rw-r--r--   1 dehamad  2023_abu-dhabi     0 Apr 29 23:11 file.txt
+-rw-r--r--   1 dehamad  2023_abu-dhabi     0 Apr 29 23:11 file2.txt
+drwxr-xr-x   4 dehamad  2023_abu-dhabi   136 Apr 29 23:02 includes
+drwxr-xr-x   3 dehamad  2023_abu-dhabi   102 Apr 27 07:44 rules
+drwxr-xr-x   9 dehamad  2023_abu-dhabi   306 Apr 29 23:09 src

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:00:30 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 23:32:47 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
-	data->highest_token = TOKEN_AND;
 	if (env)
 	{
 		data->env = env;

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 22:55:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/29 23:34:46 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	line = NULL;
 	data_init(&data, env);
-	// printf("size = %d\n", env_lstsize(&data));
-	// print_env_array(data.env);
-	// print_env_list(data.env_list);
-	// print_path(data.path);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (1)
@@ -55,12 +51,11 @@ int	main(int ac, char **av, char **env)
 				exit_failure(&data);
 			if (!lexer(&data))
 				continue ;
-			parser(&data);
-			// exec_ast(data.ast, &data);
+			if (!parser(&data))
+				continue ;
 			data_reset(&data);
 		}
 	}
 	data_free(&data);
 	return (data.exit_status);
 }
-

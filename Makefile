@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/29 22:53:43 by dehamad          ###   ########.fr        #
+#    Updated: 2024/04/29 23:15:37 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ PARSING_UTILS_ENV = env_add.c  env_expansion.c env_get.c env_last.c env_lstclear
 	env_lstsize.c env_new.c env_toarr.c env_tolst.c env_update.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c token_last.c
-PARSING_UTILS_AST = ast_add.c ast_head.c ast_new.c ast_lstclear.c ast_right.c ast_left.c
-PARSING_UTILS_PARSER = parse_and.c parse_pipe.c parse_redirect.c parse_word.c
+PARSING_UTILS_AST = ast_lstclear.c
 	
 EXECUTION = execution.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
@@ -47,8 +46,6 @@ SRCS = \
 	$(addprefix src/parsing/, $(PARSING)) \
 	$(addprefix src/parsing/utils/env/, $(PARSING_UTILS_ENV)) \
 	$(addprefix src/parsing/utils/tokens/, $(PARSING_UTILS_TOKEN)) \
-	$(addprefix src/parsing/utils/ast/, $(PARSING_UTILS_AST)) \
-	$(addprefix src/parsing/utils/parser/, $(PARSING_UTILS_PARSER)) \
 	$(addprefix src/parsing/utils/ast/, $(PARSING_UTILS_AST)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
