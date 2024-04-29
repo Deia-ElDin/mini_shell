@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tolst.c                                        :+:      :+:    :+:   */
+/*   env_lstsize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:29:54 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/26 04:27:06 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/26 04:27:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-void	env_tolst(t_data *data);
+int	env_lstsize(t_data *data);
 
-/// @brief Used to convert the env array to an env linked list
+/// @brief Used to get the size of the env linked list
 /// @param data The main struct
-void	env_tolst(t_data *data)
+/// @return The size of the env linked list
+int	env_lstsize(t_data *data)
 {
-	int	i;
+	int		size;
+	t_env	*crnt;
 
-	data->env_list = NULL;
-	if (!data->env)
-		return ;
-	i = -1;
-	while (data->env[++i])
-		env_add(data, env_new(data, data->env[i]));
+	size = 0;
+	crnt = data->env_list;
+	while (crnt && ++size)
+		crnt = crnt->next;
+	return (size);
 }

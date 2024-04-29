@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdouble_redirect.c                             :+:      :+:    :+:   */
+/*   parse_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:26:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:29:01 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/28 19:38:13 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/28 19:48:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "is.h"
+#include "../../../../includes/minishell.h"
 
-int	ft_isdouble_redirect(char *str)
+void	parse_pipe(t_data *data, t_token *token)
 {
-	return ((*str == '>' || *str == '<') && *(str + 1) == *str);
+	t_ast	*new_node;
+
+	new_node = ast_new(data, token);
+	if (!new_node)
+		exit_failure(data);
+	data->ast = data->ast;
+	if (!data->ast)
+		data->ast = new_node;
+	else
+	{
+		new_node->left = data->ast;
+		data->ast = new_node;
+	}
 }

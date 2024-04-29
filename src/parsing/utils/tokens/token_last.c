@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   token_last.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 19:04:36 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/27 08:12:45 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/27 08:12:58 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
-void	free_ast(t_ast *ast)
+t_token	*token_last(t_data *data)
 {
-	if (!ast)
-		return ;
-	if (ast->left)
-		free_ast(ast->left);
-	if (ast->right)
-		free_ast(ast->right);
-	free(ast);
-}
+	t_token	*token;
 
-void	free_data(t_data *data)
-{
-	env_clear(data);
-	token_clear(data);
-	ft_free(&data->env, 'a');
-	ft_free(&data->path, 'a');
-	free_ast(data->ast);
-	ft_free(&data->line, 'p');
+	if (!data->tokens)
+		return (NULL);
+	token = data->tokens;
+	while (token->next)
+		token = token->next;
+	return (token);
 }

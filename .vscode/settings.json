@@ -44,6 +44,7 @@
     "__locale": "c",
     "__functional_base_03": "c",
     "__tuple": "c",
-    "ios": "c"
+    "ios": "c",
+    "is.h": "c"
   }
 }

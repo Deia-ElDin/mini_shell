@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tolst.c                                        :+:      :+:    :+:   */
+/*   ast_add.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:29:54 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/25 21:28:40 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/28 18:20:10 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-void	env_tolst(t_data *data);
-
-/// @brief Used to convert the env array to an env linked list
-/// @param data The main struct
-void	env_tolst(t_data *data)
+void	ast_add(t_data *data, t_ast *head, char direction)
 {
-	int	i;
-
-	data->env_list = NULL;
-	if (!data->env)
+	if (!head)
 		return ;
-	i = -1;
-	while (data->env[++i])
-		env_add(data, env_new(data, data->env[i]));
+	if (direction == 'l')
+	{
+		head->left = ast_head(data, head, 'l');
+		if (!head->left || data->highest_token == 0)
+			return ;
+		ast_add(data, head->left, 'l');
+		ast_add(data, head->left, 'r');
+	}
+	else
+	{
+		head->right = ast_head(data, head, 'r');
+		if (!head->right || data->highest_token == 0)
+			return ;
+		ast_add(data, head->right, 'l');
+		ast_add(data, head->right, 'r');
+	}
 }

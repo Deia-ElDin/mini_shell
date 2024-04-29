@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tolst.c                                        :+:      :+:    :+:   */
+/*   parse_and.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:29:54 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/28 19:40:50 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/28 19:48:08 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-void	env_tolst(t_data *data);
-
-/// @brief Used to convert the env array to an env linked list
-/// @param data The main struct
-void	env_tolst(t_data *data)
+void	parse_and(t_data *data, t_token *token)
 {
-	int	i;
+	t_ast	*new_node;
 
-	data->env_list = NULL;
-	if (!data->env)
-		return ;
-	i = -1;
-	while (data->env[++i])
-		env_add(data, env_new(data, data->env[i]));
+	new_node = ast_new(data, token);
+	if (!new_node)
+		exit_failure(data);
+	data->ast = data->ast;
+	if (!data->ast)
+		data->ast = new_node;
+	else
+	{
+		new_node->left = data->ast;
+		data->ast = new_node;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 04:44:36 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:22:28 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/27 13:31:14 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,13 @@
 // 	return (true);
 // }
 
-// /**
-//  * The purpose of this function is to validate the quotes
-//  * we loop over the line and check if there is any quotes
-//  * if !quotes and we found a quote we set the quotes to the current quote
-//  * if quotes and we found the same quote we set the quotes back to 0
-//  * if quotes is not 0 (we didn't find a match quotes) then it's an error
-// */
-
 // static bool	validate_quotes(t_data *data)
 // {
 // 	const char	*line;
 // 	char		quotes;
 // 	int			i;
+
+//     // "  '   " '    //    123123123 
 
 // 	line = data->line;
 // 	quotes = '\0';
@@ -73,7 +67,7 @@
 // 		if (ft_isquote(line[i]))
 // 		{
 // 			if (!quotes)
-// 				quotes = line[i];
+// 				quotes = line[i]; // " 
 // 			else if (quotes == line[i])
 // 				quotes = '\0';
 // 		}
@@ -83,12 +77,6 @@
 // 		return (syntax_error(&quotes), false);
 // 	return (true);
 // }
-
-/**
- * The purpose of this function is to validate the pipe
- * we loop over the line and check if there is any pipe
- * if we found a pipe we scan the context before and after the pipe
-*/
 
 // static bool	validate_pipe(t_data *data)
 // {
@@ -107,12 +95,6 @@
 // 	return (true);
 // }
 
-/**
- * The purpose of this function is to validate the redirection
- * we loop over the line and check if there is any redirection
- * if we found a redirection we scan the context only after the redirection
-*/
-
 // static bool	validate_redirection(t_data *data)
 // {
 // 	int	i;
@@ -130,12 +112,6 @@
 // 	}
 // 	return (true);
 // }
-
-/**
- * The purpose of this function is to validate the line
- * we check if the line is not null for safety purposes
- * then we call the validation functions
-*/
 
 // bool	validations(t_data *data)
 // {

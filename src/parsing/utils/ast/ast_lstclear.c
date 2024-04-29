@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tolst.c                                        :+:      :+:    :+:   */
+/*   ast_lstclear.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:29:54 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
+/*   Updated: 2024/04/28 20:08:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-void	env_tolst(t_data *data);
-
-/// @brief Used to convert the env array to an env linked list
-/// @param data The main struct
-void	env_tolst(t_data *data)
+static void	recursive_free(t_ast **lst)
 {
-	int	i;
+	if (*lst)
+	{
+		recursive_free(&(*lst)->left);
+		recursive_free(&(*lst)->right);
+		ft_free(&(*lst)->cmd, 'a');
+		free(*lst);
+		*lst = NULL;
+	}
+}
 
-	data->env_list = NULL;
-	if (!data->env)
-		return ;
-	i = -1;
-	while (data->env[++i])
-		env_add(data, env_new(data, data->env[i]));
+void	ast_lstclear(t_data *data)
+{
+	recursive_free(&data->ast);
+	data->ast = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 15:06:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/28 13:51:25 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	line = NULL;
-	init_data(&data, env);
-	// printf("size = %d\n", env_size(&data));
+	data_init(&data, env);
+	// printf("size = %d\n", env_lstsize(&data));
 	// print_env_array(data.env);
 	// print_env_list(data.env_list);
 	// print_path(data.path);
@@ -54,20 +54,13 @@ int	main(int ac, char **av, char **env)
 			if (!data.line)
 				exit_failure(&data);
 			if (!lexer(&data))
-			{
-				free_data(&data);
 				continue ;
-			}
-			print_tokens(data.tokens);
-			// data.ast = parser(&data);
-			// print_ast(data.ast);
+			parser(&data);
 			// exec_ast(data.ast, &data);
-			token_clear(&data);
-			// free_ast(data.ast);
-			ft_free(&data.line, 'p');
+			data_reset(&data);
 		}
 	}
-	free_data(&data);
+	data_free(&data);
 	return (data.exit_status);
 }
 

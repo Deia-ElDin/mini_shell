@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 12:08:25 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 19:56:49 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/04/26 07:25:46 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 bool	lexer(t_data *data)
 {
-	t_token	*head;
-
-	head = NULL;
 	if (!data->line)
 		return (NULL);
 	token_tolst(data, &data->tokens, 0);
-	return (token_validation(data));
+	printf("\ntokens list\n");
+	print_tokens(data->tokens);
+	if (data->error)
+		return (token_lstclear(data), false);
+	if (!token_validation(data))
+		return (token_lstclear(data), false);
+	printf("\ntokens list merging\n");
+	token_merge(data);
+	print_tokens(data->tokens);
+	return (true);
 }
