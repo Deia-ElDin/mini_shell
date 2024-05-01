@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:32:34 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:42:26 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		// printf("type: %d\n", ast->type);
-		printf("\nhead => value:  %s, index = %d\n",
-			ast->token->value, ast->token->index);
+		printf("\nhead => type = %d\n", ast->type);
 		if (ast->cmd)
 		{
 			i = -1;
@@ -57,11 +56,9 @@ void	print_ast(t_ast *ast)
 		}
 		printf("\n");
 		if (ast->left)
-			printf("	left => value:  %s, index = %d\n",
-				ast->left->token->value, ast->left->token->index);
+			printf("	left => type = %d\n", ast->left->type);
 		if (ast->right)
-			printf("	right => value: %s, index = %d\n",
-				ast->right->token->value, ast->right->token->index);
+			printf("	right => type = %d\n", ast->left->type);
 		if (ast->left)
 		{
 			printf("\nGoing left ---> \n");
@@ -73,6 +70,8 @@ void	print_ast(t_ast *ast)
 			print_ast(ast->right);
 		}
 	}
+	else
+		printf("AST FAILED\n");
 }
 
 void	print_path(char **path)

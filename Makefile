@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/04/29 23:15:37 by dehamad          ###   ########.fr        #
+#    Updated: 2024/05/01 12:43:47 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Delete the removing of .o files in the make rule 
+# Delete the removing of .o files in the make rule
 # Delete the CFLAGS -g3 -fsanitize=address
 
 NAME = minishell
@@ -24,22 +24,22 @@ LIBS = -lreadline
 MAIN = main.c delete_me.c
 
 
-PARSING = lexer.c parser.c 
+PARSING = lexer.c parser.c
 PARSING_UTILS_ENV = env_add.c  env_expansion.c env_get.c env_last.c env_lstclear.c \
 	env_lstsize.c env_new.c env_toarr.c env_tolst.c env_update.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c
 PARSING_UTILS_AST = ast_add.c ast_head.c ast_new.c
-	
+
 PARSING_UTILS_ENV = env_add.c  env_expansion.c env_get.c env_last.c env_lstclear.c \
 	env_lstsize.c env_new.c env_toarr.c env_tolst.c env_update.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c token_last.c
-PARSING_UTILS_AST = ast_lstclear.c
-	
+PARSING_UTILS_AST = ast_lstclear.c ast.c
+
 EXECUTION = execution.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
-UTILS = error.c exit.c data.c 
+UTILS = error.c exit.c data.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
@@ -50,8 +50,8 @@ SRCS = \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
 	$(addprefix src/utils/, $(UTILS))
-	
-OBJS = $(SRCS:.c=.o) 
+
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 bonus: $(BONUS_NAME)
@@ -71,7 +71,7 @@ clean:
 	make -C ./includes/libft clean
 
 fclean: clean
-	rm -f $(NAME) 
+	rm -f $(NAME)
 	make -C ./includes/libft fclean
 
 re: fclean all

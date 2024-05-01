@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:15:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/01 15:41:13 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 
 enum
 {
-	NODE_CMD,
+	NODE_WORD,
 	NODE_REDIR_IN,
 	NODE_REDIR_OUT,
 	NODE_HEREDOC,
 	NODE_APPEND,
+	NODE_CMD,
 	NODE_PIPE,
 	NODE_OR,
 	NODE_AND
@@ -41,15 +42,27 @@ enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
+	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
 	TOKEN_AND
 };
+
+/*
+
+
+
+echo
+/usr/bin/echo
+
+echo hello world
+
+"echo" "hello" "world" NULL
+*/
 
 typedef struct s_env
 {
@@ -99,7 +112,7 @@ typedef struct s_data
 
 //  ************ Parsing Function ************  //
 bool	lexer(t_data *data);
-bool	parser(t_data *data);
+t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 
@@ -127,6 +140,10 @@ bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
+// AST Utils Functions
+t_ast	*new_ast(int type);
+void	add_left_ast(t_ast *ast, t_ast *new_node);
+void	add_right_ast(t_ast *ast, t_ast *new_node);
 
 // Execution Function
 void	execution(t_data *data);

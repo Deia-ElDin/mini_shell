@@ -3,111 +3,148 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:27:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:32:28 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/01 17:37:20 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static	t_ast	*node_values(t_data *data, t_ast *new_node, t_token *token)
+static t_token	*get_next_left_node(t_token *tokens)
 {
-	char	*ptr;
+	t_token	*token_node;
+	t_token	*nav_token;
+	int		next_high_token;
 
-	new_node->type = token->type;
-	if (token->type == TOKEN_WORD)
+	next_high_token = TOKEN_AND;
+	nav_token = NULL;
+	token_node = NULL;
+	while (next_high_token >= 0)
 	{
-		ptr = ft_strdup(token->value);
-		if (!ptr)
-			exit_failure(data);
-		new_node->cmd = ft_split(ptr, ' ');
-		if (!new_node->cmd)
-			exit_failure(data);
+		nav_token = tokens;
+		while (nav_token)
+		{
+			printf("Inside get next left NHT(%d) CT(%d)\n", next_high_token, nav_token->type);
+			if (nav_token->type == next_high_token)
+				token_node = nav_token;
+			nav_token = nav_token->prev;
+		}
+		if (!token_node)
+			next_high_token--;
+		else
+			break ;
 	}
-	else
-		new_node->cmd = NULL;
-	new_node->left = NULL;
-	new_node->right = NULL;
-	new_node->token = token;
-	token->is_taken = true;
-	return (new_node);
+	return (token_node);
 }
 
-t_ast	*ast_new(t_data *data, t_token *token)
-{
-	t_ast	*new_node;
-
-	if (!data || !token)
-		return (NULL);
-	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
-	if (!new_node)
-		exit_failure(data);
-	return (node_values(data, new_node, token));
-}
-
-void	ast_tree(t_data *data, t_token *token)
-{
-	t_ast	*new_node;
-
-	new_node = ast_new(data, token);
-	if (!new_node)
-		exit_failure(data);
-	data->ast = data->ast;
-	if (!data->ast)
-		data->ast = new_node;
-	else if (token->type == TOKEN_WORD)
-	{
-		if (!data->ast->left && token->next && token->next->next)
-			data->ast->left = new_node;
-		else if (!data->ast->right)
-			data->ast->right = new_node;
-	}
-	else
-	{
-		new_node->left = data->ast;
-		data->ast = new_node;
-	}
-}
-
-bool	parser(t_data *data)
-{
-	t_token	*token;
-
-	token = data->tokens;
-	while (token)
-	{
-		ast_tree(data, token);
-		token = token->next;
-	}
-	print_ast(data->ast);
-	if (data->ast)
-		return (true);
-	return (false);
-}
 /*
-ls -la > file.txt | grep "drwxr" file.txt > file2.txt | wc -l && echo "done" && echo "success" && echo "yo" | sort | uniq
+Find next highest token in the precedence and returns next head token
 */
+static t_token	*get_next_right_node(t_token *tokens)
+{
+	t_token	*token_node;
+	t_token	*nav_token;
+	int		next_high_token;
+
+	next_high_token = TOKEN_AND;
+	nav_token = NULL;
+	token_node = NULL;
+	while (next_high_token >= 0)
+	{
+		nav_token = tokens;
+		while (nav_token)
+		{
+			printf("Inside get next left NHT(%d) CT(%d)\n", next_high_token, nav_token->type);
+			if (nav_token->type == next_high_token)
+				token_node = nav_token;
+			nav_token = nav_token->next;
+		}
+		if (!token_node)
+			next_high_token--;
+		else
+			break ;
+	}
+	return (token_node);
+}
+
+static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
+{
+	t_ast	*new_node;
+	t_token	*new_token;
+
+	printf("Inside recur pars\n");
+	new_token = NULL;
+	if (!token)
+		return (1);
+	if (token->prev)
+	{
+		token->prev->next = NULL;
+		new_token = token->prev;
+		token->prev = NULL;
+	}
+	new_token = get_next_left_node(new_token);
+	if (new_token)
+	{
+		new_node = new_ast(new_token->type);
+		printf("New Token Type: (%d)\n", new_token->type);
+	}
+	if (new_node)
+		add_left_ast(node, new_node);
+	if (new_node && new_token && recursive_parsing(data, new_token, new_node) && token->prev)
+		return (token_delone(&token), 1);
+	printf("checking right\n");
+	if (token->next)
+	{
+		token->next->prev = NULL;
+		new_token = token->prev;
+		token->next = NULL;
+	}
+	new_token = get_next_right_node(new_token);
+	if (new_token)
+	{
+		new_node = new_ast(new_token->type);
+		printf("New Token Type: (%d)\n", new_token->type);
+	}
+	if (new_node)
+		add_right_ast(node, new_node);
+	if (new_node && new_token && recursive_parsing(data, new_token, new_node) && token->next)
+		return (token_delone(&token), 1);
+	return (token_delone(&token), 0);
+}
+
+t_ast	*parser(t_data *data)
+{
+	t_ast	*head_node;
+	t_token	*head_token;
+
+	if (!data)
+		return (NULL);
+	head_token = get_next_right_node(data->tokens);
+	head_node = NULL;
+	if (head_token)
+	{
+		printf("About to create head node\n");
+		head_node = new_ast(head_token->type);
+	}
+	printf("About to check recursive parsing\n");
+	if (!head_node)
+		return (printf("headnode is fucked\n"), head_node);
+	recursive_parsing(data, head_token, head_node);
+	return (head_node);
+}
 
 /*
-index: 0 type: 2, value = .ls -la. space = 1
-index: 1 type: 4, value = .>. space = 1
-index: 2 type: 2, value = .file.txt. space = 1
-index: 3 type: 7, value = .|. space = 1
-index: 4 type: 2, value = .grep drwxr file.txt. space = 1
-index: 5 type: 4, value = .>. space = 1
-index: 6 type: 2, value = .file2.txt. space = 1
-index: 7 type: 7, value = .|. space = 1
-index: 8 type: 2, value = .wc -l. space = 1
-index: 9 type: 9, value = .&&. space = 1
-index: 10 type: 2, value = .echo done. space = 1
-index: 11 type: 9, value = .&&. space = 1
-index: 12 type: 2, value = .echo success. space = 1
-index: 13 type: 9, value = .&&. space = 1
-index: 14 type: 2, value = .echo yo. space = 1
-index: 15 type: 7, value = .|. space = 1
-index: 16 type: 2, value = .sort. space = 1
-index: 17 type: 7, value = .|. space = 1
-index: 18 type: 2, value = .uniq. space = 0
+
+
+echo hello | tr e a
+
+|
+
+echo
+
+
+
+
 */

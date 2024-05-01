@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:34:46 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/01 15:21:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	main(int ac, char **av, char **env)
 				exit_failure(&data);
 			if (!lexer(&data))
 				continue ;
-			if (!parser(&data))
-				continue ;
-			data_reset(&data);
+			data.ast = parser(&data);
+			print_ast(data.ast);
+			// data_reset(&data);
 		}
 	}
-	data_free(&data);
+	// data_free(&data);
 	return (data.exit_status);
 }
