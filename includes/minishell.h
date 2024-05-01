@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/01 15:41:13 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:21:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 
 # include "./libft/libft.h"
 # include <signal.h>
+# include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include <sys/types.h>
+# include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -27,21 +33,9 @@
 
 enum
 {
-	NODE_WORD,
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
-	NODE_HEREDOC,
-	NODE_APPEND,
-	NODE_CMD,
-	NODE_PIPE,
-	NODE_OR,
-	NODE_AND
-};
-
-enum
-{
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
@@ -87,8 +81,7 @@ typedef struct s_token
 typedef struct s_ast
 {
 	int				type;
-	char			**cmd;
-	char			*file;
+	char			*value;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -96,10 +89,6 @@ typedef struct s_ast
 
 typedef struct s_data
 {
-	// int				highest_token;
-	// int				left_high_token;
-	// int				right_high_token;
-	bool			error;
 	char			*line;
 	char			**env;
 	// char			**av;
@@ -134,19 +123,31 @@ void	token_delone(t_token **node);
 void	token_lstclear(t_data *data);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
-void	token_merge(t_data *data);
-void	token_merge(t_data *data);
+void	token_clear(t_data *data);
 bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
 // AST Utils Functions
 t_ast	*new_ast(int type);
-void	add_left_ast(t_ast *ast, t_ast *new_node);
-void	add_right_ast(t_ast *ast, t_ast *new_node);
+void	add_ast(t_ast **ast, t_ast *new_node);
+// void	free_ast(t_ast *ast);
 
 // Execution Function
 void	execution(t_data *data);
+int		exec_ast(t_ast *ast, t_data *data);
+//	*-> redirections.c
+int		redirect_in(t_ast *ast, t_data *data);
+int		redirect_out(t_ast *ast, t_data *data);
+int		here_doc(t_ast *ast, t_data *data);
+int		append(t_ast *ast, t_data *data);
+int		check_for_redirs(t_ast *ast, t_data *data);
+//	*-> and_or_exec.c
+int		or_operator(t_ast *ast, t_data *data);
+int		and_operator(t_ast *ast, t_data *data);
+//	*-> simple_cmd.c
+int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
+int		pipe_cmd(t_ast *ast, t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);
@@ -170,6 +171,14 @@ void	syntax_error(char *err);
 //	*-> exit.c
 void	exit_success(t_data *data);
 void	exit_failure(t_data *data);
+//	*-> free.c
+void	free_ast(t_ast *ast);
+void	free_data(t_data *data);
+//	*-> init.c
+void	init_data(t_data *data, char **env);
+//	*-> utils.c
+void	skip_spaces(const char *line, int *i);
+void	skip_quotes(const char *line, int *i);
 
 // DELETE ME
 void	print_env_array(char **env);
