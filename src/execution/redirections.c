@@ -14,11 +14,14 @@
 
 int	check_for_redirs(t_ast *ast, t_data *data)
 {
-	if (ast->type == NODE_REDIR)
-	{
-		if (!ft_strncmp(ast->cmd, ">", 1) && !redirect_out(ast, data))
+	if (ast->type == NODE_REDIR_OUT)
+	{	
+		if (!redirect_out(ast, data))
 			return (0);
-		if (!ft_strncmp(ast->cmd, "<", 1) && !redirect_in(ast, data))
+	}
+	else if (ast->type == NODE_REDIR_IN)
+	{	
+		if (!redirect_in(ast, data))
 			return (0);
 	}
 	else if (ast->type == NODE_HEREDOC && !here_doc(ast, data))
@@ -42,7 +45,8 @@ int	redirect_in(t_ast *ast, t_data *data)
 
 int	redirect_out(t_ast *ast, t_data *data)
 {
-	data->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	unlink(ast->file);
+	data->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0777);
 	if (data->file_fd == -1)
 		return (1);
 	data->redirect_flag = 1;
@@ -54,6 +58,7 @@ int	here_doc(t_ast *ast, t_data *data)
 {
 	int	status;
 
+	(void)ast;
 	status = 0;
 	data->redirect_flag = -2;
 	return (status);

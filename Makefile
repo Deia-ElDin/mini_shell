@@ -37,7 +37,8 @@ PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c 
 	token_tolst.c token_validation.c token_last.c
 PARSING_UTILS_AST = ast_lstclear.c ast.c
 
-EXECUTION = execution.c
+EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c
+EXECUTION_UTILS = env_utils.c pipe_utils.c str_join.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
 UTILS = error.c exit.c data.c
 
@@ -48,6 +49,7 @@ SRCS = \
 	$(addprefix src/parsing/utils/tokens/, $(PARSING_UTILS_TOKEN)) \
 	$(addprefix src/parsing/utils/ast/, $(PARSING_UTILS_AST)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
+	$(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
 	$(addprefix src/utils/, $(UTILS))
 

@@ -17,6 +17,8 @@
 /// @param env A double pointer to the environment variables
 void	data_init(t_data *data, char **env)
 {
+	data->file_fd = -1;
+	data->redirect_flag = 0;
 	data->line = NULL;
 	data->env_list = NULL;
 	data->env = NULL;

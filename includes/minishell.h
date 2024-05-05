@@ -33,9 +33,21 @@
 
 enum
 {
+	NODE_REDIR_IN,
+	NODE_REDIR_OUT,
+	NODE_HEREDOC,
+	NODE_APPEND,
+	NODE_WORD,
+	NODE_CMD,
+	NODE_PIPE,
+	NODE_OR,
+	NODE_AND
+};
+
+enum
+{
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
@@ -45,18 +57,6 @@ enum
 	TOKEN_OR,
 	TOKEN_AND
 };
-
-/*
-
-
-
-echo
-/usr/bin/echo
-
-echo hello world
-
-"echo" "hello" "world" NULL
-*/
 
 typedef struct s_env
 {
@@ -81,7 +81,9 @@ typedef struct s_token
 typedef struct s_ast
 {
 	int				type;
-	char			*value;
+	char			**cmd;
+	char			*file;
+	int				pipe[2];
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -89,8 +91,11 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	bool			error;
 	char			*line;
 	char			**env;
+	int				file_fd;
+	int				redirect_flag;
 	// char			**av;
 	char			**path;
 	int				exit_status;
@@ -124,13 +129,15 @@ void	token_lstclear(t_data *data);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
 void	token_clear(t_data *data);
+void	token_merge(t_data *data);
 bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
 // AST Utils Functions
 t_ast	*new_ast(int type);
-void	add_ast(t_ast **ast, t_ast *new_node);
+void	add_left_ast(t_ast *ast, t_ast *new_node);
+void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);
 
 // Execution Function

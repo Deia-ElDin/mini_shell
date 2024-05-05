@@ -134,17 +134,3 @@ t_ast	*parser(t_data *data)
 	recursive_parsing(data, head_token, head_node);
 	return (head_node);
 }
-
-/*
-
-
-echo hello | tr e a
-
-|
-
-echo
-
-
-
-
-*/
