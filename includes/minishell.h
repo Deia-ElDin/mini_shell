@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:21:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/06 12:37:37 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ typedef struct s_token
 
 typedef struct s_ast
 {
+	int				end_flag;
 	int				type;
 	char			**cmd;
 	char			*file;
-	int				pipe[2];
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -91,6 +91,7 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	int				pipe[2];
 	bool			error;
 	char			*line;
 	char			**env;
@@ -155,6 +156,14 @@ int		and_operator(t_ast *ast, t_data *data);
 //	*-> simple_cmd.c
 int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
 int		pipe_cmd(t_ast *ast, t_data *data);
+//	*-> str_join.c
+char	*join_strs(char *str, char *buffer);
+void	free_2dchar(char **str);
+//	*-> pipe_utils.c
+void	pipe_for_next(t_data *data, int last);
+int		check_for_sleep(int pid, char *cmd, int last);
+char	*gnl_till_null(int *pipe_fd, char *str);
+char	*get_cmd_path(char *cmd, t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);

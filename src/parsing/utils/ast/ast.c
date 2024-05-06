@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/01 17:33:59 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:37:54 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_ast	*new_ast(int type)
 	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
 	if (!new_node)
 		exit(1);
+	new_node->end_flag = 0;
 	new_node->type = type - 1;
 	new_node->left = NULL;
 	new_node->right = NULL;

@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/04/29 15:52:47 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:38:31 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	call_child(char *cmd, char **args, int last, t_data *data)
 	{
 		close(data->pipe[0]);
 		dup2(data->pipe[1], 1);
-		if (!last)
+		if (last)
 			close(data->pipe[1]);
 	}
 	if (cmd)
@@ -53,7 +53,7 @@ int	simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data)
 	char	*path;
 	pid_t	pid;
 
-	path = get_cmd_path(ast_left->cmd, data);
+	path = get_cmd_path(ast_left->cmd[0], data);
 	if (check_for_redirs(ast_right, data))
 		return (free(path), data->file_fd);
 	if (data->redirect_flag != 0 && data->file_fd == -1)
@@ -64,7 +64,7 @@ int	simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data)
 	if (pid < 0)
 		exit(1);
 	if (pid == 0)
-		call_child(path, ast_right->args, ast_right->end_flag, data);
+		call_child(path, ast_right->cmd, ast_right->end_flag, data);
 	else
 	{
 		pipe_for_next(data, ast_left->end_flag + ast_right->end_flag);

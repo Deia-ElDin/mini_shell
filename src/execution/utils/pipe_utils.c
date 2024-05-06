@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:32:54 by melshafi          #+#    #+#             */
-/*   Updated: 2024/04/29 15:48:46 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:38:09 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pipe_for_next(t_data *data, int last)
 	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
 	{
 		close(data->pipe[1]);
-		if (last)
+		if (!last)
 		{
 			dup2(data->pipe[0], 0);
 			close(data->pipe[0]);

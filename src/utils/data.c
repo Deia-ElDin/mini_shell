@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:32:47 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/06 12:40:14 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	data_init(t_data *data, char **env)
 
 /**
  * The purpose of this function is to initialize the data structure
- * The purpose of the data->error: is to use it as a flag where 
+ * The purpose of the data->error: is to use it as a flag where
  * we need to stop a stage of the execution of the program,
- * i.e if we found a quote error while creating the tokens list, 
+ * i.e if we found a quote error while creating the tokens list,
  * since we can't validate the quotes in the token_validation function
 */
 
@@ -50,7 +50,7 @@ void	data_init(t_data *data, char **env)
 /// @param data The main struct
 void	data_reset(t_data *data)
 {
-	token_lstclear(data);
+	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');
 	data->exit_status = 0;
@@ -61,7 +61,7 @@ void	data_reset(t_data *data)
 void	data_free(t_data *data)
 {
 	env_lstclear(data);
-	token_lstclear(data);
+	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->env, 'a');
 	ft_free(&data->path, 'a');

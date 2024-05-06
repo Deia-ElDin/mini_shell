@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:27:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/01 17:37:20 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:44:35 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
 
 	printf("Inside recur pars\n");
 	new_token = NULL;
+	new_node = NULL;
 	if (!token)
 		return (1);
 	if (token->prev)
