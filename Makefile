@@ -6,7 +6,7 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/05/06 12:43:26 by melshafi         ###   ########.fr        #
+#    Updated: 2024/05/06 16:18:46 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ MAIN = main.c delete_me.c
 
 
 PARSING = lexer.c parser.c
+PARSING_UTILS_PARSING = parse_cmd.c
 PARSING_UTILS_ENV = env_add.c  env_expansion.c env_get.c env_last.c env_lstclear.c \
 	env_lstsize.c env_new.c env_toarr.c env_tolst.c env_update.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
@@ -45,6 +46,7 @@ UTILS = error.c exit.c data.c
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
+	$(addprefix src/parsing/utils/parsing/, $(PARSING_UTILS_PARSING)) \
 	$(addprefix src/parsing/utils/env/, $(PARSING_UTILS_ENV)) \
 	$(addprefix src/parsing/utils/tokens/, $(PARSING_UTILS_TOKEN)) \
 	$(addprefix src/parsing/utils/ast/, $(PARSING_UTILS_AST)) \

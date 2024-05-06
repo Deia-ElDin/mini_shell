@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/06 15:35:16 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:17:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_ast	*new_ast(t_token *token)
 	new_node->type = token->type - 1;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	if (new_node->type == NODE_CMD)
+		new_node = parse_cmd(token, new_node);
 	return (new_node);
 }
 

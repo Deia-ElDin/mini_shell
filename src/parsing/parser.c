@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:27:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 15:48:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:31 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static t_token	*get_next_right_node(t_token *tokens)
 	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
-	while (next_high_token >= 0)
+	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens->next;
 		while (nav_token && !nav_token->is_parsed)

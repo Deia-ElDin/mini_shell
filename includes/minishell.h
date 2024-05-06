@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 15:23:16 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:16:28 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ bool	lexer(t_data *data);
 t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
+t_ast	*parse_cmd(t_token *token, t_ast *new_node);
 
 //	*-> Env Functions
 t_env	*env_new(t_data *data, char *env);

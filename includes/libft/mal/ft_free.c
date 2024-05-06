@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:04:05 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/18 02:35:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:04:53 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	free_arr(void ***arr)
 		free((*arr)[i]);
 		i++;
 	}
+	free((*arr)[i]);
 	free(*arr);
 	*arr = NULL;
 }
@@ -52,14 +53,14 @@ void	ft_free(void *address, char target)
 	static void	free_ptr(void **ptr)
 	{
 		if (!ptr || !(*ptr))
-			we are checking if the ptr it self is NULL 
+			we are checking if the ptr it self is NULL
         	or the value it points to is NULL, \0
 	}
-	
+
 	arr: Pointer to a pointer to a pointer to void (e.g., void ***).
-	*arr: Dereferencing once gives you a 
+	*arr: Dereferencing once gives you a
 		pointer to a pointer to void (e.g., void **).
-	cpy: Assigned the dereferenced value of *arr, 
+	cpy: Assigned the dereferenced value of *arr,
 		so cpy is also a pointer to a pointer to void (e.g., void **).
 
 	if we used the *arr directly instead of cpy,
