@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 12:37:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:16 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_token
 	char			*value;
 	int				type;
 	int				index;
+	bool			is_parsed;
 	bool			is_space;
 	bool			is_taken;
 	struct s_token	*prev;
@@ -136,7 +137,7 @@ bool	token_validation(t_data *data);
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
 // AST Utils Functions
-t_ast	*new_ast(int type);
+t_ast	*new_ast(t_token *token);
 void	add_left_ast(t_ast *ast, t_ast *new_node);
 void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);

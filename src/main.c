@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/01 15:21:11 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:44:43 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	main(int ac, char **av, char **env)
 				continue ;
 			data.ast = parser(&data);
 			print_ast(data.ast);
-			// data_reset(&data);
+			data_reset(&data);
 		}
 	}
-	// data_free(&data);
+	data_free(&data);
 	return (data.exit_status);
 }

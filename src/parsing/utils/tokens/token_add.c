@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_add.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:08:26 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:24:52 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 		token->is_space = true;
 	else
 		token->is_space = false;
+	token->is_parsed = false;
 	token->prev = NULL;
 	token->next = NULL;
 	return (token);
@@ -78,7 +79,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
  * which means it's either a TOKEN_DOUBLE_QUOTE or TOKEN_WORD
  * we set the value of the token by expanding the env variables
  * else we trim the value to remove the whitespaces
- * we check if the next char is a space or not, for example 
+ * we check if the next char is a space or not, for example
  * echo "hi""there" => hithere, echo "hi" "there" => hi there
  * so we need to find out if there's a space between them or not
  * once we clean the token_lst we will either add a space or not

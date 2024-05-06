@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/01 14:42:26 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:03:13 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_ast(t_ast *ast)
 		if (ast->left)
 			printf("	left => type = %d\n", ast->left->type);
 		if (ast->right)
-			printf("	right => type = %d\n", ast->left->type);
+			printf("	right => type = %d\n", ast->right->type);
 		if (ast->left)
 		{
 			printf("\nGoing left ---> \n");
