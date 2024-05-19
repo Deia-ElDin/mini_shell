@@ -6,18 +6,20 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/28 20:08:02 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static void	recursive_free(t_ast **lst)
 {
 	if (*lst)
 	{
-		recursive_free(&(*lst)->left);
-		recursive_free(&(*lst)->right);
+		if ((*lst)->left)
+			recursive_free(&(*lst)->left);
+		if ((*lst)->right)
+			recursive_free(&(*lst)->right);
 		ft_free(&(*lst)->cmd, 'a');
 		free(*lst);
 		*lst = NULL;

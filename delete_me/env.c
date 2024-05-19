@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:38:46 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/24 20:02:10 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:31:11 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../../includes/minishell.h"
+// #include "minishell.h"
 
 // void	update_env(t_data *data, char *env)
 // {

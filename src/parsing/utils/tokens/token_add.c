@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:08:26 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/18 17:07:54 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static int		token_type(char *token);
 static t_token	*token_values(t_data *data, char *value, int index);

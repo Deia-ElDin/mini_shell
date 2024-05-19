@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:32:34 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:02:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		// printf("type: %d\n", ast->type);
-		printf("\nhead => value:  %s, index = %d\n",
+		printf("\nhead => value: %s, index = %d\n",
 			ast->token->value, ast->token->index);
 		if (ast->cmd)
 		{

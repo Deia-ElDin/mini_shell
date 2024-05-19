@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:42:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/24 19:18:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static bool	valid_pipe(t_token *crnt);
 static bool	valid_redirect(t_token *crnt);

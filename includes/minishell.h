@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:15:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 18:43:08 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
-# define PROMPT "bash$ "
-# define ERR_PROMPT "bash: "
+# define PROMPT "mini-shell$ "
+# define ERR_PROMPT "mini-shell: "
 # define WHITESPACES " \t\v\f\r"
 
 # define SYNTAX_ERR "syntax error near unexpected token"
+
+// int	g_errno = 0;
 
 enum
 {
@@ -33,6 +36,7 @@ enum
 	NODE_HEREDOC,
 	NODE_APPEND,
 	NODE_PIPE,
+	NODE_BUILTIN,
 	NODE_OR,
 	NODE_AND
 };
@@ -50,6 +54,12 @@ enum
 	TOKEN_OR,
 	TOKEN_AND
 };
+
+typedef struct s_key_value
+{
+	char	*key;
+	char	*value;
+}	t_key_value;
 
 typedef struct s_env
 {
@@ -75,7 +85,6 @@ typedef struct s_ast
 {
 	int				type;
 	char			**cmd;
-	char			*file;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -88,9 +97,9 @@ typedef struct s_data
 	// int				right_high_token;
 	bool			error;
 	char			*line;
-	char			**env;
-	// char			**av;
 	char			**path;
+	char			**env;
+	char			**env_arr;
 	int				exit_status;
 	t_env			*env_list;
 	t_token			*tokens;
@@ -104,15 +113,17 @@ bool	parser(t_data *data);
 // ***** Parsing Utils Functions ***** //
 
 //	*-> Env Functions
-t_env	*env_new(t_data *data, char *env);
-t_env	*env_update(t_data *data, char *env);
 t_env	*env_get(t_data *data, char *key);
 t_env	*env_last(t_data *data);
 char	*env_expansion(t_data *data, char *str);
+void	env_new(t_data *data, char *key, char *value, bool is_equal );
+void	env_set(t_data *data, char *key, char *value, bool is_equal );
+void	env_concat(t_data *data, char *key, char *value);
 void	env_add(t_data *data, t_env *new);
+void	env_lstclear(t_data *data);
 void	env_tolst(t_data *data);
 void	env_toarr(t_data *data);
-void	env_lstclear(t_data *data);
+void	env_free(t_env *node);
 int		env_lstsize(t_data *data);
 
 //	*-> Token Functions
@@ -127,28 +138,34 @@ bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
+void	ast_tree(t_data *data, t_token *token);
 
 // Execution Function
 void	execution(t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);
-// void	cd(t_data *data);
-// void	echo(t_data *data);
-// void	env(t_data *data);
-// void	exit_shell(t_data *data);
-// void	export(t_data *data);
-// void	pwd(t_data *data);
-// void	unset(t_data *data);
+void	cd(t_data *data);
+void	echo(t_data *data);
+void	env(t_data *data);
+void	exit_shell(t_data *data);
+void	export(t_data *data);
+void	pwd(t_data *data);
+void	unset_env(t_data *data, char *key);
+
+// ***** Execution Utils Functions ***** //
+bool	is_builtin(t_data *data);
 
 // ***** Main Utils Functions ***** //
 //	*-> data.c
 void	data_init(t_data *data, char **env);
+void	data_status(t_data *data, int exit_status);
 void	data_reset(t_data *data);
 void	data_free(t_data *data);
 
-//	*-> error.c
+//	*-> errors
 void	syntax_error(char *err);
+void	export_err(t_data *data, char *err);
 
 //	*-> exit.c
 void	exit_success(t_data *data);

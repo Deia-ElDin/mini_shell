@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 23:00:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static bool	is_token_mergeable(t_token *token);
 static char	*remove_quotes(t_data *data, t_token *token);

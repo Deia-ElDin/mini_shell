@@ -6,13 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 22:11:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:39:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
-
-void	env_add(t_data *data, t_env *new);
+#include "minishell.h"
 
 /// @brief Used to add a new node to the end of the linked list
 /// @param data The main struct

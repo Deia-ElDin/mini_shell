@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:01:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 05:45:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	exit_success(t_data *data)
 {

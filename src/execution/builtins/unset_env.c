@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   unset_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 16:01:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 20:21:30 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/14 16:01:18 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/18 17:00:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(t_data *data)
+void	unset_env(t_data *data, char *key)
 {
-	int		i;
-	bool	n_flag;
+	t_env	*current;
+	t_env	*previous;
 
-	i = 1;
-	n_flag = false;
-	if (data->ast->cmd[i] && ft_strcmp(data->ast->cmd[i], "-n") == 0)
+	if (data == NULL || key == NULL)
+		return ;
+	current = data->env_list;
+	previous = NULL;
+	while (current)
 	{
-		n_flag = true;
-		i++;
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				data->env_list = current->next;
+			env_free(current);
+			env_toarr(data);
+			return ;
+		}
+		previous = current;
+		current = current->next;
 	}
-	while (data->ast->cmd[i])
-	{
-		ft_putstr_fd(data->ast->cmd[i], STDOUT_FILENO);
-		if (data->ast->cmd[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (!n_flag)
-		ft_putchar_fd('\n', STDOUT_FILENO);
 }

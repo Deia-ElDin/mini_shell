@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:25:15 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/18 17:15:11 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static char	*ret_expansion(t_data *data, char *key, char *start, char *end);
 char		*env_expansion(t_data *data, char *str);
@@ -25,14 +25,26 @@ static char	*ret_expansion(t_data *data, char *key, char *start, char *end)
 {
 	t_env	*node;
 	char	*ret;
+	char	*exit_status_str;
 
 	ret = NULL;
-	node = env_get(data, key);
-	ft_free(&key, 'p');
-	if (!node)
-		ret = ft_strjoin(start, end);
+	if (ft_strcmp(key, "?") == 0)
+	{
+		exit_status_str = ft_itoa(data->exit_status);
+		if (!exit_status_str)
+			exit_failure(data);
+		ret = ft_strnjoin(3, start, exit_status_str, end);
+		ft_free(&exit_status_str, 'p');
+	}
 	else
-		ret = ft_strnjoin(3, start, node->value, end);
+	{
+		node = env_get(data, key);
+		ft_free(&key, 'p');
+		if (!node)
+			ret = ft_strjoin(start, end);
+		else
+			ret = ft_strnjoin(3, start, node->value, end);
+	}
 	if (!ret)
 		exit_failure(data);
 	return (ret);

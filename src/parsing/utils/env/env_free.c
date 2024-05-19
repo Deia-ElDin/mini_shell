@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_last.c                                       :+:      :+:    :+:   */
+/*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 08:12:45 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/18 16:35:55 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/18 16:57:51 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_last(t_data *data)
+/// @brief Used to free the env node
+/// @param node The node to be freed
+void	env_free(t_env *node)
 {
-	t_token	*token;
-
-	if (!data->tokens)
-		return (NULL);
-	token = data->tokens;
-	while (token->next)
-		token = token->next;
-	return (token);
+	if (!node)
+		return ;
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
 }

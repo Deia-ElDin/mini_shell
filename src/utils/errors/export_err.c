@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_last.c                                       :+:      :+:    :+:   */
+/*   export_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 08:12:45 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/19 17:13:32 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/19 17:41:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_last(t_data *data)
+void	export_err(t_data *data, char *err)
 {
-	t_token	*token;
-
-	if (!data->tokens)
-		return (NULL);
-	token = data->tokens;
-	while (token->next)
-		token = token->next;
-	return (token);
+	ft_putstr_fd(ERR_PROMPT, STDERR_FILENO);
+	ft_putstr_fd("export: `", STDERR_FILENO);
+	ft_putstr_fd(err, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	data_status(data, 1);
 }

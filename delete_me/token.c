@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/21 20:22:48 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:31:11 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../../includes/minishell.h"
+// #include "minishell.h"
 
 /**
  * The purpose of this function is to get the token type
