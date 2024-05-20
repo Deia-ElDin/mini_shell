@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:28:31 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 06:16:04 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
 

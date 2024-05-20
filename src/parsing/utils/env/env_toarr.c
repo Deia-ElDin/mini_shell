@@ -6,55 +6,39 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 05:59:51 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:29:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 17:01:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
-
-static char	*env_set(t_env *env_node);
-void		env_toarr(t_data *data);
-
-/// @brief Used to convert a env node to a string
-/// @param env_node The env node to convert
-/// @return The string representation of the env node
-static char	*env_set(t_env *env_node)
-{
-	char	*key;
-	char	*value;
-	bool	is_equal;
-
-	key = env_node->key;
-	value = env_node->value;
-	is_equal = env_node->is_equal;
-	if (is_equal && value)
-		return (ft_strnjoin(3, key, "=", value));
-	else if (is_equal)
-		return (ft_strjoin(key, "="));
-	else
-		return (ft_strdup(key));
-}
+#include "minishell.h"
 
 /// @brief Used to convert the env linked list to an array
 /// @param data The main struct
 void	env_toarr(t_data *data)
 {
-	t_env	*env_list;
+	t_env	*node;
 	int		i;
 
-	env_list = data->env_list;
-	if (!env_list)
+	node = data->env_list;
+	if (!node)
 		return ;
-	data->env = ft_calloc(env_lstsize(data) + 1, sizeof(char *));
-	if (!data->env)
+	if (data->env_arr)
+		ft_free(&data->env_arr, 'a');
+	data->env_arr = ft_calloc(env_lstsize(data) + 1, sizeof(char *));
+	if (!data->env_arr)
 		exit_failure(data);
 	i = 0;
-	while (env_list)
+	while (node)
 	{
-		data->env[i] = env_set(env_list);
-		if (!data->env[i])
-			exit_failure(data);
-		env_list = env_list->next;
+		if (node->is_equal && node->value)
+			data->env_arr[i] = ft_strnjoin(3, node->key, "=", node->value);
+		else if (node->is_equal)
+			data->env_arr[i] = ft_strjoin(node->key, "=");
+		else
+			data->env_arr[i] = ft_strdup(node->key);
+		if (!data->env_arr[i])
+			return (data_status(data, 1));
+		node = node->next;
 		i++;
 	}
 }

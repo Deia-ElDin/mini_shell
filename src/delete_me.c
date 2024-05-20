@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 15:03:13 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:49:43 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		// printf("type: %d\n", ast->type);
-		printf("\nhead => type = %d\n", ast->type);
+		printf("\nhead => value:  %s, index = %d\n",
+			ast->token->value, ast->token->index);
 		if (ast->cmd)
 		{
 			i = -1;

@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 22:59:51 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 void	token_delone(t_token **node);
 

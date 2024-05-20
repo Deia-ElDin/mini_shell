@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 12:17:18 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:48:28 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
-# define PROMPT "bash$ "
-# define ERR_PROMPT "bash: "
+# define PROMPT "mini-shell$ "
+# define ERR_PROMPT "mini-shell: "
 # define WHITESPACES " \t\v\f\r"
 
 # define SYNTAX_ERR "syntax error near unexpected token"
@@ -40,6 +41,10 @@ enum
 	NODE_WORD,
 	NODE_CMD,
 	NODE_PIPE,
+	NODE_BUILTIN,
+	NODE_SINGLE_QUOTE,
+	NODE_DOUBLE_QUOTE,
+	NODE_AND,
 	NODE_OR,
 	NODE_AND
 };
@@ -48,11 +53,11 @@ enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
-	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
 	TOKEN_AND
@@ -74,7 +79,6 @@ typedef struct s_token
 	int				index;
 	bool			is_parsed;
 	bool			is_space;
-	bool			is_taken;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -85,7 +89,6 @@ typedef struct s_ast
 	int				type;
 	char			**cmd;
 	char			*file;
-	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -97,10 +100,10 @@ typedef struct s_data
 	bool			error;
 	char			*line;
 	char			**env;
-	int				file_fd;
-	int				redirect_flag;
 	// char			**av;
 	char			**path;
+	char			**env;
+	char			**env_arr;
 	int				exit_status;
 	t_env			*env_list;
 	t_token			*tokens;
@@ -115,15 +118,18 @@ t_ast	*parser(t_data *data);
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
 
 //	*-> Env Functions
-t_env	*env_new(t_data *data, char *env);
-t_env	*env_update(t_data *data, char *env);
 t_env	*env_get(t_data *data, char *key);
 t_env	*env_last(t_data *data);
 char	*env_expansion(t_data *data, char *str);
+void	env_new(t_data *data, char *key, char *value, bool is_equal );
+void	env_set(t_data *data, char *key, char *value, bool is_equal );
+void	env_concat(t_data *data, char *key, char *value);
 void	env_add(t_data *data, t_env *new);
+void	env_lstclear(t_data *data);
 void	env_tolst(t_data *data);
 void	env_toarr(t_data *data);
-void	env_lstclear(t_data *data);
+void	env_unset(t_data *data);
+void	env_free(t_env *node);
 int		env_lstsize(t_data *data);
 
 //	*-> Token Functions
@@ -138,11 +144,6 @@ bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
-// AST Utils Functions
-t_ast	*new_ast(t_token *token);
-void	add_left_ast(t_ast *ast, t_ast *new_node);
-void	add_right_ast(t_ast *ast, t_ast *new_node);
-// void	free_ast(t_ast *ast);
 
 // Execution Function
 void	execution(t_data *data);
@@ -170,22 +171,26 @@ char	*get_cmd_path(char *cmd, t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);
-// void	cd(t_data *data);
-// void	echo(t_data *data);
-// void	env(t_data *data);
-// void	exit_shell(t_data *data);
-// void	export(t_data *data);
-// void	pwd(t_data *data);
-// void	unset(t_data *data);
+void	cd(t_data *data);
+void	echo(t_data *data);
+void	env(t_data *data);
+void	exit_shell(t_data *data);
+void	export(t_data *data);
+void	pwd(t_data *data);
+
+// ***** Execution Utils Functions ***** //
+bool	is_builtin(t_data *data);
 
 // ***** Main Utils Functions ***** //
 //	*-> data.c
 void	data_init(t_data *data, char **env);
+void	data_status(t_data *data, int exit_status);
 void	data_reset(t_data *data);
 void	data_free(t_data *data);
 
-//	*-> error.c
+//	*-> errors
 void	syntax_error(char *err);
+void	export_err(t_data *data, char *err);
 
 //	*-> exit.c
 void	exit_success(t_data *data);

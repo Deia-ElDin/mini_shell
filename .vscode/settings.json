@@ -45,6 +45,7 @@
     "__functional_base_03": "c",
     "__tuple": "c",
     "ios": "c",
-    "is.h": "c"
+    "is.h": "c",
+    "memory_resource": "c"
   }
 }

@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_lstclear.c                                     :+:      :+:    :+:   */
+/*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 15:49:22 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/18 16:35:55 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/18 16:57:51 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	recursive_free(t_ast **lst)
+/// @brief Used to free the env node
+/// @param node The node to be freed
+void	env_free(t_env *node)
 {
-	if (*lst)
-	{
-		if ((*lst)->left)
-			recursive_free(&(*lst)->left);
-		if ((*lst)->right)
-			recursive_free(&(*lst)->right);
-		ft_free(&(*lst)->cmd, 'a');
-		free(*lst);
-		*lst = NULL;
-	}
-}
-
-void	ast_lstclear(t_data *data)
-{
-	recursive_free(&data->ast);
-	data->ast = NULL;
+	if (!node)
+		return ;
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
 }

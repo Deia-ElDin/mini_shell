@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 12:40:20 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:49:40 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void	signal_handler(int signo)
 {
@@ -18,9 +18,7 @@ static void	signal_handler(int signo)
 	{
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line("", 0);
 		rl_redisplay();
-		// exit(EXIT_SUCCESS);
 	}
 	else if (signo == SIGQUIT)
 		printf("Quit: 3\n");
@@ -51,9 +49,8 @@ int	main(int ac, char **av, char **env)
 				exit_failure(&data);
 			if (!lexer(&data))
 				continue ;
-			data.ast = parser(&data);
-			exec_ast(data.ast, &data);
-			// print_ast(data.ast);
+			if (!parser(&data))
+				continue ;
 			data_reset(&data);
 		}
 	}

@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:42:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/24 19:18:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:55:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static bool	valid_pipe(t_token *crnt);
 static bool	valid_redirect(t_token *crnt);
@@ -21,9 +21,9 @@ bool		token_validation(t_data *data);
 /// @return True or false depends if the test pass or not
 static bool	valid_pipe(t_token *crnt)
 {
-	if (!crnt->prev || crnt->prev->type == TOKEN_PIPE)
+	if (!crnt->prev || crnt->prev->type == PIPE)
 		return (false);
-	if (!crnt->next || crnt->next->type == TOKEN_PIPE)
+	if (!crnt->next || crnt->next->type == PIPE)
 		return (false);
 	return (true);
 }
@@ -35,7 +35,7 @@ static bool	valid_redirect(t_token *crnt)
 {
 	if (!crnt->next)
 		return (false);
-	if (crnt->next->type >= TOKEN_REDIR_IN && crnt->next->type <= TOKEN_PIPE)
+	if (crnt->next->type >= REDIR_IN && crnt->next->type <= PIPE)
 		return (false);
 	return (true);
 }
@@ -50,12 +50,12 @@ bool	token_validation(t_data *data)
 	crnt = data->tokens;
 	while (crnt)
 	{
-		if (crnt->type == TOKEN_PIPE && !valid_pipe(crnt))
+		if (crnt->type == PIPE && !valid_pipe(crnt))
 			return (syntax_error(crnt->value), false);
-		else if ((crnt->type == TOKEN_REDIR_IN
-				|| crnt->type == TOKEN_REDIR_OUT
-				|| crnt->type == TOKEN_APPEND
-				|| crnt->type == TOKEN_HEREDOC)
+		else if ((crnt->type == REDIR_IN
+				|| crnt->type == REDIR_OUT
+				|| crnt->type == APPEND
+				|| crnt->type == HEREDOC)
 			&& !valid_redirect(crnt))
 			return (syntax_error(crnt->value), false);
 		crnt = crnt->next;

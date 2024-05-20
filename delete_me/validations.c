@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 04:44:36 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/29 22:53:55 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:29:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../includes/minishell.h"
+// #include "minishell.h"
 
 /**
  * The purpose of this function is to scan the line before and after the target
