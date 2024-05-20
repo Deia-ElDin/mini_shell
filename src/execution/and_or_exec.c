@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:42:05 by melshafi          #+#    #+#             */
-/*   Updated: 2024/04/29 13:50:00 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:35:47 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	and_operator(t_ast *ast, t_data *data)
 	int	status1;
 	int	status2;
 
+	status1 = 0;
+	status2 = 0;
 	if (ast->left->left || ast->left->right)
 		status1 = exec_ast(ast->left, data);
 	if (ast->right->left || ast->right->right)
@@ -34,6 +36,8 @@ int	or_operator(t_ast *ast, t_data *data)
 	int	status1;
 	int	status2;
 
+	status1 = 0;
+	status2 = 0;
 	if (ast->left->left || ast->left->right)
 		status1 = exec_ast(ast->left, data);
 	if (!status1 && (ast->right->left || ast->right->right))

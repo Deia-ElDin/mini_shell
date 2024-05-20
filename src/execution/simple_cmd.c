@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 12:19:44 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:42:03 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	call_child(char *cmd, char **args, int last, t_data *data)
 	char	*str;
 
 	str = NULL;
-	ft_putstr_fd("Executing child\n", 2);
+	// ft_putstr_fd("Executing child\n", 2);
 	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
 	{
 		close(data->pipe[0]);
@@ -27,7 +27,7 @@ static void	call_child(char *cmd, char **args, int last, t_data *data)
 	}
 	if (cmd)
 		execve(cmd, args, data->env);
-	if (data->pipe != NULL)
+	if (data->pipe[0] < 0 || data->pipe[1] < 0)
 	{
 		str = gnl_till_null(data->pipe, str);
 		free(str);

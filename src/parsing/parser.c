@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:27:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 15:52:31 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:39:27 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,10 @@ static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
 	t_ast	*new_node;
 	t_token	*new_token;
 
-	printf("Inside recur pars\n");
 	new_token = NULL;
 	new_node = NULL;
 	if (!token)
 		return (1);
-	printf("checking left\n");
 	new_token = get_next_left_node(token);
 	if (new_token)
 		new_node = new_ast(new_token);
@@ -117,7 +115,6 @@ static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
 		add_left_ast(node, new_node);
 	if (new_node && new_token && recursive_parsing(data, new_token, new_node))
 		return (1);
-	printf("checking right\n");
 	new_token = get_next_right_node(token);
 	if (new_token)
 		new_node = new_ast(new_token);

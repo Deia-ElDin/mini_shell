@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 12:40:14 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:37:33 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
+	data->pipe[0] = -1;
+	data->pipe[1] = -1;
 	if (env)
 	{
 		data->env = env;

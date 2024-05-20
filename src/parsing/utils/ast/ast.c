@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 12:17:42 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:40:00 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_ast	*new_ast(t_token *token)
 	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
 	if (!new_node)
 		exit(1);
-	printf("New node of type (%d) from token index (%d)\n", token->type, token->index);
 	new_node->end_flag = 0;
 	new_node->type = token->type - 1;
 	new_node->head = NULL;
