@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:31:58 by dehamad          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/20 16:43:17 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -24,6 +25,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include <errno.h>
 
 # define PROMPT "mini-shell$ "
@@ -52,11 +54,11 @@ enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
-	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
 	TOKEN_AND
@@ -89,7 +91,6 @@ typedef struct s_ast
 	int				pipe[2];
 	char			**cmd;
 	char			*file;
-	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -124,6 +125,9 @@ char	*env_expansion(t_data *data, char *str);
 void	env_new(t_data *data, char *key, char *value, bool is_equal );
 void	env_set(t_data *data, char *key, char *value, bool is_equal );
 void	env_concat(t_data *data, char *key, char *value);
+void	env_new(t_data *data, char *key, char *value, bool is_equal );
+void	env_set(t_data *data, char *key, char *value, bool is_equal );
+void	env_concat(t_data *data, char *key, char *value);
 void	env_add(t_data *data, t_env *new);
 void	env_lstclear(t_data *data);
 void	env_tolst(t_data *data);
@@ -144,11 +148,6 @@ bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
-// AST Utils Functions
-t_ast	*new_ast(t_token *token);
-void	add_left_ast(t_ast *ast, t_ast *new_node);
-void	add_right_ast(t_ast *ast, t_ast *new_node);
-// void	free_ast(t_ast *ast);
 
 // Execution Function
 void	execution(t_data *data);

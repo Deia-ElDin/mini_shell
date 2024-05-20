@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:15:15 by dehamad          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/20 16:43:29 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -47,7 +48,8 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		// printf("type: %d\n", ast->type);
-		printf("\nhead => type = %d\n", ast->type);
+		printf("\nhead => value:  %s, index = %d\n",
+			ast->token->value, ast->token->index);
 		if (ast->cmd)
 		{
 			i = -1;

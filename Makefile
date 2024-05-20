@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/05/20 16:31:10 by dehamad          ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/05/20 16:42:46 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 # Delete the removing of .o files in the make rule
 # Delete the CFLAGS -g3 -fsanitize=address
@@ -16,7 +17,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 -fsanitize=address
 # CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 -fsanitize=address
 
 LIBFT = includes/libft/libft.a

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:28:57 by dehamad          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/20 16:45:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -23,24 +24,24 @@ void			token_add(t_data *data, t_token **head, int start, int len);
 static int	token_type(char *token)
 {
 	if (*token == '\'')
-		return (TOKEN_SINGLE_QUOTE);
+		return (SINGLE_QUOTE);
 	if (*token == '\"')
-		return (TOKEN_DOUBLE_QUOTE);
+		return (DOUBLE_QUOTE);
 	if (!ft_strcmp(token, "&&"))
-		return (TOKEN_AND);
+		return (AND);
 	if (!ft_strcmp(token, "||"))
-		return (TOKEN_OR);
+		return (OR);
 	if (!ft_strcmp(token, "<<"))
-		return (TOKEN_HEREDOC);
+		return (HEREDOC);
 	if (!ft_strcmp(token, ">>"))
-		return (TOKEN_APPEND);
+		return (APPEND);
 	if (!ft_strcmp(token, "<"))
-		return (TOKEN_REDIR_IN);
+		return (REDIR_IN);
 	if (!ft_strcmp(token, ">"))
-		return (TOKEN_REDIR_OUT);
+		return (REDIR_OUT);
 	if (!ft_strcmp(token, "|"))
-		return (TOKEN_PIPE);
-	return (TOKEN_WORD);
+		return (PIPE);
+	return (CMD);
 }
 
 /// @brief Used to set the token struct values
@@ -56,7 +57,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 	if (!token)
 		exit_failure(data);
 	token->type = token_type(value);
-	if (ft_strchr(value, '$') && token->type != TOKEN_SINGLE_QUOTE)
+	if (ft_strchr(value, '$') && token->type != SINGLE_QUOTE)
 		token->value = env_expansion(data, value);
 	else
 		token->value = ft_strtrim(value, WHITESPACES);
@@ -76,6 +77,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 /**
  * The purpose of this function is to set the token struct values
  * we check if the value has a '$' and the token is not a single quote
+ * which means it's either a DOUBLE_QUOTE or CMD
  * which means it's either a DOUBLE_QUOTE or CMD
  * we set the value of the token by expanding the env variables
  * else we trim the value to remove the whitespaces
