@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/06 12:38:31 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:19:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,4 @@ int	simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data)
 		data->exit_status = check_for_sleep(pid, path, ast_right->end_flag);
 	}
 	return (free(path), data->exit_status);
-}
-
-int	pipe_cmd(t_ast *ast, t_data *data)
-{
-	if (data->pipe[0] == -1 && data->pipe[1] == -1)
-	{
-		if (pipe(data->pipe) == -1)
-			return (ft_putstr_fd("ERR\n", 2), 1);
-	}
-	if (ast->left->left && ast->left->right)
-		exec_ast(ast->left, data);
-	if (ast->right->left && ast->right->right)
-		exec_ast(ast->right, data);
-	return (0);
 }

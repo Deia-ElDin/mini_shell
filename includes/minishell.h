@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/06 16:16:28 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:17:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_ast
 	int				type;
 	char			**cmd;
 	char			*file;
+	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;

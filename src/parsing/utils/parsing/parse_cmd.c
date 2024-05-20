@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/06 17:04:42 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:14:12 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_ast	*parse_cmd(t_token *token, t_ast *new_node)
 	left_node->cmd = (char **)ft_calloc(2, sizeof(char *));
 	if (!left_node->cmd)
 		exit(1);
-	left_node->cmd[0] = right_node->cmd[0];
+	left_node->cmd[0] = ft_strdup(right_node->cmd[0]);
 	left_node->cmd[1] = NULL;
 	left_node->left = NULL;
 	left_node->right = NULL;
