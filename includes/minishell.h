@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 18:43:08 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:20:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 
 # define SYNTAX_ERR "syntax error near unexpected token"
 
-// int	g_errno = 0;
-
 enum
 {
 	NODE_CMD,
@@ -37,29 +35,11 @@ enum
 	NODE_APPEND,
 	NODE_PIPE,
 	NODE_BUILTIN,
+	NODE_SINGLE_QUOTE,
+	NODE_DOUBLE_QUOTE,
+	NODE_AND,
 	NODE_OR,
-	NODE_AND
 };
-
-enum
-{
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_HEREDOC,
-	TOKEN_APPEND,
-	TOKEN_PIPE,
-	TOKEN_OR,
-	TOKEN_AND
-};
-
-typedef struct s_key_value
-{
-	char	*key;
-	char	*value;
-}	t_key_value;
 
 typedef struct s_env
 {
@@ -76,7 +56,6 @@ typedef struct s_token
 	int				type;
 	int				index;
 	bool			is_space;
-	bool			is_taken;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -85,6 +64,11 @@ typedef struct s_ast
 {
 	int				type;
 	char			**cmd;
+	char			*infile;
+	char			*outfile;
+	int				append;
+	int				here_doc;
+	int				pipe;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -123,6 +107,7 @@ void	env_add(t_data *data, t_env *new);
 void	env_lstclear(t_data *data);
 void	env_tolst(t_data *data);
 void	env_toarr(t_data *data);
+void	env_unset(t_data *data);
 void	env_free(t_env *node);
 int		env_lstsize(t_data *data);
 
@@ -151,7 +136,6 @@ void	env(t_data *data);
 void	exit_shell(t_data *data);
 void	export(t_data *data);
 void	pwd(t_data *data);
-void	unset_env(t_data *data, char *key);
 
 // ***** Execution Utils Functions ***** //
 bool	is_builtin(t_data *data);

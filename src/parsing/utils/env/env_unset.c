@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_env.c                                        :+:      :+:    :+:   */
+/*   env_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 16:01:18 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 17:00:42 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/19 20:25:21 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/19 20:25:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_env(t_data *data, char *key)
+void	env_unset(t_data *data)
 {
 	t_env	*current;
 	t_env	*previous;
+	char	*key;
 
-	if (data == NULL || key == NULL)
+	key = data->ast->cmd[1];
+	if (!data || !key)
 		return ;
 	current = data->env_list;
 	previous = NULL;

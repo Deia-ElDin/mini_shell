@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:45:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 16:50:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:42:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	builtins(t_data *data)
 	char	*cmd;
 
 	cmd = data->ast->cmd[0];
+	if (!cmd)
+		data_status(data, 1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		cd(data);
 	else if (ft_strcmp(cmd, "echo") == 0)
@@ -30,7 +32,7 @@ void	builtins(t_data *data)
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		pwd(data);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		unset_env(data, data->ast->cmd[1]);
+		env_unset(data);
 	else
-		exit_failure(data);
+		data_status(data, 1);
 }

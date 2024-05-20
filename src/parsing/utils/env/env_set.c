@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 12:43:14 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 17:51:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:21:51 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,28 @@
 /// @param data The main struct
 /// @param key The key to set
 /// @param value The value to set
-void	env_set(t_data *data, char *key, char *value, bool is_equal )
+/// @param is_equal A boolean to check if there's an equal sign
+void	env_set(t_data *data, char *key, char *value, bool is_equal)
 {
 	t_env	*node;
 
 	node = env_get(data, key);
 	if (node)
 	{
-		if (node->value)
+		if (node->value && value && *value && is_equal)
 			ft_free(&node->value, 'p');
-		if (value && *value)
+		if (is_equal)
 		{
 			node->is_equal = true;
-			node->value = ft_strdup(value);
-			if (!node->value)
-				return (data_status(data, 1));
+			if (value && *value)
+			{
+				node->value = ft_strdup(value);
+				if (!node->value)
+					return (data_status(data, 1));
+			}
+			else
+				node->value = NULL;
 		}
-		else
-			node->value = NULL;
 	}
 	else
 		env_new(data, key, value, is_equal);

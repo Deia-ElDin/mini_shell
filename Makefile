@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/05/19 19:22:43 by dehamad          ###   ########.fr        #
+#    Updated: 2024/05/19 20:36:03 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,14 @@ MAIN = main.c delete_me.c
 PARSING = lexer.c parser.c 
 PARSING_UTILS_ENV = env_add.c env_expansion.c env_free.c env_get.c env_last.c \
 	env_lstclear.c  env_lstsize.c env_new.c env_set.c env_toarr.c env_tolst.c \
-	env_concat.c 
+	env_concat.c env_unset.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c token_last.c
 PARSING_UTILS_AST = ast_lstclear.c ast_tree.c
 	
 EXECUTION = execution.c utils.c
-EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c \
-	unset_env.c
+EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c 
+
 UTILS = error.c exit.c data.c 
 UTILS_ERRS = export_err.c
 
@@ -54,7 +54,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 bonus: $(BONUS_NAME)
 sanitize: CFLAGS += -fsanitize=address
-sanitize: re
+sanitize: all
 valgrind: all
 	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./minishell
 

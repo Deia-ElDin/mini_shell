@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:27:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 19:11:03 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:20:19 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,37 @@ bool	parser(t_data *data)
 	token = data->tokens;
 	while (token)
 	{
-		ast_tree(data, token);
-		token = token->next;
+		if (token->type == NODE_CMD || token->type == NODE_BUILTIN)
+			parse_word(data, &token);
+		else if (token->type == NODE_PIPE)
+			parse_pipe(data, &token);
+		else if (token->type == NODE_REDIR_IN || token->type == NODE_REDIR_OUT
+			|| token->type == NODE_APPEND || token->type == NODE_HEREDOC)
+			parse_redirection(data, &token);
+		else
+			token = token->next;
 	}
-	// print_ast(data->ast);
-	if (data->ast)
-		return (true);
-	return (false);
+	print_ast(data->ast);
+	return (data->ast != NULL);
 }
+
+// bool	parser(t_data *data)
+// {
+// 	t_token	*token;
+
+// 	token = data->tokens;
+// 	while (token)
+// 	{
+// 		ast_tree(data, token);
+// 		token = token->next;
+// 	}
+// 	print_ast(data->ast);
+// 	if (data->ast)
+// 		return (true);
+// 	return (false);
+// }
 /*
-ls -la > file2.txt | grep "drwxr" file2.txt >> file2.txt | wc -l 
-&& echo "done" && echo "success" && echo "yo" | sort | uniq
+ls -la > file2.txt | grep "drwxr" file2.txt >> file2.txt | wc -l && echo "done" && echo "success" && echo "yo" | sort | uniq
 */
 
 /*

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:31:11 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:55:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 // static int	get_token_type(char *token)
 // {
 // 	if (*token == '\'')
-// 		return (TOKEN_SINGLE_QUOTE);
+// 		return (SINGLE_QUOTE);
 // 	if (*token == '\"')
-// 		return (TOKEN_DOUBLE_QUOTE);
+// 		return (DOUBLE_QUOTE);
 // 	if (!ft_strcmp(token, "<<"))
-// 		return (TOKEN_HEREDOC);
+// 		return (HEREDOC);
 // 	if (!ft_strcmp(token, ">>"))
-// 		return (TOKEN_APPEND);
+// 		return (APPEND);
 // 	if (!ft_strcmp(token, "<"))
-// 		return (TOKEN_REDIR_IN);
+// 		return (REDIR_IN);
 // 	if (!ft_strcmp(token, ">"))
-// 		return (TOKEN_REDIR_OUT);
+// 		return (REDIR_OUT);
 // 	if (!ft_strcmp(token, "|"))
-// 		return (TOKEN_PIPE);
-// 	return (TOKEN_WORD);
+// 		return (PIPE);
+// 	return (CMD);
 // }
 
 // static t_token	*new_token(t_data *data, unsigned int start, int len)
