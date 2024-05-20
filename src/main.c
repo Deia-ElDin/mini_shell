@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:20:51 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:17:12 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		line = readline(PROMPT);
+		printf("before break\n");
 		if (!line)
 			break ;
 		add_history(line);
@@ -51,9 +52,12 @@ int	main(int ac, char **av, char **env)
 		if (!parser(&data))
 			continue ;
 		print_ast(data.ast);
+		printf("before exec\n");
 		execution(&data);
+		printf("after execution\n");
 		data_reset(&data);
 	}
+	printf("after while loop\n");
 	data_free(&data);
 	return (data.exit_status);
 }
