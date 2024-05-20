@@ -6,70 +6,98 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:44:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:51:18 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-static	t_ast	*node_values(t_data *data, t_ast *new_node, t_token *token)
+static t_token	*get_head_node(t_token *tokens)
 {
-	char	*ptr;
+	t_token	*token_node;
+	t_token	*nav_token;
+	int		next_high_token;
 
-	new_node->type = token->type;
-	if (token->type == TOKEN_WORD)
+	next_high_token = TOKEN_AND;
+	nav_token = NULL;
+	token_node = NULL;
+	while (next_high_token >= 0)
 	{
-		ptr = ft_strdup(token->value);
-		if (!ptr)
-			exit_failure(data);
-		new_node->cmd = ft_split(ptr, ' ');
-		if (!new_node->cmd)
-			exit_failure(data);
+		nav_token = tokens;
+		while (nav_token && !nav_token->is_parsed)
+		{
+			if (nav_token->type == next_high_token)
+				token_node = nav_token;
+			nav_token = nav_token->next;
+		}
+		if (!token_node)
+			next_high_token--;
+		else
+			break ;
 	}
-	else
-		new_node->cmd = NULL;
-	new_node->left = NULL;
-	new_node->right = NULL;
-	new_node->token = token;
-	token->is_taken = true;
-	return (new_node);
+	if (token_node)
+		token_node->is_parsed = true;
+	return (token_node);
 }
 
-t_ast	*ast_new(t_data *data, t_token *token)
+static t_token	*get_next_left_node(t_token *tokens)
 {
-	t_ast	*new_node;
+	t_token	*token_node;
+	t_token	*nav_token;
+	int		next_high_token;
 
-	if (!data || !token)
-		return (NULL);
-	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
-	if (!new_node)
-		exit_failure(data);
-	return (node_values(data, new_node, token));
+	next_high_token = TOKEN_AND;
+	nav_token = NULL;
+	token_node = NULL;
+	while (next_high_token >= 0)
+	{
+		nav_token = tokens->prev;
+		while (nav_token && !nav_token->is_parsed)
+		{
+			if (nav_token->type == next_high_token)
+				token_node = nav_token;
+			nav_token = nav_token->prev;
+		}
+		if (!token_node)
+			next_high_token--;
+		else
+			break ;
+	}
+	if (token_node)
+		token_node->is_parsed = true;
+	return (token_node);
 }
 
-void	ast_tree(t_data *data, t_token *token)
+/*
+Find next highest token in the precedence and returns next head token
+*/
+static t_token	*get_next_right_node(t_token *tokens)
 {
-	t_ast	*new_node;
+	t_token	*token_node;
+	t_token	*nav_token;
+	int		next_high_token;
 
-	new_node = ast_new(data, token);
-	if (!new_node)
-		exit_failure(data);
-	data->ast = data->ast;
-	if (!data->ast)
-		data->ast = new_node;
-	else if (token->type == TOKEN_WORD)
+	next_high_token = TOKEN_AND;
+	nav_token = NULL;
+	token_node = NULL;
+	while (next_high_token >= TOKEN_WORD)
 	{
-		if (!data->ast->left && token->next && token->next->next)
-			data->ast->left = new_node;
-		else if (!data->ast->right)
-			data->ast->right = new_node;
+		nav_token = tokens->next;
+		while (nav_token && !nav_token->is_parsed)
+		{
+			if (nav_token->type == next_high_token)
+				token_node = nav_token;
+			nav_token = nav_token->next;
+		}
+		if (!token_node)
+			next_high_token--;
+		else
+			break ;
 	}
-	else
-	{
-		new_node->left = data->ast;
-		data->ast = new_node;
-	}
+	if (token_node)
+		token_node->is_parsed = true;
+	return (token_node);
 }
 
 static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
@@ -98,16 +126,23 @@ static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
 	return (0);
 }
 
-	token = data->tokens;
-	while (token)
-	{
-		ast_tree(data, token);
-		token = token->next;
-	}
-	print_ast(data->ast);
-	if (data->ast)
-		return (true);
-	return (false);
+t_ast	*parser(t_data *data)
+{
+	t_ast	*head_node;
+	t_token	*head_token;
+
+	if (!data)
+		return (NULL);
+	head_token = get_head_node(data->tokens);
+	head_node = NULL;
+	if (head_token)
+		head_node = new_ast(head_token);
+	else
+		return (printf("headtoken is fucked\n"), head_node);
+	if (!head_node)
+		return (printf("headnode is fucked\n"), head_node);
+	recursive_parsing(data, head_token, head_node);
+	return (head_node);
 }
 /*
 ls -la > file.txt | grep "drwxr" file.txt > file2.txt | wc -l && echo "done" && echo "success" && echo "yo" | sort | uniq

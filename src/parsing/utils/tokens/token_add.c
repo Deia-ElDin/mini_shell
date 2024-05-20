@@ -6,10 +6,9 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:54:23 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -24,24 +23,24 @@ void			token_add(t_data *data, t_token **head, int start, int len);
 static int	token_type(char *token)
 {
 	if (*token == '\'')
-		return (SINGLE_QUOTE);
+		return (TOKEN_SINGLE_QUOTE);
 	if (*token == '\"')
-		return (DOUBLE_QUOTE);
+		return (TOKEN_DOUBLE_QUOTE);
 	if (!ft_strcmp(token, "&&"))
-		return (AND);
+		return (TOKEN_AND);
 	if (!ft_strcmp(token, "||"))
-		return (OR);
+		return (TOKEN_OR);
 	if (!ft_strcmp(token, "<<"))
-		return (HEREDOC);
+		return (TOKEN_HEREDOC);
 	if (!ft_strcmp(token, ">>"))
-		return (APPEND);
+		return (TOKEN_APPEND);
 	if (!ft_strcmp(token, "<"))
-		return (REDIR_IN);
+		return (TOKEN_REDIR_IN);
 	if (!ft_strcmp(token, ">"))
-		return (REDIR_OUT);
+		return (TOKEN_REDIR_OUT);
 	if (!ft_strcmp(token, "|"))
-		return (PIPE);
-	return (CMD);
+		return (TOKEN_PIPE);
+	return (TOKEN_WORD);
 }
 
 /// @brief Used to set the token struct values
@@ -57,7 +56,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 	if (!token)
 		exit_failure(data);
 	token->type = token_type(value);
-	if (ft_strchr(value, '$') && token->type != SINGLE_QUOTE)
+	if (ft_strchr(value, '$') && token->type != TOKEN_SINGLE_QUOTE)
 		token->value = env_expansion(data, value);
 	else
 		token->value = ft_strtrim(value, WHITESPACES);

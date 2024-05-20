@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:43:17 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:53:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ typedef struct s_ast
 {
 	int				end_flag;
 	int				type;
-	int				pipe[2];
 	char			**cmd;
 	char			*file;
+	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_token			*token;
@@ -148,6 +148,11 @@ bool	token_validation(t_data *data);
 
 // *-> AST Functions
 void	ast_lstclear(t_data *data);
+// AST Utils Functions
+t_ast	*new_ast(t_token *token);
+void	add_left_ast(t_ast *ast, t_ast *new_node);
+void	add_right_ast(t_ast *ast, t_ast *new_node);
+// void	free_ast(t_ast *ast);
 
 // Execution Function
 void	execution(t_data *data);
