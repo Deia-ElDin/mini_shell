@@ -131,6 +131,7 @@ t_ast	*parser(t_data *data)
 	t_ast	*head_node;
 	t_token	*head_token;
 
+	data->ast = NULL;
 	if (!data)
 		return (NULL);
 	head_token = get_head_node(data->tokens);

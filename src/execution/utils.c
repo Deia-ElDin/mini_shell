@@ -16,9 +16,9 @@ bool	is_builtin(t_data *data)
 {
 	char	*cmd;
 
-	if (!data->ast || !data->ast->cmd || !data->ast->cmd[0])
+	if (!data->ast || data->ast->type != NODE_CMD)
 		return (false);
-	cmd = data->ast->cmd[0];
+	cmd = data->ast->left->cmd[0];
 	if (!ft_strcmp(cmd, "cd")
 		|| !ft_strcmp(cmd, "echo")
 		|| !ft_strcmp(cmd, "env")

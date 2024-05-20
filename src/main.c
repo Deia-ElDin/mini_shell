@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		line = readline(PROMPT);
-		printf("before break\n");
+		// printf("before break\n");
 		if (!line)
 			break ;
 		add_history(line);
@@ -51,13 +51,13 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if (!parser(&data))
 			continue ;
-		print_ast(data.ast);
-		printf("before exec\n");
+		// print_ast(data.ast);
+		// printf("before exec\n");
 		execution(&data);
-		printf("after execution\n");
+		// printf("after execution\n");
 		data_reset(&data);
 	}
-	printf("after while loop\n");
+	// printf("after while loop\n");
 	data_free(&data);
 	return (data.exit_status);
 }

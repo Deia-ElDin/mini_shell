@@ -16,7 +16,7 @@ void	builtins(t_data *data)
 {
 	char	*cmd;
 
-	cmd = data->ast->cmd[0];
+	cmd = data->ast->left->cmd[0];
 	if (!cmd)
 		return (data_status(data, 1));
 	if (ft_strcmp(cmd, "cd") == 0)
