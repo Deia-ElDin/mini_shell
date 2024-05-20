@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:04:08 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:20:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if (!parser(&data))
 			continue ;
+		print_ast(data.ast);
 		execution(&data);
 		data_reset(&data);
 	}

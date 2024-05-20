@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:04:57 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:20:08 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,13 @@ static void	recursive_free(t_ast **lst)
 			recursive_free(&(*lst)->left);
 		if ((*lst)->right)
 			recursive_free(&(*lst)->right);
-		if ((*lst)->left)
-			recursive_free(&(*lst)->left);
-		if ((*lst)->right)
-			recursive_free(&(*lst)->right);
 		ft_free(&(*lst)->cmd, 'a');
-		free(*lst);
 		if ((*lst)->type == NODE_PIPE)
 		{
 			close((*lst)->pipe[0]);
 			close((*lst)->pipe[1]);
 		}
+		free(*lst);
 		*lst = NULL;
 	}
 }

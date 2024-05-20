@@ -23,7 +23,7 @@ void	execution(t_data *data)
 
 int	exec_ast(t_ast *ast, t_data *data)
 {
-	if (!data)
+	if (!data || !ast)
 		return (1);
 	if (ast->type == NODE_CMD)
 		simple_cmd(ast->left, ast->right, data);

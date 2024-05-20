@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:05:11 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:15:19 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,6 @@ void	data_init(t_data *data, char **env)
 		}
 	}
 }
-		path_env = env_get(data, "PATH");
-		if (path_env && path_env->value)
-		{
-			data->path = ft_split(path_env->value, ':');
-			if (!data->path)
-				exit_failure(data);
-		}
-	}
-}
 
 /**
  * The purpose of this function is to initialize the data structure
@@ -92,14 +83,6 @@ void	data_init(t_data *data, char **env)
  * i.e if we found a quote error while creating the tokens list,
  * since we can't validate the quotes in the token_validation function
 */
-
-/// @brief Used to update the exit status in the data structure
-/// @param data The main struct
-/// @param exit_status The exit status to be updated
-void	data_status(t_data *data, int exit_status)
-{
-	data->exit_status = exit_status;
-}
 
 /// @brief Used to update the exit status in the data structure
 /// @param data The main struct
@@ -123,7 +106,7 @@ void	data_reset(t_data *data)
 /// @param data The main struct
 void	data_free(t_data *data)
 {
-	token_lstclear(data);
+	token_clear(data);
 	env_lstclear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');

@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:03:45 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:15:22 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ int		env_lstsize(t_data *data);
 //	*-> Token Functions
 t_token	*token_last(t_data *data);
 void	token_delone(t_token **node);
-void	token_lstclear(t_data *data);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
 void	token_clear(t_data *data);

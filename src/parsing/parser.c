@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:51:18 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:17:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ t_ast	*parser(t_data *data)
 	if (!head_node)
 		return (printf("headnode is fucked\n"), head_node);
 	recursive_parsing(data, head_token, head_node);
+	data->ast = head_node;
 	return (head_node);
 }
 /*

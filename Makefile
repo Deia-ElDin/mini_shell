@@ -6,7 +6,7 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/05/20 17:03:23 by melshafi         ###   ########.fr        #
+#    Updated: 2024/05/20 17:16:03 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ LIBS = -lreadline
 
 MAIN = main.c delete_me.c
 
-PARSING_UTILS_PARSING = parse_cmd.c
+PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c
 EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c utils.c
 EXECUTION_UTILS = env_utils.c pipe_utils.c str_join.c
-EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
+EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c
 UTILS = error.c exit.c data.c
 PARSING = lexer.c parser.c
 PARSING_UTILS_ENV = env_add.c env_expansion.c env_free.c env_get.c env_last.c \
@@ -36,7 +36,7 @@ PARSING_UTILS_ENV = env_add.c env_expansion.c env_free.c env_get.c env_last.c \
 	env_concat.c env_unset.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c token_last.c
-PARSING_UTILS_AST = ast_lstclear.c ast_tree.c ast.c
+PARSING_UTILS_AST = ast_lstclear.c ast.c
 
 UTILS = error.c exit.c data.c
 UTILS_ERRS = export_err.c
