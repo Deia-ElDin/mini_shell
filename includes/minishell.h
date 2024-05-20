@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:15:22 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:50:25 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,19 @@ enum
 	NODE_WORD,
 	NODE_CMD,
 	NODE_PIPE,
-	NODE_BUILTIN,
-	NODE_SINGLE_QUOTE,
-	NODE_DOUBLE_QUOTE,
-	NODE_AND,
-	NODE_OR
+	NODE_OR,
+	NODE_AND
 };
 
 enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	TOKEN_WORD,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
+	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
 	TOKEN_AND
