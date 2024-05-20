@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 02:44:39 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 20:56:49 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:31:11 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../../includes/minishell.h"
+// #include "minishell.h"
 
 // void	skip_spaces(const char *line, int *i)
 // {

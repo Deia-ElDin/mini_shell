@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_last.c                                       :+:      :+:    :+:   */
+/*   env_concat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 08:12:45 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/18 18:26:40 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/19 17:44:55 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_last(t_data *data)
+void	env_concat(t_data *data, char *key, char *value)
 {
-	t_token	*token;
+	t_env	*node;
+	char	*new_value;
 
-	if (!data->tokens)
-		return (NULL);
-	token = data->tokens;
-	while (token->next)
-		token = token->next;
-	return (token);
+	node = env_get(data, key);
+	if (node)
+	{
+		new_value = ft_strjoin(node->value, value);
+		if (!new_value)
+			return (data_status(data, 1));
+		ft_free(&node->value, 'p');
+		node->value = new_value;
+	}
+	else
+		env_new(data, key, value, true);
+	env_toarr(data);
 }

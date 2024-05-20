@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_last.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 08:12:45 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:29:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/14 16:15:25 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/19 20:43:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_last(t_data *data)
+bool	is_builtin(t_data *data)
 {
-	t_token	*token;
+	char	*cmd;
 
-	if (!data->tokens)
-		return (NULL);
-	token = data->tokens;
-	while (token->next)
-		token = token->next;
-	return (token);
+	if (!data->ast || !data->ast->cmd || !data->ast->cmd[0])
+		return (false);
+	cmd = data->ast->cmd[0];
+	if (!ft_strcmp(cmd, "cd")
+		|| !ft_strcmp(cmd, "echo")
+		|| !ft_strcmp(cmd, "env")
+		|| !ft_strcmp(cmd, "exit")
+		|| !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "pwd")
+		|| !ft_strcmp(cmd, "unset"))
+		return (true);
+	return (false);
 }

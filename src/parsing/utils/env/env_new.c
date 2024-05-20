@@ -6,49 +6,56 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:49:47 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 04:31:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 17:51:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
-t_env	*env_new(t_data *data, char *env);
+static t_env	*env_init(t_data *data, char *key, char *value, bool is_equal );
+void			env_new(t_data *data, char *key, char *value, bool is_equal );
 
-/// @brief Used to create a new env node
+/// @brief Used to create a new env node and initialize it
 /// @param data The main struct
-/// @param env A pointer to the environment variable
-/// @return The new env node
-t_env	*env_new(t_data *data, char *env)
+/// @param key_value_arr The key value pair array, key[0], value[1]
+/// @return 
+static t_env	*env_init(t_data *data, char *key, char *value, bool is_equal )
 {
 	t_env	*new_node;
 
 	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new_node)
-		exit_failure(data);
+		return (NULL);
 	new_node->key = NULL;
 	new_node->value = NULL;
-	new_node->is_equal = false;
-	new_node->key = ft_strdup(env);
-	if (!new_node->key)
-		exit_failure(data);
-	new_node->value = ft_strchr(new_node->key, '=');
-	if (new_node->value)
-	{
+	if (is_equal)
 		new_node->is_equal = true;
-		*new_node->value = '\0';
-		new_node->value++;
-		new_node->value = ft_strdup(new_node->value);
+	else
+		new_node->is_equal = false;
+	if (key)
+	{
+		new_node->key = ft_strdup(key);
+		if (!new_node->key)
+			return (data->exit_status = 1, env_free(new_node), NULL);
+	}
+	if (value)
+	{
+		new_node->value = ft_strdup(value);
 		if (!new_node->value)
-			exit_failure(data);
+			return (data->exit_status = 1, env_free(new_node), NULL);
 	}
 	return (new_node);
 }
 
-/**
- * the purpose of this function is to create a new node
- * key is the key of the environment variable
- * value is the value of the environment variable
- * key = ft_strdup to the whole env string, 
- * then if there's = sign we null terminate it
- * and value is the rest of the string
-*/
+/// @brief Used to create a new env node
+/// @param data The main struct
+/// @param key_value_pair A pointer to the key value pair
+void	env_new(t_data *data, char *key, char *value, bool is_equal )
+{
+	t_env	*new_node;
+
+	new_node = env_init(data, key, value, is_equal);
+	if (!new_node)
+		return (data_status(data, 1));
+	env_add(data, new_node);
+}

@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 20:29:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/26 05:02:04 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/18 21:00:38 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /// @brief Used to print a syntax error
 /// @param err The error message
@@ -22,4 +22,3 @@ void	syntax_error(char *err)
 	ft_putstr_fd(err, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
-

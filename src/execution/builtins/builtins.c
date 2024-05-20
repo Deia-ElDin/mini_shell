@@ -6,30 +6,33 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:45:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/19 22:22:19 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:42:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 void	builtins(t_data *data)
 {
-	printf("data->line = %s\n", data->line);
-}
+	char	*cmd;
 
-// if (ft_strcmp(data->line, "cd") == 0)
-//     cd(data);
-// else if (ft_strcmp(data->av[0], "echo") == 0)
-//     echo(data);
-// else if (ft_strcmp(data->av[0], "env") == 0)
-//     env(data);
-// else if (ft_strcmp(data->av[0], "exit") == 0)
-//     exit_shell(data);
-// else if (ft_strcmp(data->av[0], "export") == 0)
-//     export(data);
-// else if (ft_strcmp(data->av[0], "pwd") == 0)
-//     pwd(data);
-// else if (ft_strcmp(data->av[0], "unset") == 0)
-//     unset(data);
-// else
-	// data->exit_status = 127;
+	cmd = data->ast->cmd[0];
+	if (!cmd)
+		data_status(data, 1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		cd(data);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		echo(data);
+	else if (ft_strcmp(cmd, "env") == 0)
+		env(data);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		exit_shell(data);
+	else if (ft_strcmp(cmd, "export") == 0)
+		export(data);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		pwd(data);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		env_unset(data);
+	else
+		data_status(data, 1);
+}

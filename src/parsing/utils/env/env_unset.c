@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_add.c                                          :+:      :+:    :+:   */
+/*   env_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 02:46:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 16:39:09 by dehamad          ###   ########.fr       */
+/*   Created: 2024/05/19 20:25:21 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/19 20:25:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/// @brief Used to add a new node to the end of the linked list
-/// @param data The main struct
-/// @param new The new node to be added
-void	env_add(t_data *data, t_env *new)
+void	env_unset(t_data *data)
 {
-	t_env	*last_node;
+	t_env	*current;
+	t_env	*previous;
+	char	*key;
 
-	if (!new)
+	key = data->ast->cmd[1];
+	if (!data || !key)
 		return ;
-	last_node = env_last(data);
-	if (last_node)
-		last_node->next = new;
-	else
-		data->env_list = new;
+	current = data->env_list;
+	previous = NULL;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				data->env_list = current->next;
+			env_free(current);
+			env_toarr(data);
+			return ;
+		}
+		previous = current;
+		current = current->next;
+	}
 }

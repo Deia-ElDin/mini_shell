@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_clear.c                                      :+:      :+:    :+:   */
+/*   token_lstclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 03:33:15 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/22 14:07:52 by melshafi         ###   ########.fr       */
+/*   Created: 2024/04/26 04:13:31 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/20 16:13:25 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 /**
  * the purpose of this function is to delete a node

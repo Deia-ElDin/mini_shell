@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	execution(t_data *data)
 {
-	builtins(data);
+	if (is_builtin(data))
+		builtins(data);
+	
 }
 
 int	exec_ast(t_ast *ast, t_data *data)
