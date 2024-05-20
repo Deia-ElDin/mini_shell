@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:55:58 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:04:39 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	call_child(char *cmd, char **args, int last, t_data *data)
+static void	call_child(char *cmd, t_ast *ast_right, t_data *data)
 {
 	char	*str;
 
 	str = NULL;
-	// ft_putstr_fd("Executing child\n", 2);
-	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
+	ft_putstr_fd("Executing child\n", 2);
+	if (ast_right->head->head && ast_right->head->head->type == NODE_PIPE)
 	{
-		close(data->pipe[0]);
-		dup2(data->pipe[1], 1);
-		if (last)
-			close(data->pipe[1]);
+		close(ast_right->head->head->pipe[0]);
+		dup2(ast_right->head->head->pipe[1], 1);
+		if (ast_right->end_flag)
+			close(ast_right->head->head->pipe[1]);
 	}
 	if (cmd)
-		execve(cmd, args, data->env);
-	if (data->pipe[0] < 0 || data->pipe[1] < 0)
+		execve(cmd, ast_right->cmd, data->env);
+	if (ast_right->head->head && ast_right->head->head->type == NODE_PIPE
+		&& (ast_right->head->head->pipe[0] < 0
+		|| ast_right->head->head->pipe[1] < 0))
 	{
-		str = gnl_till_null(data->pipe, str);
+		str = gnl_till_null(ast_right->head->head->pipe, str);
 		free(str);
 	}
 	ft_putstr_fd("child execution FAILED\n", 2);
@@ -58,16 +60,16 @@ int	simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data)
 		return (free(path), data->file_fd);
 	if (data->redirect_flag != 0 && data->file_fd == -1)
 		return (ft_putstr_fd("ERR\n", 2), 1);
-	if (!path && data->pipe[0] >= 0)
-		return (clear_pipe(data->pipe), 1);
+	if (!path && ast_left->head->head->type == NODE_PIPE)
+		return (clear_pipe(ast_left->head->head->pipe), 1);
 	pid = fork();
 	if (pid < 0)
 		exit(1);
 	if (pid == 0)
-		call_child(path, ast_right->cmd, ast_right->end_flag, data);
+		call_child(path, ast_right, data);
 	else
 	{
-		pipe_for_next(data, ast_left->end_flag + ast_right->end_flag);
+		pipe_for_next(data, ast_right);
 		data->exit_status = check_for_sleep(pid, path, ast_right->end_flag);
 	}
 	return (free(path), data->exit_status);

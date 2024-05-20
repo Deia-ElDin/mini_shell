@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:14:17 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/06 12:37:24 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:48:06 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_cmd_path(char *cmd, t_data *data)
 
 	path = NULL;
 	if (cmd && !access(cmd, F_OK | X_OK))
-			path = ft_strdup(cmd);
+		path = ft_strdup(cmd);
 	else if (cmd && !ft_strncmp(cmd, "./", 2))
 		path = get_path(data->env, &cmd[2], "PWD");
 	else

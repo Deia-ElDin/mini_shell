@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_lstclear.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:10 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/20 17:04:57 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static void	recursive_free(t_ast **lst)
 			recursive_free(&(*lst)->right);
 		ft_free(&(*lst)->cmd, 'a');
 		free(*lst);
+		if ((*lst)->type == NODE_PIPE)
+		{
+			close((*lst)->pipe[0]);
+			close((*lst)->pipe[1]);
+		}
 		*lst = NULL;
 	}
 }

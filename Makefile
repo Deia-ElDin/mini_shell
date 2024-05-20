@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/20 16:42:46 by dehamad          ###   ########.fr        #
+#    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
+#    Updated: 2024/05/20 17:03:23 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c uti
 EXECUTION_UTILS = env_utils.c pipe_utils.c str_join.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit.c export.c pwd.c unset.c
 UTILS = error.c exit.c data.c
-PARSING = lexer.c parser.c 
+PARSING = lexer.c parser.c
 PARSING_UTILS_ENV = env_add.c env_expansion.c env_free.c env_get.c env_last.c \
 	env_lstclear.c  env_lstsize.c env_new.c env_set.c env_toarr.c env_tolst.c \
 	env_concat.c env_unset.c
@@ -38,7 +38,7 @@ PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c 
 	token_tolst.c token_validation.c token_last.c
 PARSING_UTILS_AST = ast_lstclear.c ast_tree.c ast.c
 
-UTILS = error.c exit.c data.c 
+UTILS = error.c exit.c data.c
 UTILS_ERRS = export_err.c
 
 SRCS = \
@@ -53,8 +53,8 @@ SRCS = \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
 	$(addprefix src/utils/, $(UTILS)) \
 	$(addprefix src/utils/errors/, $(UTILS_ERRS))
-	
-OBJS = $(SRCS:.c=.o) 
+
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 bonus: $(BONUS_NAME)

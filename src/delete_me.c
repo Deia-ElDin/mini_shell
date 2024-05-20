@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:43:29 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/20 17:03:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	print_ast(t_ast *ast)
 	if (ast)
 	{
 		// printf("type: %d\n", ast->type);
-		printf("\nhead => value:  %s, index = %d\n",
-			ast->token->value, ast->token->index);
+		printf("\nhead => type = %d ", ast->type);
+		if (ast->head)
+			printf("current nodes head type => %d", ast->head->type);
+		printf("\n");
 		if (ast->cmd)
 		{
 			i = -1;
@@ -57,10 +59,10 @@ void	print_ast(t_ast *ast)
 				printf("cmd[%d]: %s\n", i, ast->cmd[i]);
 		}
 		printf("\n");
-		if (ast->left)
-			printf("	left => type = %d\n", ast->left->type);
-		if (ast->right)
-			printf("	right => type = %d\n", ast->right->type);
+		if (ast->left && ast->left->head)
+			printf("	left => type = %d nodes head type => %d\n", ast->left->type, ast->left->head->type);
+		if (ast->right && ast->right->head)
+			printf("	right => type = %d nodes head type => %d\n", ast->right->type, ast->right->head->type);
 		if (ast->left)
 		{
 			printf("\nGoing left ---> \n");

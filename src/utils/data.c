@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:46:49 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/20 17:05:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	update_shlvl(t_data *data)
 void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
-	
+
 	data->file_fd = -1;
 	data->redirect_flag = 0;
 	data->line = NULL;

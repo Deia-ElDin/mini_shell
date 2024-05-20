@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:51:58 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:05:04 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ t_ast	*new_ast(t_token *token)
 	new_node->head = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	new_node->pipe[0] = -1;
+	new_node->pipe[1] = -1;
 	if (new_node->type == NODE_CMD)
 		new_node = parse_cmd(token, new_node);
+	else if (new_node->type == NODE_PIPE)
+		new_node = parse_pipe(token, new_node);
 	return (new_node);
 }
 
@@ -34,7 +38,10 @@ void	add_left_ast(t_ast *ast, t_ast *new_node)
 	t_ast	*tmp;
 
 	if (!ast)
+	{
 		ast = new_node;
+		ast->head = NULL;
+	}
 	else
 	{
 		tmp = ast;
@@ -50,7 +57,10 @@ void	add_right_ast(t_ast *ast, t_ast *new_node)
 	t_ast	*tmp;
 
 	if (!ast)
+	{
 		ast = new_node;
+		ast->head = NULL;
+	}
 	else
 	{
 		tmp = ast;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:53:34 by dehamad          ###   ########.fr       */
+/*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
+/*   Updated: 2024/05/20 17:03:45 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_ast
 {
 	int				end_flag;
 	int				type;
+	int				pipe[2];
 	char			**cmd;
 	char			*file;
 	struct s_ast	*head;
@@ -117,6 +118,7 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
+t_ast	*parse_pipe(t_token *token, t_ast *new_node);
 
 //	*-> Env Functions
 t_env	*env_get(t_data *data, char *key);
@@ -173,7 +175,7 @@ int		pipe_cmd(t_ast *ast, t_data *data);
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
 //	*-> pipe_utils.c
-void	pipe_for_next(t_data *data, int last);
+void	pipe_for_next(t_data *data, t_ast *ast_right);
 int		check_for_sleep(int pid, char *cmd, int last);
 char	*gnl_till_null(int *pipe_fd, char *str);
 char	*get_cmd_path(char *cmd, t_data *data);

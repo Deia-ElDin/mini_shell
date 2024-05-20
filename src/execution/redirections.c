@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/04/29 13:41:58 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:47:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	check_for_redirs(t_ast *ast, t_data *data)
 {
 	if (ast->type == NODE_REDIR_OUT)
-	{	
+	{
 		if (!redirect_out(ast, data))
 			return (0);
 	}
 	else if (ast->type == NODE_REDIR_IN)
-	{	
+	{
 		if (!redirect_in(ast, data))
 			return (0);
 	}
@@ -66,7 +66,6 @@ int	here_doc(t_ast *ast, t_data *data)
 
 int	append(t_ast *ast, t_data *data)
 {
-
 	data->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_APPEND, 0777);
 	if (data->file_fd == -1)
 		return (1);

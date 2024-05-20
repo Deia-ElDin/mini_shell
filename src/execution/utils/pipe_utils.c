@@ -6,26 +6,26 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:32:54 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/06 12:38:09 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:55:21 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	pipe_for_next(t_data *data, int last)
+void	pipe_for_next(t_data *data, t_ast *ast_right)
 {
 	if (data->redirect_flag != 0)
 		data->redirect_flag = 0;
-	if (data->pipe[0] >= 0 || data->pipe[1] >= 0)
+	if (ast_right->head->head && ast_right->head->head->type == NODE_PIPE)
 	{
-		close(data->pipe[1]);
-		if (!last)
+		close(ast_right->head->head->pipe[1]);
+		if (!ast_right->end_flag)
 		{
-			dup2(data->pipe[0], 0);
-			close(data->pipe[0]);
+			dup2(ast_right->head->head->pipe[0], 0);
+			close(ast_right->head->head->pipe[0]);
 		}
 		else
-			close(data->pipe[0]);
+			close(ast_right->head->head->pipe[0]);
 	}
 }
 
