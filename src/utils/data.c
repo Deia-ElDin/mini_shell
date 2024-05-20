@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:13:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:34:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ static void	update_shlvl(t_data *data)
 /// @param env A double pointer to the environment variables
 void	data_init(t_data *data, char **env)
 {
+	t_env	*path_env;
+	
 	data->file_fd = -1;
 	data->redirect_flag = 0;
-	t_env	*path_env;
-
 	data->line = NULL;
 	data->env_list = NULL;
 	data->env = NULL;
@@ -57,8 +57,6 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
-	data->pipe[0] = -1;
-	data->pipe[1] = -1;
 	if (env)
 	{
 		data->env = env;

@@ -16,7 +16,8 @@ void	execution(t_data *data)
 {
 	if (is_builtin(data))
 		builtins(data);
-	
+	else
+		exec_ast(data->ast, data);
 }
 
 int	exec_ast(t_ast *ast, t_data *data)

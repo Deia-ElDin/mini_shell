@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 20:54:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:29:40 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static bool	is_token_mergeable(t_token *token)
 {
 	if (!token)
 		return (false);
-	if (token->type == CMD)
+	if (token->type == TOKEN_WORD)
 		return (true);
-	if (token->type == SINGLE_QUOTE)
+	if (token->type == TOKEN_SINGLE_QUOTE)
 		return (true);
-	if (token->type == DOUBLE_QUOTE)
+	if (token->type == TOKEN_DOUBLE_QUOTE)
 		return (true);
 	return (false);
 }
@@ -38,7 +38,7 @@ static char	*remove_quotes(t_data *data, t_token *token)
 
 	if (!token)
 		return (NULL);
-	if (token->type != SINGLE_QUOTE && token->type != DOUBLE_QUOTE)
+	if (token->type != TOKEN_SINGLE_QUOTE && token->type != TOKEN_DOUBLE_QUOTE)
 		return (token->value);
 	len = ft_strlen(token->value);
 	if (len < 2)
@@ -75,7 +75,7 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
 		exit_failure(data);
-	token->type = CMD;
+	token->type = TOKEN_WORD;
 	token->value = merge_values(data, first, second);
 	token->is_space = false;
 	token->prev = NULL;

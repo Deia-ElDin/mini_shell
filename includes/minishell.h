@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:12:12 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:31:58 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ enum
 	NODE_SINGLE_QUOTE,
 	NODE_DOUBLE_QUOTE,
 	NODE_AND,
-	NODE_OR,
-	NODE_AND
+	NODE_OR
 };
 
 enum
@@ -87,6 +86,7 @@ typedef struct s_ast
 {
 	int				end_flag;
 	int				type;
+	int				pipe[2];
 	char			**cmd;
 	char			*file;
 	struct s_ast	*head;
@@ -97,7 +97,8 @@ typedef struct s_ast
 
 typedef struct s_data
 {
-	int				pipe[2];
+	int				file_fd;
+	int				redirect_flag;
 	bool			error;
 	char			*line;
 	char			**path;

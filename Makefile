@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/05/20 16:16:55 by dehamad          ###   ########.fr        #
+#    Updated: 2024/05/20 16:31:10 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PARSING_UTILS_ENV = env_add.c env_expansion.c env_free.c env_get.c env_last.c \
 	env_concat.c env_unset.c
 PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c \
 	token_tolst.c token_validation.c token_last.c
-PARSING_UTILS_AST = ast_lstclear.c ast_tree.c ast_add.c ast_head.c ast_new.c
+PARSING_UTILS_AST = ast_lstclear.c ast_tree.c ast.c
 
 UTILS = error.c exit.c data.c 
 UTILS_ERRS = export_err.c
