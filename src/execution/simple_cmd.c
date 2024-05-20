@@ -56,7 +56,7 @@ int	simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data)
 	pid_t	pid;
 
 	path = get_cmd_path(ast_left->cmd[0], data);
-	if (check_for_redirs(ast_right, data))
+	if (!check_for_redirs(ast_right, data))
 		return (free(path), data->file_fd);
 	if (data->redirect_flag != 0 && data->file_fd == -1)
 		return (ft_putstr_fd("ERR\n", 2), 1);

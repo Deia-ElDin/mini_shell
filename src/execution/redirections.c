@@ -17,20 +17,20 @@ int	check_for_redirs(t_ast *ast, t_data *data)
 	if (ast->type == NODE_REDIR_OUT)
 	{
 		if (!redirect_out(ast, data))
-			return (0);
+			return (1);
 	}
 	else if (ast->type == NODE_REDIR_IN)
 	{
 		if (!redirect_in(ast, data))
-			return (0);
+			return (1);
 	}
 	else if (ast->type == NODE_HEREDOC && !here_doc(ast, data))
-		return (0);
+		return (1);
 	else if (ast->type == NODE_APPEND && !append(ast, data))
-		return (0);
+		return (1);
 	else if (ast->type == NODE_WORD)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	redirect_in(t_ast *ast, t_data *data)
