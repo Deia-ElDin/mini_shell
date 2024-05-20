@@ -29,10 +29,6 @@ int	exec_ast(t_ast *ast, t_data *data)
 		simple_cmd(ast->left, ast->right, data);
 	else if (ast->type == NODE_PIPE)
 		pipe_cmd(ast, data);
-	else if (ast->type == NODE_OR)
-		or_operator(ast, data);
-	else if (ast->type == NODE_AND)
-		and_operator(ast, data);
 	return (0);
 }
 
