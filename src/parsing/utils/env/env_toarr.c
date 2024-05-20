@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 05:59:51 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 17:01:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:45:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	env_toarr(t_data *data)
 		ft_free(&data->env_arr, 'a');
 	data->env_arr = ft_calloc(env_lstsize(data) + 1, sizeof(char *));
 	if (!data->env_arr)
-		exit_failure(data);
+		return (data_status(data, 1));
 	i = 0;
 	while (node)
 	{

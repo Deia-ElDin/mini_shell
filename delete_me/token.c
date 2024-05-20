@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:42:27 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 20:55:20 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:42:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@
 // 		return (NULL);
 // 	value = ft_substr(data->line, start, (size_t)len);
 // 	if (!value)
-// 		exit_failure(data);
+// 		data_status(data, 1);
 // 	if (ft_isempty_str(value))
 // 		return (ft_free(&value, 'p'), NULL);
 // 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 // 	if (!token)
-// 		exit_failure(data);
+// 		data_status(data, 1);
 // 	token->type = get_token_type(value);
 // 	token->value = ft_strtrim(value, WHITESPACES);
 // 	token->next = NULL;
 // 	ft_free(&value, 'p');
 // 	if (!token->value)
-// 		exit_failure(data);
+// 		data_status(data, 1);
 // 	return (token);
 // }
 

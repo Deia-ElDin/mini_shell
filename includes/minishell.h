@@ -3,30 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:50:25 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:38:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "./libft/libft.h"
 # include <signal.h>
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <errno.h>
-# include <errno.h>
 
 # define PROMPT "mini-shell$ "
 # define ERR_PROMPT "mini-shell: "
@@ -162,8 +156,8 @@ int		here_doc(t_ast *ast, t_data *data);
 int		append(t_ast *ast, t_data *data);
 int		check_for_redirs(t_ast *ast, t_data *data);
 //	*-> and_or_exec.c
-int		or_operator(t_ast *ast, t_data *data);
-int		and_operator(t_ast *ast, t_data *data);
+// int		or_operator(t_ast *ast, t_data *data);
+// int		and_operator(t_ast *ast, t_data *data);
 //	*-> simple_cmd.c
 int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
 int		pipe_cmd(t_ast *ast, t_data *data);

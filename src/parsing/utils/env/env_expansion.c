@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 17:15:11 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:44:39 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*ret_expansion(t_data *data, char *key, char *start, char *end)
 	{
 		exit_status_str = ft_itoa(data->exit_status);
 		if (!exit_status_str)
-			exit_failure(data);
+			return (data_status(data, 1), NULL);
 		ret = ft_strnjoin(3, start, exit_status_str, end);
 		ft_free(&exit_status_str, 'p');
 	}
@@ -46,7 +46,7 @@ static char	*ret_expansion(t_data *data, char *key, char *start, char *end)
 			ret = ft_strnjoin(3, start, node->value, end);
 	}
 	if (!ret)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	return (ret);
 }
 
@@ -86,7 +86,7 @@ char	*env_expansion(t_data *data, char *str)
 	exp_end = i;
 	key = ft_strndup(str + exp_start, exp_end - exp_start);
 	if (!key)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	str[exp_start - 1] = '\0';
 	return (ret_expansion(data, key, str, str + exp_end));
 }

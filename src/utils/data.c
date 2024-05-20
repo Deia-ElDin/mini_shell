@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 17:15:19 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 20:46:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -27,7 +26,7 @@ static void	update_shlvl(t_data *data)
 	{
 		ret = ft_atoi(shlvl_env->value);
 		if (ret.error)
-			exit_failure(data);
+			return (data_status(data, 1));
 		shlvl = ret.nbr;
 		shlvl++;
 	}
@@ -35,7 +34,7 @@ static void	update_shlvl(t_data *data)
 		shlvl = 1;
 	shlvl_str = ft_itoa(shlvl);
 	if (!shlvl_str)
-		exit_failure(data);
+		return (data_status(data, 1));
 	env_set(data, "SHLVL", shlvl_str, true);
 	ft_free(&shlvl_str, 'p');
 }
@@ -71,7 +70,7 @@ void	data_init(t_data *data, char **env)
 		{
 			data->path = ft_split(path_env->value, ':');
 			if (!data->path)
-				exit_failure(data);
+				return (data_status(data, 1));
 		}
 	}
 }

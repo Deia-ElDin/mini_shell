@@ -46,6 +46,9 @@
     "__tuple": "c",
     "ios": "c",
     "is.h": "c",
-    "memory_resource": "c"
+    "memory_resource": "c",
+    "wait.h": "c",
+    "string.h": "c",
+    "fcntl.h": "c"
   }
 }

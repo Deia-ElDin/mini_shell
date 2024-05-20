@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:38:46 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/17 17:31:11 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:42:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 // 	{
 // 		new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 // 		if (!new_node)
-// 			exit_failure(data);
+// 			data_status(data, 1);
 // 		new_node->key = ft_strdup(*env++);
 // 		new_node->value = ft_strchr(new_node->key, '=');
 // 		if (new_node->value)
@@ -99,7 +99,7 @@
 // 		tmp = tmp->next;
 // 	env = (char **)ft_calloc((i + 1), sizeof(char *));
 // 	if (!env)
-// 		exit_failure(data);
+// 		data_status(data, 1);
 // 	i = 0;
 // 	while (env_list)
 // 	{

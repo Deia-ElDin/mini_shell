@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:37:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 17:02:08 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 19:52:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	cd_error(t_data *data, char *msg)
 	{
 		ft_putstr_fd(": ", fd);
 		ft_putstr_fd(strerror(errno), fd);
-		errno = 0;
 	}
 	ft_putchar_fd('\n', fd);
 	data_status(data, 1);
@@ -78,5 +77,5 @@ void	cd(t_data *data)
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (cd_error(data, "getcwd failed"));
 	env_set(data, "PWD", cwd, true);
-	data->exit_status = 0;
+	data_status(data, 0);
 }

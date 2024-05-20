@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:15:37 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 18:46:35 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:21:23 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	handle_pipe_cmd(t_data *data)
-{
+// static void	handle_pipe_cmd(t_data *data)
+// {
 
-}
+// }
 
 int	pipe_cmd(t_ast *ast, t_data *data)
 {

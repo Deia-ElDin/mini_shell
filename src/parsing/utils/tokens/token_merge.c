@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:55:05 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:45:47 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*remove_quotes(t_data *data, t_token *token)
 	new = NULL;
 	new = ft_substr(token->value, 1, len - 2);
 	if (!new)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	return (new);
 }
 
@@ -64,7 +64,7 @@ static char	*merge_values(t_data *data, t_token *first, t_token *second)
 	else
 		merged = ft_strjoin(first_value, second_value);
 	if (!merged)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	return (merged);
 }
 
@@ -74,7 +74,7 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
-		exit_failure(data);
+		return (data_status(data, 1));
 	token->type = TOKEN_WORD;
 	token->value = merge_values(data, first, second);
 	token->is_space = false;

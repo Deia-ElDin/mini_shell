@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 20:29:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 21:00:38 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:29:26 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,12 @@ void	syntax_error(char *err)
 	ft_putstr_fd(" `", STDERR_FILENO);
 	ft_putstr_fd(err, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
+}
+
+void	print_error(char *err_name, char *err)
+{
+	ft_putstr_fd(ERR_PROMPT, STDERR_FILENO);
+	perror(err_name);
+	ft_putstr_fd(err, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }

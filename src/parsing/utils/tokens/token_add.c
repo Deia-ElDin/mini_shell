@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 16:54:23 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:45:25 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	token->type = token_type(value);
 	if (ft_strchr(value, '$') && token->type != TOKEN_SINGLE_QUOTE)
 		token->value = env_expansion(data, value);
@@ -62,7 +62,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 		token->value = ft_strtrim(value, WHITESPACES);
 	ft_free(&value, 'p');
 	if (!token->value)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	if (data->line[index] == ' ')
 		token->is_space = true;
 	else
@@ -99,7 +99,7 @@ static t_token	*token_new(t_data *data, int start, int len)
 		return (NULL);
 	value = ft_substr(data->line, start, (size_t)len);
 	if (!value)
-		exit_failure(data);
+		return (data_status(data, 1), NULL);
 	if (ft_isempty_str(value))
 		return (ft_free(&value, 'p'), NULL);
 	return (token_values(data, value, start + len));

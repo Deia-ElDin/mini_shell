@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 17:57:28 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:17:24 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	call_child(char *cmd, t_ast *ast_right, t_data *data)
 		execve(cmd, ast_right->cmd, data->env);
 	if (ast_right->head->head && ast_right->head->head->type == NODE_PIPE
 		&& (ast_right->head->head->pipe[0] < 0
-		|| ast_right->head->head->pipe[1] < 0))
+			|| ast_right->head->head->pipe[1] < 0))
 	{
 		str = gnl_till_null(ast_right->head->head->pipe, str);
 		free(str);
