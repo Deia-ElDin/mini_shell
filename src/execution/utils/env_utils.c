@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:14:17 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/20 13:48:06 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:37:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*get_path(char **envp, char *cmd, char *var)
 		}
 		free(path);
 	}
-	free_2dchar(paths_split);
+	ft_free(&paths_split, 'a');
 	return (NULL);
 }
 

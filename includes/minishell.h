@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/21 12:20:30 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:55:33 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct s_ast
 typedef struct s_data
 {
 	int				now_pipe[2];
-	int				next_pipe[2];
+	int				prev_pipe[2];
 	int				file_fd;
 	int				redirect_flag;
 	bool			error;
@@ -165,11 +165,13 @@ int		pipe_cmd(t_data *data);
 //	*-> str_join.c
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
-//	*-> pipe_utils.c
-void	pipe_for_next(t_data *data, t_ast *ast_right);
+//	*-> cmd_utils.c
 int		check_for_sleep(int pid, char *cmd, int last);
 char	*gnl_till_null(int *pipe_fd, char *str);
 char	*get_cmd_path(char *cmd, t_data *data);
+//	*-> pipe_utils.c
+int		is_first_pipe(t_ast *ast);
+int		is_last_pipe(t_ast *ast);
 
 // Builtins Functions
 void	builtins(t_data *data);
