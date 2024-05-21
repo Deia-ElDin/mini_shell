@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:06:49 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:52:37 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_for_redirs(t_ast *ast, t_data *data)
 		return (1);
 	else if (ast->type == NODE_APPEND && !append(ast, data))
 		return (1);
-	else if (ast->type == NODE_WORD)
+	else if (ast->type == NODE_WORD || ast->type == NODE_CMD)
 		return (1);
 	return (0);
 }

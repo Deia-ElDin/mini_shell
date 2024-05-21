@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:52:57 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:48:17 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
-	ft_putstr_fd("Executing child\n", 2);
 	if (cmd)
 		execve(cmd, ast->cmd, data->env);
 	ft_putstr_fd("child execution FAILED\n", 2);
@@ -48,9 +47,6 @@ int	simple_cmd(t_data *data)
 	// if (!path && ast->left->head->head->type == NODE_PIPE)
 	// 	return (clear_pipe(ast->left->head->head->pipe), 1);
 	pid = fork();
-	ft_putstr_fd("PID: \n", 2);
-	ft_putnbr_fd(pid, 2);
-	ft_putstr_fd("\n", 2);
 	if (pid < 0)
 	{
 		data->exit_status = pid;

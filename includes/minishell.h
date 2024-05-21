@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/21 13:55:33 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:51:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	int				std_fds[2];
 	int				now_pipe[2];
-	int				prev_pipe[2];
+	int				next_pipe[2];
 	int				file_fd;
 	int				redirect_flag;
 	bool			error;
