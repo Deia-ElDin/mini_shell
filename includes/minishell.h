@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 19:38:48 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:20:30 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_ast
 
 typedef struct s_data
 {
+	int				now_pipe[2];
+	int				next_pipe[2];
 	int				file_fd;
 	int				redirect_flag;
 	bool			error;
@@ -148,7 +150,6 @@ void	add_right_ast(t_ast *ast, t_ast *new_node);
 
 // Execution Function
 void	execution(t_data *data);
-int		exec_ast(t_ast *ast, t_data *data);
 //	*-> redirections.c
 int		redirect_in(t_ast *ast, t_data *data);
 int		redirect_out(t_ast *ast, t_data *data);
@@ -159,8 +160,8 @@ int		check_for_redirs(t_ast *ast, t_data *data);
 // int		or_operator(t_ast *ast, t_data *data);
 // int		and_operator(t_ast *ast, t_data *data);
 //	*-> simple_cmd.c
-int		simple_cmd(t_ast *ast_left, t_ast *ast_right, t_data *data);
-int		pipe_cmd(t_ast *ast, t_data *data);
+int		simple_cmd(t_data *data);
+int		pipe_cmd(t_data *data);
 //	*-> str_join.c
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);

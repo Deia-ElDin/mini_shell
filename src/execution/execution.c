@@ -25,9 +25,9 @@ void	execution(t_data *data)
 	else
 	{
 		if (ast->type == NODE_CMD)
-			simple_cmd(ast->left, ast->right, data);
+			simple_cmd(data);
 		else if (ast->type == NODE_PIPE)
-			pipe_cmd(ast, data);
+			pipe_cmd(data);
 	}
 }
 

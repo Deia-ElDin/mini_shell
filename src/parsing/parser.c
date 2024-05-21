@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/20 17:17:44 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:56:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,14 @@ t_ast	*parser(t_data *data)
 	if (head_token)
 		head_node = new_ast(head_token);
 	else
-		return (printf("headtoken is fucked\n"), head_node);
+		return (head_node);
 	if (!head_node)
-		return (printf("headnode is fucked\n"), head_node);
+		return (head_node);
 	recursive_parsing(data, head_token, head_node);
 	data->ast = head_node;
+	while (head_node->right)
+		head_node = head_node->right;
+	head_node->end_flag = 1;
 	return (head_node);
 }
 /*

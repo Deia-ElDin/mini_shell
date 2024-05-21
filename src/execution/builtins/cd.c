@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:37:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 19:52:09 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:01:42 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*get_path(t_data *data)
 	t_env	*env_var;
 	char	*path;
 
-	path = data->ast->cmd[1];
+	path = data->ast->right->cmd[1];
 	if (!path || !ft_strcmp(path, "~"))
 	{
 		env_var = env_get(data, "HOME");
