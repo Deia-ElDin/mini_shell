@@ -12,66 +12,62 @@
 
 #include "../../includes/minishell.h"
 
-int	check_for_redirs(t_ast *ast, t_data *data)
+int	check_for_redirs(t_ast *ast)
 {
 	if (!ast)
 		return (0);
 	if (ast->type == NODE_REDIR_OUT)
 	{
-		if (!redirect_out(ast, data))
+		if (!redirect_out(ast))
 			return (1);
 	}
 	else if (ast->type == NODE_REDIR_IN)
 	{
-		if (!redirect_in(ast, data))
+		if (!redirect_in(ast))
 			return (1);
 	}
-	else if (ast->type == NODE_HEREDOC && !here_doc(ast, data))
+	else if (ast->type == NODE_HEREDOC && !here_doc(ast))
 		return (1);
-	else if (ast->type == NODE_APPEND && !append(ast, data))
+	else if (ast->type == NODE_APPEND && !append(ast))
 		return (1);
 	else if (ast->type == NODE_WORD || ast->type == NODE_CMD)
 		return (1);
 	return (0);
 }
 
-int	redirect_in(t_ast *ast, t_data *data)
+int	redirect_in(t_ast *ast)
 {
-	data->file_fd = open(ast->file, O_RDONLY, 0777);
-	if (data->file_fd == -1)
+	ast->file_fd = open(ast->file, O_RDONLY, 0755);
+	if (ast->file_fd == -1)
 		return (1);
-	data->redirect_flag = -1;
-	dup2(data->file_fd, 0);
+	dup2(ast->file_fd, 0);
 	return (0);
 }
 
-int	redirect_out(t_ast *ast, t_data *data)
+int	redirect_out(t_ast *ast)
 {
 	unlink(ast->file);
-	data->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0777);
-	if (data->file_fd == -1)
+	ast->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0755);
+	if (ast->file_fd == -1)
 		return (1);
-	data->redirect_flag = 1;
-	dup2(data->file_fd, 1);
+	dup2(ast->file_fd, 1);
 	return (0);
 }
 
-int	here_doc(t_ast *ast, t_data *data)
+int	here_doc(t_ast *ast)
 {
 	int	status;
 
 	(void)ast;
 	status = 0;
-	data->redirect_flag = -2;
 	return (status);
 }
 
-int	append(t_ast *ast, t_data *data)
+int	append(t_ast *ast)
 {
-	data->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_APPEND, 0777);
-	if (data->file_fd == -1)
+	ast->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_APPEND, 0755);
+	if (ast->file_fd == -1)
 		return (1);
-	data->redirect_flag = 2;
-	dup2(data->file_fd, 1);
+	dup2(ast->file_fd, 1);
 	return (0);
 }

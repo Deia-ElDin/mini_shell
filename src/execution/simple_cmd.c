@@ -40,9 +40,9 @@ int	simple_cmd(t_data *data)
 
 	ast = data->ast;
 	path = get_cmd_path(ast->left->cmd[0], data);
-	if (!check_for_redirs(ast->right, data))
-		return (free(path), data->file_fd);
-	if (data->redirect_flag != 0 && data->file_fd == -1)
+	if (!check_for_redirs(ast->right))
+		return (free(path), ast->right->file_fd);
+	if (ast->right->type < NODE_WORD && ast->right->file_fd == -1)
 		return (ft_putstr_fd("ERR\n", 2), 1);
 	// if (!path && ast->left->head->head->type == NODE_PIPE)
 	// 	return (clear_pipe(ast->left->head->head->pipe), 1);

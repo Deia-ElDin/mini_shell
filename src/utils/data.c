@@ -46,8 +46,6 @@ void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
 
-	data->file_fd = -1;
-	data->redirect_flag = 0;
 	data->line = NULL;
 	data->env_list = NULL;
 	data->env = NULL;

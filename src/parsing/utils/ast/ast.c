@@ -24,6 +24,8 @@ t_ast	*new_ast(t_token *token)
 	new_node->head = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	new_node->thereisprev = false;
+	new_node->prev_pipe = NULL;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;
 	if (new_node->type == NODE_CMD)

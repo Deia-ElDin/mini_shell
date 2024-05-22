@@ -12,24 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-static int	get_next_pipe(t_data *data)
+static int	get_prev_pipe(t_data *data)
 {
 	t_ast	*ast;
 
 	ast = data->ast;
-	data->now_pipe[0] = ast->pipe[0];
-	data->now_pipe[1] = ast->pipe[1];
-	data->next_pipe[0] = -1;
-	data->next_pipe[1] = -1;
-	while (ast)
+	data->now_pipe = ast->pipe;
+	if (ast->left && ast->left->type == NODE_PIPE)
 	{
-		ast = ast->head;
-		if (ast && ast->type == NODE_PIPE)
-		{
-			data->next_pipe[0] = ast->pipe[0];
-			data->next_pipe[1] = ast->pipe[1];
-			return (1);
-		}
+		ast->thereisprev = true;
+		ast->prev_pipe = ast->left->pipe;
+		return (1);
 	}
 	return (0);
 }
@@ -68,10 +61,10 @@ static int	exec_pipe_cmd(t_ast *ast, t_data *data, int *is_sleep)
 {
 	pid_t	pid;
 
-	if (!check_for_redirs(ast->right, data))
-		return (data->file_fd);
-	if (data->redirect_flag != 0 && data->file_fd == -1)
-		return (ft_putstr_fd("REDIRECTION ERROR\n", 2), 1);
+	if (!check_for_redirs(ast->right))
+		return (ast->right->file_fd);
+	if (ast->right->type < NODE_WORD && ast->right->file_fd == -1)
+		return (ft_putstr_fd("ERR\n", 2), 1);
 	if (ast->left->type == NODE_WORD && ft_strnstr(ast->left->cmd[0], "sleep", ft_strlen(ast->left->cmd[0])))
 		*is_sleep = 1;
 	pid = fork();
@@ -93,35 +86,38 @@ static int	exec_pipe_cmd(t_ast *ast, t_data *data, int *is_sleep)
 
 		if (ast == ast->head->left)
 		{
-			dup2(data->now_pipe[1], STDOUT_FILENO);
-			close (data->now_pipe[0]);
-			close (data->now_pipe[1]);
+			dup2(data->now_pipe[WRITE_END], STDOUT_FILENO);
+			close (data->now_pipe[READ_END]);
+			close (data->now_pipe[WRITE_END]);
 		}
 		else if (ast == ast->head->right)
 		{
-			dup2(data->now_pipe[0], STDIN_FILENO);
-			close (data->now_pipe[0]);
-			close (data->now_pipe[1]);
+			dup2(data->now_pipe[READ_END], STDIN_FILENO);
+			close (data->now_pipe[READ_END]);
+			close (data->now_pipe[WRITE_END]);
 		}
 		if (!is_first_pipe(ast->head) || (is_first_pipe(ast->head) && !is_last_pipe(ast->head)))
 		{
 			ft_putstr_fd("THIS IS NOT THE FIRST PIPE\n", 2);
-			dup2(data->next_pipe[0], STDIN_FILENO);
+			dup2(ast->prev_pipe[READ_END], STDIN_FILENO);
 		}
 		if (!is_last_pipe(ast->head))
 		{
 			ft_putstr_fd("THIS IS NOT THE LAST PIPE\n", 2);
-			dup2(data->now_pipe[1], STDOUT_FILENO);
+			dup2(data->now_pipe[WRITE_END], STDOUT_FILENO);
 		}
 		if (ast->right->end_flag)
 		{
-			dup2(data->std_fds[1], data->now_pipe[1]);
-			dup2(data->std_fds[0], data->now_pipe[0]);
+			dup2(data->std_fds[WRITE_END], data->now_pipe[WRITE_END]);
+			dup2(data->std_fds[READ_END], data->now_pipe[READ_END]);
 		}
-		close(data->next_pipe[0]);
-		close(data->next_pipe[1]);
-		close(data->now_pipe[0]);
-		close(data->now_pipe[1]);
+		if (ast->thereisprev)
+		{
+			close(ast->prev_pipe[READ_END]);
+			close(ast->prev_pipe[WRITE_END]);
+		}
+		close(data->now_pipe[READ_END]);
+		close(data->now_pipe[WRITE_END]);
 		execute(get_cmd_path(ast->left->cmd[0], data), data);
 	}
 	return (pid);
@@ -135,18 +131,24 @@ int	pipe_cmd(t_data *data)
 
 	is_sleep = 0;
 	ast = data->ast;
-	get_next_pipe(data);
-	ft_putstr_fd("GOING LEFT\n", 2);
+	get_prev_pipe(data);
+	// ft_putstr_fd("GOING LEFT\n", 2);
 	data->ast = ast->left;
 	pid[0] = exec_pipe_cmd(ast->left, data, &is_sleep);
-	ft_putstr_fd("GOING RIGHT\n", 2);
+	// ft_putstr_fd("GOING RIGHT\n", 2);
 	data->ast = ast->right;
 	pid[1] = exec_pipe_cmd(ast->right, data, &is_sleep);
-	close(data->now_pipe[0]);
-	close(data->now_pipe[1]);
-	close(data->next_pipe[0]);
-	close(data->next_pipe[1]);
-	check_for_sleep(pid[0], NULL, 0);
+	close(data->now_pipe[READ_END]);
+	close(data->now_pipe[WRITE_END]);
+	if (ast->thereisprev)
+	{
+		close(ast->prev_pipe[READ_END]);
+		close(ast->prev_pipe[WRITE_END]);
+	}
+	if (is_sleep)
+		check_for_sleep(pid[0], "sleep", 0);
+	else
+		check_for_sleep(pid[0], NULL, 0);
 	data->exit_status = check_for_sleep(pid[1], NULL, ast->right->right->end_flag);
 	return (0);
 }

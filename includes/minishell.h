@@ -30,6 +30,12 @@
 
 enum
 {
+	READ_END,
+	WRITE_END
+};
+
+enum
+{
 	NODE_REDIR_IN,
 	NODE_REDIR_OUT,
 	NODE_HEREDOC,
@@ -80,7 +86,10 @@ typedef struct s_ast
 	int				end_flag;
 	int				type;
 	int				pipe[2];
+	int				*prev_pipe;
+	bool			thereisprev;
 	char			**cmd;
+	int				file_fd;
 	char			*file;
 	struct s_ast	*head;
 	struct s_ast	*left;
@@ -91,10 +100,7 @@ typedef struct s_ast
 typedef struct s_data
 {
 	int				std_fds[2];
-	int				now_pipe[2];
-	int				next_pipe[2];
-	int				file_fd;
-	int				redirect_flag;
+	int				*now_pipe;
 	bool			error;
 	char			*line;
 	char			**path;
@@ -152,11 +158,11 @@ void	add_right_ast(t_ast *ast, t_ast *new_node);
 // Execution Function
 void	execution(t_data *data);
 //	*-> redirections.c
-int		redirect_in(t_ast *ast, t_data *data);
-int		redirect_out(t_ast *ast, t_data *data);
-int		here_doc(t_ast *ast, t_data *data);
-int		append(t_ast *ast, t_data *data);
-int		check_for_redirs(t_ast *ast, t_data *data);
+int		redirect_in(t_ast *ast);
+int		redirect_out(t_ast *ast);
+int		here_doc(t_ast *ast);
+int		append(t_ast *ast);
+int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
 // int		or_operator(t_ast *ast, t_data *data);
 // int		and_operator(t_ast *ast, t_data *data);
