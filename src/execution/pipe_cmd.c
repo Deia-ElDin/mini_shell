@@ -59,15 +59,27 @@ static void	execute(char *path, t_data *data)
 
 static void child(t_ast *ast, t_data *data)
 {
-	// ft_putstr_fd("INSIDE CHILD PROCESS\n", 2);
-	// if (ast->left && ast->left->cmd)
-	// {
-	// 	ft_putstr_fd("	CURRENT CMD: ", 2);
-	// 	ft_putstr_fd(ast->left->cmd[0], 2);
-	// 	ft_putstr_fd("\n", 2);
-	// }
-	// else
-	// 	ft_putstr_fd("	IN CHILD WITHOUT CMD\n", 2);
+	ft_putstr_fd("INSIDE CHILD PROCESS\n", 2);
+	if (ast->left && ast->left->cmd)
+	{
+		ft_putstr_fd("	CURRENT CMD: ", 2);
+		ft_putstr_fd(ast->left->cmd[0], 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else
+		ft_putstr_fd("	IN CHILD WITHOUT CMD\n", 2);
+	if (ast == ast->head->left)
+	{
+		dup2(data->now_pipe[1], STDOUT_FILENO);
+		close (data->now_pipe[0]);
+		close (data->now_pipe[1]);
+	}
+	else if (ast == ast->head->right && is_last_pipe(ast->head))
+	{
+		dup2(data->now_pipe[0], STDIN_FILENO);
+		close (data->now_pipe[0]);
+		close (data->now_pipe[1]);
+	}
 	if (ast->type != NODE_CMD)
 		execute(NULL, data);
 	if (ast->head->thereisprev)
