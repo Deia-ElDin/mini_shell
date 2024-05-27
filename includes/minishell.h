@@ -86,8 +86,10 @@ typedef struct s_ast
 	int				end_flag;
 	int				type;
 	int				pipe[2];
-	int				*next_pipe;
-	bool			thereisnext;
+	int				*prev_pipe;
+	bool			thereispipe;
+	bool			thereisprev;
+	bool			thereisout;
 	char			**cmd;
 	int				file_fd;
 	char			*file;
@@ -117,7 +119,6 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
-t_ast	*parse_pipe(t_token *token, t_ast *new_node);
 
 //	*-> Env Functions
 t_env	*env_get(t_data *data, char *key);
@@ -156,6 +157,7 @@ void	add_right_ast(t_ast *ast, t_ast *new_node);
 
 // Execution Function
 void	execution(t_data *data);
+void	prepare_pipe(t_ast *new_node);
 //	*-> redirections.c
 int		redirect_in(t_ast *ast);
 int		redirect_out(t_ast *ast);

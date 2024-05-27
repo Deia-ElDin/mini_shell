@@ -56,8 +56,8 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
-	dup2(data->std_fds[0], 0);
-	dup2(data->std_fds[1], 1);
+	// dup2(data->std_fds[0], 0);
+	// dup2(data->std_fds[1], 1);
 	if (env)
 	{
 		data->env = env;
@@ -95,8 +95,8 @@ void	data_status(t_data *data, int exit_status)
 /// @param data The main struct
 void	data_reset(t_data *data)
 {
-	dup2(data->std_fds[1], 1);
-	dup2(data->std_fds[0], 0);
+	// dup2(data->std_fds[1], 1);
+	// dup2(data->std_fds[0], 0);
 	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');

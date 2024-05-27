@@ -14,23 +14,40 @@
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
-	if (cmd)
+	if (ast->head->thereisprev)
+	{
+		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
+		close(ast->head->prev_pipe[READ_END]);
+	}
+	if (ast->head->thereispipe)
+	{
+		close(ast->head->pipe[READ_END]);
+		dup2(ast->head->pipe[WRITE_END], STDOUT_FILENO);
+		close(ast->head->pipe[WRITE_END]);
+	}
+	if (ast->head->thereisout)
+		dup2(ast->head->file_fd, STDOUT_FILENO);
+	if (is_builtin(data))
+		builtins(data);
+	else if (cmd)
+	{
 		execve(cmd, ast->cmd, data->env);
-	ft_putstr_fd("child execution FAILED\n", 2);
+		ft_putstr_fd("child execution FAILED\n", 2);
+		exit(1);
+	}
 	exit(1);
 }
 
-// static void	clear_pipe(int *my_pipes)
-// {
-// 	char	*str;
-
-// 	ft_putstr_fd("ERR: Clearing pipe\n", 2);
-// 	str = NULL;
-// 	str = gnl_till_null(my_pipes, str);
-// 	close(my_pipes[1]);
-// 	dup2(my_pipes[0], 0);
-// 	free(str);
-// }
+static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
+{
+	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
+	if (ast->thereisprev)
+		close(ast->prev_pipe[READ_END]);
+	if (ast->thereispipe)
+		close(ast->pipe[WRITE_END]);
+	if (ast->thereisout)
+		close(ast->file_fd);
+}
 
 int	simple_cmd(t_data *data)
 {
@@ -44,17 +61,14 @@ int	simple_cmd(t_data *data)
 		return (free(path), ast->right->file_fd);
 	if (ast->right->type < NODE_WORD && ast->right->file_fd == -1)
 		return (ft_putstr_fd("ERR\n", 2), 1);
-	// if (!path && ast->left->head->head->type == NODE_PIPE)
-	// 	return (clear_pipe(ast->left->head->head->pipe), 1);
 	pid = fork();
 	if (pid < 0)
-	{
+		ft_putstr_fd("fork failed\n", 2);
+	if (pid < 0)
 		data->exit_status = pid;
-		return (pid);
-	}
 	if (pid == 0)
 		call_child(path, ast->right, data);
-	else
-		data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
+	else if (pid > 0)
+		call_parent(pid, path, ast, data);
 	return (free(path), data->exit_status);
 }

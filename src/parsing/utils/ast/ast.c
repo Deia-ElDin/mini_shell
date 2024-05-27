@@ -24,14 +24,14 @@ t_ast	*new_ast(t_token *token)
 	new_node->head = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
-	new_node->thereisnext = false;
-	new_node->next_pipe = NULL;
+	new_node->thereispipe = false;
+	new_node->thereisprev = false;
+	new_node->thereisout = false;
+	new_node->prev_pipe = NULL;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;
 	if (new_node->type == NODE_CMD)
 		new_node = parse_cmd(token, new_node);
-	else if (new_node->type == NODE_PIPE)
-		new_node = parse_pipe(token, new_node);
 	return (new_node);
 }
 

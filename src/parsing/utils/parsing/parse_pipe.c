@@ -12,15 +12,8 @@
 
 #include "../../../../includes/minishell.h"
 
-t_ast	*parse_pipe(t_token *token, t_ast *new_node)
+void	prepare_pipe(t_ast *new_node)
 {
-	new_node->token = token;
 	if (pipe(new_node->pipe) == -1)
-		return (ft_putstr_fd("ERR\n", 2), new_node);
-	if (new_node->head && new_node->head->type == NODE_PIPE)
-	{
-		new_node->thereisnext = true;
-		new_node->next_pipe = new_node->head->pipe;
-	}
-	return (new_node);
+		ft_putstr_fd("ERR\n", 2);
 }
