@@ -56,6 +56,8 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
+	dup2(data->std_fds[0], 0);
+	dup2(data->std_fds[1], 1);
 	if (env)
 	{
 		data->env = env;
@@ -71,8 +73,6 @@ void	data_init(t_data *data, char **env)
 				return (data_status(data, 1));
 		}
 	}
-	dup2(data->std_fds[0], 0);
-	dup2(data->std_fds[1], 1);
 }
 
 /**

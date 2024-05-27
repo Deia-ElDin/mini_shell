@@ -86,8 +86,8 @@ typedef struct s_ast
 	int				end_flag;
 	int				type;
 	int				pipe[2];
-	int				*prev_pipe;
-	bool			thereisprev;
+	int				*next_pipe;
+	bool			thereisnext;
 	char			**cmd;
 	int				file_fd;
 	char			*file;
@@ -100,7 +100,6 @@ typedef struct s_ast
 typedef struct s_data
 {
 	int				std_fds[2];
-	int				*now_pipe;
 	bool			error;
 	char			*line;
 	char			**path;

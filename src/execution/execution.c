@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell.h"
 
 void	execution(t_data *data)
 {
@@ -20,15 +19,20 @@ void	execution(t_data *data)
 	ast = data->ast;
 	if (!data || !ast)
 		return ;
-	if (is_builtin(data))
-		builtins(data);
-	else
+	data->ast = ast->left;
+	execution(data);
+	data->ast = ast->right;
+	execution(data);
+	data->ast = ast;	
+	if (ast->type == NODE_CMD)
 	{
-		if (ast->type == NODE_CMD)
+		if (is_builtin(data))
+			builtins(data);
+		else
 			simple_cmd(data);
-		else if (ast->type == NODE_PIPE)
-			pipe_cmd(data);
 	}
+	else if (ast->type == NODE_PIPE)
+		pipe_cmd(data);
 }
 
 // int	exec_ast(t_ast *ast, t_data *data)

@@ -56,7 +56,10 @@ static t_token	*get_next_left_node(t_token *tokens)
 		while (nav_token && !nav_token->is_parsed)
 		{
 			if (nav_token->type == next_high_token)
+			{
 				token_node = nav_token;
+				break ;
+			}
 			nav_token = nav_token->prev;
 		}
 		if (!token_node)
@@ -87,7 +90,10 @@ static t_token	*get_next_right_node(t_token *tokens)
 		while (nav_token && !nav_token->is_parsed)
 		{
 			if (nav_token->type == next_high_token)
+			{
 				token_node = nav_token;
+				break ;
+			}
 			nav_token = nav_token->next;
 		}
 		if (!token_node)
