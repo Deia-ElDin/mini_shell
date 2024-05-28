@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/21 15:48:17 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:33:43 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
-	if (ast->head->thereisprev)
+	if (ast->head->in_exists)
+		dup2(ast->head->file_fd, STDIN_FILENO);
+	if (ast->head->prev_exists)
 	{
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
 		close(ast->head->prev_pipe[READ_END]);
 	}
-	if (ast->head->thereispipe)
+	if (ast->head->pipe_exists)
 	{
 		close(ast->head->pipe[READ_END]);
 		dup2(ast->head->pipe[WRITE_END], STDOUT_FILENO);
 		close(ast->head->pipe[WRITE_END]);
 	}
-	if (ast->head->thereisout)
+	if (ast->head->out_exists)
 		dup2(ast->head->file_fd, STDOUT_FILENO);
-	if (is_builtin(data))
-		builtins(data);
+	if (is_builtin_with_out(data))
+		builtins_with_out(data);
 	else if (cmd)
 	{
 		execve(cmd, ast->cmd, data->env);
@@ -41,11 +43,11 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
 	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
-	if (ast->thereisprev)
+	if (ast->prev_exists)
 		close(ast->prev_pipe[READ_END]);
-	if (ast->thereispipe)
+	if (ast->pipe_exists)
 		close(ast->pipe[WRITE_END]);
-	if (ast->thereisout)
+	if (ast->out_exists)
 		close(ast->file_fd);
 }
 
@@ -56,12 +58,14 @@ int	simple_cmd(t_data *data)
 	pid_t	pid;
 
 	ast = data->ast;
+	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
 	if (!check_for_redirs(ast->right))
 		return (free(path), ast->right->file_fd);
-	if (ast->right->type < NODE_WORD && ast->right->file_fd == -1)
-		return (ft_putstr_fd("ERR\n", 2), 1);
-	pid = fork();
+	if (is_builtin(data))
+		builtins(data);
+	else
+		pid = fork();
 	if (pid < 0)
 		ft_putstr_fd("fork failed\n", 2);
 	if (pid < 0)

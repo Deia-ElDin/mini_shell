@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/21 17:51:44 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:37:48 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,10 @@ typedef struct s_ast
 	int				type;
 	int				pipe[2];
 	int				*prev_pipe;
-	bool			thereispipe;
-	bool			thereisprev;
-	bool			thereisout;
+	bool			pipe_exists;
+	bool			prev_exists;
+	bool			in_exists;
+	bool			out_exists;
 	char			**cmd;
 	int				file_fd;
 	char			*file;
@@ -154,6 +155,7 @@ t_ast	*new_ast(t_token *token);
 void	add_left_ast(t_ast *ast, t_ast *new_node);
 void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);
+int		is_file(t_token *token);
 
 // Execution Function
 void	execution(t_data *data);
@@ -183,6 +185,7 @@ int		is_last_pipe(t_ast *ast);
 
 // Builtins Functions
 void	builtins(t_data *data);
+void	builtins_with_out(t_data *data);
 void	cd(t_data *data);
 void	echo(t_data *data);
 void	env(t_data *data);
@@ -192,6 +195,7 @@ void	pwd(t_data *data);
 
 // ***** Execution Utils Functions ***** //
 bool	is_builtin(t_data *data);
+bool	is_builtin_with_out(t_data *data);
 
 // ***** Main Utils Functions ***** //
 //	*-> data.c

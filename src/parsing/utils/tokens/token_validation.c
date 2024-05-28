@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 11:42:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 16:55:34 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/28 10:56:42 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	valid_redirect(t_token *crnt)
 {
 	if (!crnt->next)
 		return (false);
-	if (crnt->next->type >= TOKEN_REDIR_IN && crnt->next->type <= TOKEN_PIPE)
+	if (crnt->next->type != TOKEN_WORD)
 		return (false);
 	return (true);
 }

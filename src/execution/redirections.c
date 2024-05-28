@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/21 16:52:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:34:20 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_for_redirs(t_ast *ast)
 {
-	if (!ast)
+	if (!ast || ast->type > NODE_WORD)
 		return (0);
 	if (ast->type == NODE_REDIR_OUT)
 	{
@@ -32,25 +32,27 @@ int	check_for_redirs(t_ast *ast)
 		return (1);
 	else if (ast->type == NODE_WORD || ast->type == NODE_CMD)
 		return (1);
+	if (ast->type < NODE_WORD && ast->head->file_fd == -1)
+		return (ft_putstr_fd("ERR\n", 2), 0);
 	return (0);
 }
 
 int	redirect_in(t_ast *ast)
 {
-	ast->file_fd = open(ast->file, O_RDONLY, 0755);
-	if (ast->file_fd == -1)
+	ast->head->in_exists = true;
+	ast->head->file_fd = open(ast->file, O_RDONLY, 0755);
+	if (ast->head->file_fd == -1)
 		return (1);
-	dup2(ast->file_fd, 0);
 	return (0);
 }
 
 int	redirect_out(t_ast *ast)
 {
+	ast->head->out_exists = true;
 	unlink(ast->file);
-	ast->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0755);
-	if (ast->file_fd == -1)
+	ast->head->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0755);
+	if (ast->head->file_fd == -1)
 		return (1);
-	dup2(ast->file_fd, 1);
 	return (0);
 }
 
@@ -65,9 +67,9 @@ int	here_doc(t_ast *ast)
 
 int	append(t_ast *ast)
 {
-	ast->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_APPEND, 0755);
-	if (ast->file_fd == -1)
+	ast->head->out_exists = true;
+	ast->head->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_APPEND, 0755);
+	if (ast->head->file_fd == -1)
 		return (1);
-	dup2(ast->file_fd, 1);
 	return (0);
 }

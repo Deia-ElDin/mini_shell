@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:20 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 20:22:18 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/05/28 11:36:00 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	export(t_data *data)
 	char	**sorted_env;
 	char	**cmds;
 
-	cmds = data->ast->cmd;
+	cmds = data->ast->right->cmd;
 	if (cmds[1] && cmds[2])
 		return (export_err(data, cmds[2]));
 	oldpwd_env = env_get(data, "OLDPWD");

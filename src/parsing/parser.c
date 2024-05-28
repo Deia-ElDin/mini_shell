@@ -6,12 +6,12 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/21 11:56:59 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:13:36 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static t_token	*get_head_node(t_token *tokens)
 {
@@ -22,10 +22,10 @@ static t_token	*get_head_node(t_token *tokens)
 	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
-	while (next_high_token >= 0)
+	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens;
-		while (nav_token && !nav_token->is_parsed)
+		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
 		{
 			if (nav_token->type == next_high_token)
 				token_node = nav_token;
@@ -50,10 +50,10 @@ static t_token	*get_next_left_node(t_token *tokens)
 	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
-	while (next_high_token >= 0)
+	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens->prev;
-		while (nav_token && !nav_token->is_parsed)
+		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
 		{
 			if (nav_token->type == next_high_token)
 			{
@@ -87,7 +87,7 @@ static t_token	*get_next_right_node(t_token *tokens)
 	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens->next;
-		while (nav_token && !nav_token->is_parsed)
+		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
 		{
 			if (nav_token->type == next_high_token)
 			{

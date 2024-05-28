@@ -19,17 +19,14 @@ void	execution(t_data *data)
 	ast = data->ast;
 	if (!data || !ast)
 		return ;
-
 	pipe_cmd(data);
-
 	data->ast = ast->left;
 	if (data->ast->type >= NODE_CMD)
 		execution(data);
 	data->ast = ast->right;
 	if (data->ast->type >= NODE_CMD)
 		execution(data);
-
-	data->ast = ast;	
+	data->ast = ast;
 	if (ast->type <= NODE_CMD)
 		simple_cmd(data);
 }
