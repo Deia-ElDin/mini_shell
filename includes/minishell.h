@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/28 15:37:48 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:57:50 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
 //	*-> cmd_utils.c
 int		check_for_sleep(int pid, char *cmd, int last);
-char	*gnl_till_null(int *pipe_fd, char *str);
 char	*get_cmd_path(char *cmd, t_data *data);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);

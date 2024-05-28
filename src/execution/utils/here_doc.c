@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_utils.c                                        :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 12:32:54 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/28 16:57:35 by melshafi         ###   ########.fr       */
+/*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
+/*   Updated: 2024/05/28 16:57:50 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_for_sleep(int pid, char *cmd, int last)
+int	check_for_heredoc(t_data *data)
 {
-	int	status;
+	t_ast	*ast;
+	char	*str;
 
-	status = 0;
-	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
-		|| last)
-		waitpid(pid, &status, 0);
-	else
-		waitpid(pid, &status, WNOHANG);
-	return (status);
+	ast = data->ast;
+	if (ast->right->type != NODE_HEREDOC)
+		return (0);
+	return (1);
 }
