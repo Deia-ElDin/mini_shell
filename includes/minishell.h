@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/28 16:57:50 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:26:10 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <readline/readline.h>
@@ -91,8 +92,10 @@ typedef struct s_ast
 	bool			prev_exists;
 	bool			in_exists;
 	bool			out_exists;
-	char			**cmd;
+	bool			heredoc_exists;
+	int				heredoc_fd;
 	int				file_fd;
+	char			**cmd;
 	char			*file;
 	struct s_ast	*head;
 	struct s_ast	*left;
@@ -160,6 +163,7 @@ int		is_file(t_token *token);
 // Execution Function
 void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
+void	prepare_heredocs(t_ast *ast, t_data *data);
 //	*-> redirections.c
 int		redirect_in(t_ast *ast);
 int		redirect_out(t_ast *ast);

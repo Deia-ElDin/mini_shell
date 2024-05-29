@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/28 15:34:20 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:10:58 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ int	check_for_redirs(t_ast *ast)
 		if (!redirect_in(ast))
 			return (1);
 	}
-	else if (ast->type == NODE_HEREDOC && !here_doc(ast))
-		return (1);
 	else if (ast->type == NODE_APPEND && !append(ast))
 		return (1);
-	else if (ast->type == NODE_WORD || ast->type == NODE_CMD)
+	else if (ast->type == NODE_WORD || ast->type == NODE_HEREDOC)
 		return (1);
 	if (ast->type < NODE_WORD && ast->head->file_fd == -1)
 		return (ft_putstr_fd("ERR\n", 2), 0);
@@ -54,15 +52,6 @@ int	redirect_out(t_ast *ast)
 	if (ast->head->file_fd == -1)
 		return (1);
 	return (0);
-}
-
-int	here_doc(t_ast *ast)
-{
-	int	status;
-
-	(void)ast;
-	status = 0;
-	return (status);
 }
 
 int	append(t_ast *ast)
