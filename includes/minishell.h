@@ -39,7 +39,6 @@ enum
 {
 	NODE_REDIR_IN,
 	NODE_REDIR_OUT,
-	NODE_HEREDOC,
 	NODE_APPEND,
 	NODE_WORD,
 	NODE_CMD,
@@ -54,8 +53,8 @@ enum
 	TOKEN_DOUBLE_QUOTE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
-	TOKEN_HEREDOC,
 	TOKEN_APPEND,
+	TOKEN_HEREDOC,
 	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
@@ -82,6 +81,13 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_heredoc
+{
+	char			*file;
+	int				fd;
+	bool			heredoc_exists;
+}	t_heredoc;
+
 typedef struct s_ast
 {
 	int				end_flag;
@@ -92,8 +98,7 @@ typedef struct s_ast
 	bool			prev_exists;
 	bool			in_exists;
 	bool			out_exists;
-	bool			heredoc_exists;
-	int				heredoc_fd;
+	t_heredoc		*heredoc;
 	int				file_fd;
 	char			**cmd;
 	char			*file;

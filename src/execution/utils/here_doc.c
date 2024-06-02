@@ -19,13 +19,13 @@ static void	read_heredoc(char *file, t_ast *ast)
 	str = readline("> ");
 	while (ft_strcmp(str, ast->right->file))
 	{
-		ft_putstr_fd(str, ast->heredoc_fd);
-		ft_putstr_fd("\n", ast->heredoc_fd);
+		ft_putstr_fd(str, ast->heredoc->fd);
+		ft_putstr_fd("\n", ast->heredoc->fd);
 		str = readline("> ");
 	}
-	close (ast->heredoc_fd);
-	ast->heredoc_fd = open(file, O_RDONLY, 0755);
-	if (ast->heredoc_fd == -1)
+	close (ast->heredoc->fd);
+	ast->heredoc->fd = open(file, O_RDONLY, 0755);
+	if (ast->heredoc->fd == -1)
 		perror("open failed");
 }
 
@@ -39,7 +39,7 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 		return (0);
 	i = 0;
 	ast->prev_exists = true;
-	ast->heredoc_exists = true;
+	ast->heredoc->heredoc_exists = true;
 	tmp = env_get(data, "TMPDIR");
 	if (!tmp)
 	{
@@ -48,10 +48,12 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	}
 	else
 		file = tmp->value;
+	ft_putstr_fd(file, 2);
+	ft_putstr_fd("\n", 2);
 	while (ast->right->cmd[i])
 		file = ft_strjoin(file, ast->right->cmd[i++]);
-	ast->heredoc_fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0775);
-	if (ast->heredoc_fd == -1)
+	ast->heredoc->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0775);
+	if (ast->heredoc->fd == -1)
 		return (perror("open failed"), ft_putstr_fd("\n", 2), 0);
 	return (read_heredoc(file, ast), 1);
 }

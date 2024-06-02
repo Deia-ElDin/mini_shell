@@ -15,7 +15,9 @@
 t_ast	*new_ast(t_token *token)
 {
 	t_ast	*new_node;
+	t_heredoc *heredoc;
 
+	heredoc = (t_heredoc *)ft_calloc(1, sizeof(t_heredoc));
 	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
 	if (!new_node)
 		return (NULL);
@@ -28,7 +30,7 @@ t_ast	*new_ast(t_token *token)
 	new_node->prev_exists = false;
 	new_node->in_exists = false;
 	new_node->out_exists = false;
-	new_node->heredoc_exists = false;
+	new_node->heredoc = heredoc;
 	new_node->prev_pipe = NULL;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;
