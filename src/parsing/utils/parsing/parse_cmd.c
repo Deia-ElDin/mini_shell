@@ -6,38 +6,38 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 10:13:56 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:16:22 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
+static void	parse_redir_type(t_token *next, t_ast *right_node)
 {
-	t_heredoc	*heredoc;
-
-	heredoc = (t_heredoc *)ft_calloc(1, sizeof(t_heredoc));
-	if (!heredoc)
-		return (ft_putstr_fd("ERR\n", 2), -1);
-	right_node->heredoc = heredoc;
-	right_node->heredoc->exists = false;
-	if (next && next->type == TOKEN_HEREDOC)
+	if (!ast_mem_allocate(&right_node))
+		right_node->type = -1;
+	if (next->type == TOKEN_APPEND)
 	{
-		right_node->type = next->type - 2;
-		if (next->next)
-		{
-			ft_putstr_fd("	FOUND HEREDOC\n", 2);
-			right_node->heredoc->exists = true;
-			right_node->heredoc->stop_key = next->next->value;
-			next->next->is_parsed = true;
-		}
-		else
-			right_node->heredoc->file = NULL;
-		next->is_parsed = true;
+		right_node->redir_append->file = next->next->value;
+		right_node->redir_append->exists = true;
 	}
-	else
-		return (0);
-	return (1);
+	else if (next->type == TOKEN_REDIR_IN)
+	{
+		right_node->redir_in->file = next->next->value;
+		right_node->redir_in->exists = true;
+	}
+	else if (next->type == TOKEN_REDIR_OUT)
+	{
+		right_node->redir_out->file = next->next->value;
+		right_node->redir_out->exists = true;
+	}
+	else if (next->type == TOKEN_HEREDOC)
+	{
+		right_node->heredoc->exists = true;
+		right_node->heredoc->stop_key = next->next->value;
+	}
+	next->next->is_parsed = true;
+	next = next->next->next;
 }
 
 static void	check_redir_tokens(t_token *token, t_ast *right_node)
@@ -45,24 +45,27 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	t_token	*next;
 
 	next = token->next;
-	if (check_heredoc_tokens(next, right_node) && next->next)
-		next = next->next->next;
-	if (next && next->type < TOKEN_WORD)
+	if (next && next->type <= TOKEN_HEREDOC)
 	{
-		right_node->type = next->type - 2;
-		if (next->next)
+		while (next && next->type <= TOKEN_HEREDOC)
 		{
-			ft_putstr_fd("	FOUND REDIRECTION\n", 2);
-			right_node->file = next->next->value;
-			next->next->is_parsed = true;
+			right_node->type = NODE_REDIR;
+			next->is_parsed = true;
+			if (next->next)
+				parse_redir_type(next, right_node);
+			else
+			{
+				right_node->type = -1;
+				ft_putstr_fd("minishell: syntax error near unexpected token\
+				 `newline'", 2);
+				break ;
+			}
 		}
-		else
-			right_node->file = NULL;
-		next->is_parsed = true;
 	}
 	else
 		right_node->type = NODE_WORD;
 	right_node->cmd = ft_split(token->value, ' ');
+	right_node->token = token;
 }
 
 t_ast	*parse_cmd(t_token *token, t_ast *new_node)

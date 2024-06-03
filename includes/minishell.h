@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/03 09:57:11 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:17:04 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ enum
 
 enum
 {
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
-	NODE_APPEND,
+	NODE_REDIR,
 	NODE_WORD,
 	NODE_CMD,
 	NODE_PIPE,
@@ -51,9 +49,9 @@ enum
 {
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
+	TOKEN_REDIR_IN,
 	TOKEN_HEREDOC,
 	TOKEN_WORD,
 	TOKEN_PIPE,
@@ -89,6 +87,27 @@ typedef struct s_heredoc
 	bool			exists;
 }	t_heredoc;
 
+typedef struct s_redir_in
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_in;
+
+typedef struct s_redir_out
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_out;
+
+typedef struct s_redir_append
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_append;
+
 typedef struct s_ast
 {
 	int				end_flag;
@@ -99,8 +118,10 @@ typedef struct s_ast
 	bool			prev_exists;
 	bool			in_exists;
 	bool			out_exists;
+	t_redir_in		*redir_in;
+	t_redir_out		*redir_out;
+	t_redir_append	*redir_append;
 	t_heredoc		*heredoc;
-	int				file_fd;
 	char			**cmd;
 	char			*file;
 	struct s_ast	*head;
@@ -161,6 +182,7 @@ bool	token_validation(t_data *data);
 void	ast_lstclear(t_data *data);
 // AST Utils Functions
 t_ast	*new_ast(t_token *token);
+t_ast	*ast_mem_allocate(t_ast **new_node);
 void	add_left_ast(t_ast *ast, t_ast *new_node);
 void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);

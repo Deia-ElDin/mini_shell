@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/29 15:11:17 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:03:25 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,16 @@ int	main(int ac, char **av, char **env)
 	data_free(&data);
 	return (data.exit_status);
 }
+
+/*
+Rework redirection node types, create structs for each redirection type, additionally
+rework the hardcoded implementation of checking for redirection in parse_cmd file,
+it must instead look through all the next redirection and take the last as the redirection
+to be applied, it must also work with different types
+
+Ex: cat < 1 < 2 < 3 > 3 > 2 > 1
+this should be equivilant to cat < 3 > 1
+the redir in doesnt create any files, but redir out will create files 3 and 2 before outputting
+to the final file 1. Additionally any failure in opening files should exit that commands exec
+with the appropriate error message and exit status code.
+*/

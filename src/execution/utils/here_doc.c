@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 09:57:27 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:14:43 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	}
 	else
 		file = tmp->value;
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd("\n", 2);
 	while (ast->right->cmd[i])
 		file = ft_strjoin(file, ast->right->cmd[i++]);
+	file = ft_strjoin(file, ft_itoa(ast->right->token->index));
+	ft_putstr_fd(file, 2);
+	ft_putstr_fd("\n", 2);
 	ast->right->heredoc->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0775);
 	if (ast->right->heredoc->fd == -1)
 		return (perror("open failed"), ft_putstr_fd("\n", 2), 0);
