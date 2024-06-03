@@ -6,10 +6,9 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/28 13:29:52 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:33:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -27,6 +26,8 @@ static void	recursive_free(t_ast **lst)
 			close((*lst)->pipe[0]);
 			close((*lst)->pipe[1]);
 		}
+		if ((*lst)->heredoc && (*lst)->heredoc->exists)
+			unlink((*lst)->heredoc->file);
 		free(*lst);
 		*lst = NULL;
 	}

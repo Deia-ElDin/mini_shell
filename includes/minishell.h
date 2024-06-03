@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/29 13:26:10 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:57:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ enum
 {
 	NODE_REDIR_IN,
 	NODE_REDIR_OUT,
-	NODE_HEREDOC,
 	NODE_APPEND,
 	NODE_WORD,
 	NODE_CMD,
@@ -54,8 +53,8 @@ enum
 	TOKEN_DOUBLE_QUOTE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
-	TOKEN_HEREDOC,
 	TOKEN_APPEND,
+	TOKEN_HEREDOC,
 	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
@@ -82,6 +81,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_heredoc
+{
+	char			*file;
+	char			*stop_key;
+	int				fd;
+	bool			exists;
+}	t_heredoc;
+
 typedef struct s_ast
 {
 	int				end_flag;
@@ -92,8 +99,7 @@ typedef struct s_ast
 	bool			prev_exists;
 	bool			in_exists;
 	bool			out_exists;
-	bool			heredoc_exists;
-	int				heredoc_fd;
+	t_heredoc		*heredoc;
 	int				file_fd;
 	char			**cmd;
 	char			*file;

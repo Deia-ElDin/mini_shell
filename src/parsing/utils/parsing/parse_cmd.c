@@ -6,25 +6,59 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/28 16:28:10 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:13:56 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
+{
+	t_heredoc	*heredoc;
+
+	heredoc = (t_heredoc *)ft_calloc(1, sizeof(t_heredoc));
+	if (!heredoc)
+		return (ft_putstr_fd("ERR\n", 2), -1);
+	right_node->heredoc = heredoc;
+	right_node->heredoc->exists = false;
+	if (next && next->type == TOKEN_HEREDOC)
+	{
+		right_node->type = next->type - 2;
+		if (next->next)
+		{
+			ft_putstr_fd("	FOUND HEREDOC\n", 2);
+			right_node->heredoc->exists = true;
+			right_node->heredoc->stop_key = next->next->value;
+			next->next->is_parsed = true;
+		}
+		else
+			right_node->heredoc->file = NULL;
+		next->is_parsed = true;
+	}
+	else
+		return (0);
+	return (1);
+}
+
 static void	check_redir_tokens(t_token *token, t_ast *right_node)
 {
-	if (token->next && token->next->type < TOKEN_WORD)
+	t_token	*next;
+
+	next = token->next;
+	if (check_heredoc_tokens(next, right_node) && next->next)
+		next = next->next->next;
+	if (next && next->type < TOKEN_WORD)
 	{
-		right_node->type = token->next->type - 2;
-		if (token->next->next)
+		right_node->type = next->type - 2;
+		if (next->next)
 		{
-			right_node->file = token->next->next->value;
-			token->next->next->is_parsed = true;
+			ft_putstr_fd("	FOUND REDIRECTION\n", 2);
+			right_node->file = next->next->value;
+			next->next->is_parsed = true;
 		}
 		else
 			right_node->file = NULL;
-		token->next->is_parsed = true;
+		next->is_parsed = true;
 	}
 	else
 		right_node->type = NODE_WORD;
