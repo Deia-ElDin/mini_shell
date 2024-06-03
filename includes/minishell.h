@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/03 09:02:16 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:57:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ typedef struct s_token
 typedef struct s_heredoc
 {
 	char			*file;
+	char			*stop_key;
 	int				fd;
-	bool			heredoc_exists;
+	bool			exists;
 }	t_heredoc;
 
 typedef struct s_ast

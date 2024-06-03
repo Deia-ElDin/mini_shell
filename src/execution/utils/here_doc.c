@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 09:06:14 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:57:27 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ static void	read_heredoc(char *file, t_ast *ast)
 	char	*str;
 
 	str = readline("> ");
-	while (ft_strcmp(str, ast->right->file))
+	ast->right->heredoc->file = file;
+	while (ft_strcmp(str, ast->right->heredoc->stop_key))
 	{
-		ft_putstr_fd(str, ast->heredoc->fd);
-		ft_putstr_fd("\n", ast->heredoc->fd);
+		ft_putstr_fd(str, ast->right->heredoc->fd);
+		ft_putstr_fd("\n", ast->right->heredoc->fd);
 		str = readline("> ");
 	}
-	close (ast->heredoc->fd);
-	ast->heredoc->fd = open(file, O_RDONLY, 0755);
-	if (ast->heredoc->fd == -1)
+	close (ast->right->heredoc->fd);
+	ast->right->heredoc->fd = open(file, O_RDONLY, 0755);
+	if (ast->right->heredoc->fd == -1)
 		perror("open failed");
 }
 
@@ -35,11 +36,10 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	char		*file;
 	int			i;
 
-	if (!ast->right->heredoc || !ast->right->heredoc->heredoc_exists)
+	if (!ast->right->heredoc->exists)
 		return (0);
 	i = 0;
 	ast->prev_exists = true;
-	ast->right->heredoc->heredoc_exists = true;
 	tmp = env_get(data, "TMPDIR");
 	if (!tmp)
 	{
