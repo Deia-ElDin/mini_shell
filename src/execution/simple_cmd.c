@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/05/29 15:13:41 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:07:28 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
 	if (ast->head->in_exists)
 		dup2(ast->head->file_fd, STDIN_FILENO);
-	if (ast->head->prev_exists && !ast->head->heredoc->heredoc_exists)
+	if (ast->head->prev_exists && !ast->heredoc->heredoc_exists)
 	{
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
 		close(ast->head->prev_pipe[READ_END]);
 	}
-	else if (ast->head->prev_exists && ast->head->heredoc->heredoc_exists)
-		dup2(ast->head->heredoc->fd, STDIN_FILENO);
+	else if (ast->head->prev_exists && ast->heredoc->heredoc_exists)
+		dup2(ast->heredoc->fd, STDIN_FILENO);
 	if (ast->head->pipe_exists)
 	{
 		close(ast->head->pipe[READ_END]);
@@ -50,10 +50,10 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
 	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
-	if (ast->prev_exists && !ast->heredoc->heredoc_exists)
+	if (ast->prev_exists && !ast->right->heredoc->heredoc_exists)
 		close(ast->prev_pipe[READ_END]);
-	else if (ast->prev_exists && ast->heredoc->heredoc_exists)
-		close(ast->heredoc->fd);
+	else if (ast->prev_exists && ast->right->heredoc->heredoc_exists)
+		close(ast->right->heredoc->fd);
 	if (ast->pipe_exists)
 		close(ast->pipe[WRITE_END]);
 	if (ast->out_exists)
