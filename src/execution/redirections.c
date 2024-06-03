@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 10:15:55 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:28:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	redirect_in(t_ast *ast)
 int	redirect_out(t_ast *ast)
 {
 	ast->head->out_exists = true;
-	// unlink(ast->file);
-	ast->head->file_fd = open(ast->file, O_CREAT | O_WRONLY | O_TRUNC, 0755);
+	unlink(ast->file);
+	ast->head->file_fd = open(ast->file, O_CREAT | O_WRONLY, 0755);
 	if (ast->head->file_fd == -1)
 		return (1);
 	return (0);
