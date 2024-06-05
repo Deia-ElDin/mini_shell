@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/03 15:17:04 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:45:24 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ typedef struct s_ast
 	int				*prev_pipe;
 	bool			pipe_exists;
 	bool			prev_exists;
-	bool			in_exists;
-	bool			out_exists;
 	t_redir_in		*redir_in;
 	t_redir_out		*redir_out;
 	t_redir_append	*redir_append;
@@ -183,6 +181,7 @@ void	ast_lstclear(t_data *data);
 // AST Utils Functions
 t_ast	*new_ast(t_token *token);
 t_ast	*ast_mem_allocate(t_ast **new_node);
+t_ast	*set_ast_defaults(t_ast *ast);
 void	add_left_ast(t_ast *ast, t_ast *new_node);
 void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);

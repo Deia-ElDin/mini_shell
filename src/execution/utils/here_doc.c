@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 15:14:43 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:21:12 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	prepare_heredocs(t_ast *ast, t_data *data)
 {
 	if (!ast || !data)
 		return ;
-	if (ast->type == NODE_CMD)
+	if (ast->type == NODE_CMD && ast->right->type == NODE_REDIR)
 		check_for_heredoc(ast, data);
 	if (ast->left && ast->left->type >= NODE_CMD)
 		prepare_heredocs(ast->left, data);

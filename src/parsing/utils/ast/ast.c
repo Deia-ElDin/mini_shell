@@ -6,11 +6,25 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 15:18:27 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:46:02 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
+
+t_ast	*set_ast_defaults(t_ast *ast)
+{
+	ast->head = NULL;
+	ast->left = NULL;
+	ast->right = NULL;
+	ast->end_flag = 0;
+	ast->pipe_exists = false;
+	ast->prev_exists = false;
+	ast->prev_pipe = NULL;
+	ast->pipe[0] = -1;
+	ast->pipe[1] = -1;
+	return (ast);
+}
 
 t_ast	*ast_mem_allocate(t_ast **new_node)
 {
@@ -53,8 +67,6 @@ t_ast	*new_ast(t_token *token)
 	new_node->right = NULL;
 	new_node->pipe_exists = false;
 	new_node->prev_exists = false;
-	new_node->in_exists = false;
-	new_node->out_exists = false;
 	new_node->prev_pipe = NULL;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;

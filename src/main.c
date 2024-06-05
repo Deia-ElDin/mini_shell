@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/03 11:03:25 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:05:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ int	main(int ac, char **av, char **env)
 }
 
 /*
+
+Additionally Add check for redir_in before a command, and make sure pipes done go for
+the filename of a redirection instead of the next command incase the redirection is
+before the command.
+
+Preferably create new node structure with type NODE_REDIR that is to the right of the right
+cmd node, which will contain all redirection chained together in order.
+
 Rework redirection node types, create structs for each redirection type, additionally
 rework the hardcoded implementation of checking for redirection in parse_cmd file,
 it must instead look through all the next redirection and take the last as the redirection
