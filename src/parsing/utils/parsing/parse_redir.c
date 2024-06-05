@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:03:47 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 14:42:57 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:47:21 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	parse_redir_out(t_token *token, t_ast *new_node)
 	new_node->type = NODE_REDIR;
 	if (token->type == TOKEN_APPEND)
 	{
-		new_node->redir_in->exists = false;
+	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
 		new_node->redir_append->exists = true;
 		new_node->redir_append->file = token->next->value;
 	}
 	else if (token->type == TOKEN_REDIR_OUT)
 	{
-		new_node->redir_append->exists = false;
+	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
 		new_node->redir_out->exists = true;
 		new_node->redir_out->file = token->next->value;
 	}
@@ -36,13 +36,13 @@ static void	parse_redir_in(t_token *token, t_ast *new_node)
 	new_node->type = NODE_REDIR;
 	if (token->type == TOKEN_REDIR_IN)
 	{
-		new_node->heredoc->exists = false;
+	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
 		new_node->redir_in->exists = true;
 		new_node->redir_in->file = token->next->value;
 	}
 	else if (token->type == TOKEN_HEREDOC)
 	{
-		new_node->redir_in->exists = false;
+	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
 		new_node->heredoc->exists = true;
 		new_node->heredoc->stop_key = token->next->value;
 	}
