@@ -6,7 +6,7 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/03 16:12:01 by melshafi         ###   ########.fr        #
+#    Updated: 2024/06/05 13:35:29 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ LIBS = -lreadline
 
 MAIN = main.c delete_me.c
 
-PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c
+PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c parse_redir.c
 EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c utils.c
 EXECUTION_UTILS = env_utils.c cmd_utils.c str_join.c pipe_utils.c here_doc.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c

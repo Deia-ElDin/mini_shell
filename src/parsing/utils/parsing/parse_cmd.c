@@ -6,73 +6,26 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:18:36 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:47:55 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	parse_redir_type(t_token *next, t_ast *right_node)
-{
-	right_node->type = NODE_REDIR;
-	if (next->type == TOKEN_APPEND)
-	{
-		right_node->redir_in->exists = false;
-		right_node->redir_append->exists = true;
-		right_node->redir_append->file = next->next->value;
-	}
-	else if (next->type == TOKEN_REDIR_OUT)
-	{
-		right_node->redir_append->exists = false;
-		right_node->redir_out->exists = true;
-		right_node->redir_out->file = next->next->value;
-	}
-	if (next->type == TOKEN_REDIR_IN)
-	{
-		right_node->heredoc->exists = false;
-		right_node->redir_in->exists = true;
-		right_node->redir_in->file = next->next->value;
-	}
-	else if (next->type == TOKEN_HEREDOC)
-	{
-		right_node->redir_in->exists = false;
-		right_node->heredoc->exists = true;
-		right_node->heredoc->stop_key = next->next->value;
-	}
-	next->next->is_parsed = true;
-	next = next->next->next;
-}
-
 static void	check_redir_tokens(t_token *token, t_ast *right_node)
 {
 	t_token	*next;
-	int		redir_token;
+	t_token	*prev;
 
 	next = token->next;
-	redir_token = TOKEN_REDIR_IN;
-	if (!next || next->type > TOKEN_HEREDOC)
-		right_node->type = NODE_WORD;
+	prev = token->prev;
+	right_node->type = NODE_WORD;
 	right_node->cmd = ft_split(token->value, ' ');
 	right_node->token = token;
-	while (redir_token >= TOKEN_REDIR_OUT)
-	{
-		while (next && !next->is_parsed && (next->type == redir_token || next->type == redir_token + 1))
-		{
-			next->is_parsed = true;
-			if (next->next)
-				parse_redir_type(next, right_node);
-			else
-			{
-				right_node->type = -1;
-				ft_putstr_fd("minishell: syntax error near unexpected token\
-				 `newline'", 2);
-				right_node->type = NODE_WORD;
-				break ;
-			}
-		}
-		next = token->next;
-		redir_token -= 2;
-	}
+	if (prev && is_file(prev))
+		check_left_for_redir(prev->prev, right_node);
+	if (next && is_file(next->next))
+		check_right_for_redir(next, right_node);
 }
 
 t_ast	*parse_cmd(t_token *token, t_ast *new_node)

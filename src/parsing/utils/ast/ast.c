@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 10:46:02 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:20:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_ast	*ast_mem_allocate(t_ast **new_node)
 
 t_ast	*new_ast(t_token *token)
 {
-	t_ast	(*new_node);
+	t_ast	*new_node;
 
 	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
 	if (!new_node || !ast_mem_allocate(&new_node))

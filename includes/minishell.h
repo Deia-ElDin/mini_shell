@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/05 10:45:24 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:18:06 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
+void	check_left_for_redir(t_token *token, t_ast *right_node);
+void	check_right_for_redir(t_token *token, t_ast *right_node);
 
 //	*-> Env Functions
 t_env	*env_get(t_data *data, char *key);

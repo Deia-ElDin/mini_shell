@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/05 12:05:18 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:44:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if (!parser(&data))
 			continue ;
-		prepare_heredocs(data.ast, &data);
-		// print_ast(data.ast);
-		execution(&data);
+		// prepare_heredocs(data.ast, &data);
+		print_ast(data.ast);
+		// execution(&data);
 		data_reset(&data);
 	}
 	data_free(&data);
