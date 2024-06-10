@@ -17,13 +17,13 @@ static void	parse_redir_out(t_token *token, t_ast *new_node)
 	new_node->type = NODE_REDIR;
 	if (token->type == TOKEN_APPEND)
 	{
-	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
+	ft_putstr_fd("		PREPARING APPEND\n", 2);
 		new_node->redir_append->exists = true;
 		new_node->redir_append->file = token->next->value;
 	}
 	else if (token->type == TOKEN_REDIR_OUT)
 	{
-	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
+	ft_putstr_fd("		PREPARING REDIR OUT\n", 2);
 		new_node->redir_out->exists = true;
 		new_node->redir_out->file = token->next->value;
 	}
@@ -36,7 +36,7 @@ static void	parse_redir_in(t_token *token, t_ast *new_node)
 	new_node->type = NODE_REDIR;
 	if (token->type == TOKEN_REDIR_IN)
 	{
-	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
+	ft_putstr_fd("		PREPARING REDIR IN\n", 2);
 		new_node->redir_in->exists = true;
 		new_node->redir_in->file = token->next->value;
 	}
@@ -59,6 +59,8 @@ static void	create_redir_ast_attached(t_token *token, t_ast *node)
 	if (!new_node || !ast_mem_allocate(&new_node))
 		return ;
 	set_ast_defaults(new_node);
+	ft_putstr_fd(token->value, 2);
+	ft_putstr_fd("\n", 2);
 	if (token->type == TOKEN_REDIR_IN || token->type == TOKEN_HEREDOC)
 		parse_redir_in(token, new_node);
 	else if (token->type == TOKEN_REDIR_OUT || token->type == TOKEN_APPEND)
@@ -95,7 +97,7 @@ void	check_right_for_redir(t_token *token, t_ast *node)
 	{
 		token->is_parsed = true;
 		if (token->next && is_file(token->next))
-			create_redir_ast_attached(token->prev, node);
+			create_redir_ast_attached(token, node);
 		else
 		{
 			node->type = -1;

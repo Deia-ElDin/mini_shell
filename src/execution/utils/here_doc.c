@@ -83,7 +83,7 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 
 void	prepare_heredocs(t_ast *ast, t_data *data)
 {
-	ft_putstr_fd("		PREPARING HEREDOC\n", 2);
+	ft_putstr_fd("		LOOPING HEREDOC\n", 2);
 	if (!ast || !data)
 		return ;
 	if (ast->type == NODE_REDIR)
