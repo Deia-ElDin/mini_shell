@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/10 14:37:33 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:02:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ char	*get_cmd_path(char *cmd, t_data *data);
 int		is_first_pipe(t_ast *ast);
 int		is_last_pipe(t_ast *ast);
 //	*->redir_utils.c
+int		clear_temp(t_ast *ast);
 int		in_exists(t_ast *ast);
 int		out_exists(t_ast *ast);
 int		append_exists(t_ast *ast);

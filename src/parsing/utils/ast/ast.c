@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 13:55:00 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:37:10 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_ast	*new_ast(t_token *token)
 	new_node->head = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	new_node->in_fd = NULL;
+	new_node->out_fd = NULL;
 	new_node->pipe_exists = false;
 	new_node->prev_exists = false;
 	new_node->prev_pipe = NULL;

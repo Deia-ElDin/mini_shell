@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/28 16:13:36 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:34:10 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ t_ast	*parser(t_data *data)
 		return (head_node);
 	recursive_parsing(data, head_token, head_node);
 	data->ast = head_node;
-	while (head_node->right)
+	while (head_node->right && head_node->type >= NODE_CMD)
 		head_node = head_node->right;
 	head_node->end_flag = 1;
 	return (head_node);

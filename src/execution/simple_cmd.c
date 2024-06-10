@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 15:09:18 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:46:54 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
-	if (in_exists(ast))
-		dup2(*(ast->head->in_fd), STDIN_FILENO);
-	if (ast->head->prev_exists && !heredoc_exists(ast))
+	if (ast->head->prev_exists && !in_exists(ast))
 	{
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
 		close(ast->head->prev_pipe[READ_END]);
 	}
-	else if (ast->head->prev_exists && heredoc_exists(ast))
+	else if (ast->head->prev_exists && in_exists(ast))
+		dup2(*(ast->head->in_fd), STDIN_FILENO);
+	else if (in_exists(ast))
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
 	if (ast->head->pipe_exists)
 	{
@@ -50,7 +50,7 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 	}
 	if (out_exists(ast))
 		dup2(*(ast->head->out_fd), STDOUT_FILENO);
-	else if (append_exists(ast))
+	else if (out_exists(ast))
 		dup2(*(ast->head->out_fd), STDOUT_FILENO);
 	execute_command(cmd, ast, data);
 }
@@ -58,9 +58,9 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
 	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
-	if (ast->prev_exists && !heredoc_exists(ast))
+	if (ast->prev_exists && !in_exists(ast))
 		close(ast->prev_pipe[READ_END]);
-	else if (ast->prev_exists && heredoc_exists(ast))
+	else if (ast->prev_exists && in_exists(ast))
 		close(*(ast->in_fd));
 	else if (in_exists(ast))
 		close(*(ast->in_fd));
@@ -68,7 +68,7 @@ static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 		close(ast->pipe[WRITE_END]);
 	if (out_exists(ast))
 		close(*(ast->out_fd));
-	else if (append_exists(ast))
+	else if (out_exists(ast))
 		close(*(ast->out_fd));
 }
 
@@ -82,7 +82,7 @@ int	simple_cmd(t_data *data)
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
 	if (!check_for_redirs(ast->right->right))
-		return (free(path), 1);
+		return (ft_putstr_fd("No such file or directory\n", 2), free(path), 1);
 	if (is_builtin(data))
 		builtins(data);
 	else

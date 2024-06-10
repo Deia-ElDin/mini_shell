@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 14:58:21 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:41:23 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ static void	set_prev_exists(t_ast *ast)
 static void	read_heredoc(char *file, t_ast *ast)
 {
 	char	*str;
-	t_ast	*head;
 
-	head = ast;
 	str = readline("> ");
 	ast->heredoc->file = file;
 	while (ft_strcmp(str, ast->heredoc->stop_key))
@@ -51,12 +49,6 @@ static void	read_heredoc(char *file, t_ast *ast)
 		str = readline("> ");
 	}
 	close (ast->heredoc->fd);
-	ast->heredoc->fd = open(file, O_RDONLY, 0755);
-	if (ast->heredoc->fd == -1)
-		perror("open failed");
-	while (head->head && head->type != NODE_CMD)
-		head = head->head;
-	head->in_fd = &(ast->heredoc->fd);
 }
 
 static int	check_for_heredoc(t_ast *ast, t_data *data)
@@ -74,11 +66,9 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	else
 		file = tmp->value;
 	file = set_file_name(ast, file);
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd("\n", 2);
 	ast->heredoc->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0775);
 	if (ast->heredoc->fd == -1)
-		return (perror("open failed"), ft_putstr_fd("\n", 2), 0);
+		return (perror("open failed"), ft_putstr_fd("ERR\n", 2), 0);
 	return (read_heredoc(file, ast), 1);
 }
 
