@@ -51,8 +51,8 @@ int	main(int ac, char **av, char **env)
 		if (!parser(&data))
 			continue ;
 		prepare_heredocs(data.ast, &data);
-		print_ast(data.ast);
-		// execution(&data);
+		// print_ast(data.ast);
+		execution(&data);
 		data_reset(&data);
 	}
 	data_free(&data);
