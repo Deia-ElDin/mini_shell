@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 10:19:12 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:35:48 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 		execve(cmd, ast->cmd, data->env);
 		ft_putstr_fd("child execution FAILED\n", 2);
 		exit(1);
+	}
+	else
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(ast->cmd[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	exit(1);
 }

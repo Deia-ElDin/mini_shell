@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/28 13:03:30 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:10:04 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	lexer(t_data *data)
 	if (!token_validation(data))
 		return (token_clear(data), false);
 	token_merge(data);
-	// print_tokens(data->tokens);
+	print_tokens(data->tokens);
 	return (true);
 }
 // printf("\ntokens list\n");
