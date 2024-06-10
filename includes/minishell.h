@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/10 13:16:07 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:37:33 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_ast
 	int				end_flag;
 	int				type;
 	int				pipe[2];
+	int				*in_fd;
+	int				*out_fd;
 	int				*prev_pipe;
 	bool			pipe_exists;
 	bool			prev_exists;
@@ -121,7 +123,6 @@ typedef struct s_ast
 	t_redir_append	*redir_append;
 	t_heredoc		*heredoc;
 	char			**cmd;
-	char			*file;
 	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
@@ -194,10 +195,6 @@ void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
 void	prepare_heredocs(t_ast *ast, t_data *data);
 //	*-> redirections.c
-int		redirect_in(t_ast *ast);
-int		redirect_out(t_ast *ast);
-int		here_doc(t_ast *ast);
-int		append(t_ast *ast);
 int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
 // int		or_operator(t_ast *ast, t_data *data);
@@ -214,6 +211,11 @@ char	*get_cmd_path(char *cmd, t_data *data);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);
 int		is_last_pipe(t_ast *ast);
+//	*->redir_utils.c
+int		in_exists(t_ast *ast);
+int		out_exists(t_ast *ast);
+int		append_exists(t_ast *ast);
+int		heredoc_exists(t_ast *ast);
 
 // Builtins Functions
 void	builtins(t_data *data);

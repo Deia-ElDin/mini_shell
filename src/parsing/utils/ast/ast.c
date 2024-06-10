@@ -6,11 +6,11 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 13:20:46 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:55:00 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 t_ast	*set_ast_defaults(t_ast *ast)
 {

@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:44:02 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:58:21 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static void	set_prev_exists(t_ast *ast)
 static void	read_heredoc(char *file, t_ast *ast)
 {
 	char	*str;
+	t_ast	*head;
 
+	head = ast;
 	str = readline("> ");
 	ast->heredoc->file = file;
 	while (ft_strcmp(str, ast->heredoc->stop_key))
@@ -52,6 +54,9 @@ static void	read_heredoc(char *file, t_ast *ast)
 	ast->heredoc->fd = open(file, O_RDONLY, 0755);
 	if (ast->heredoc->fd == -1)
 		perror("open failed");
+	while (head->head && head->type != NODE_CMD)
+		head = head->head;
+	head->in_fd = &(ast->heredoc->fd);
 }
 
 static int	check_for_heredoc(t_ast *ast, t_data *data)
@@ -59,10 +64,6 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	t_env		*tmp;
 	char		*file;
 
-	ft_putstr_fd("		CHECKING HEREDOC\n", 2);
-	if (!ast->heredoc->exists)
-		return (0);
-	ft_putstr_fd("		INSIDE HEREDOC\n", 2);
 	set_prev_exists(ast);
 	tmp = env_get(data, "TMPDIR");
 	if (!tmp)
@@ -83,10 +84,9 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 
 void	prepare_heredocs(t_ast *ast, t_data *data)
 {
-	ft_putstr_fd("		LOOPING HEREDOC\n", 2);
 	if (!ast || !data)
 		return ;
-	if (ast->type == NODE_REDIR)
+	if (ast->type == NODE_REDIR && ast->heredoc->exists)
 		check_for_heredoc(ast, data);
 	prepare_heredocs(ast->left, data);
 	prepare_heredocs(ast->right, data);

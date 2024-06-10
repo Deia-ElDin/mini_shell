@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 13:35:48 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:09:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,43 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
-	if (ast->redir_in->exists)
-		dup2(ast->redir_in->fd, STDIN_FILENO);
-	if (ast->head->prev_exists && !ast->heredoc->exists)
+	if (in_exists(ast))
+		dup2(*(ast->head->in_fd), STDIN_FILENO);
+	if (ast->head->prev_exists && !heredoc_exists(ast))
 	{
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
 		close(ast->head->prev_pipe[READ_END]);
 	}
-	else if (ast->head->prev_exists && ast->heredoc->exists)
-		dup2(ast->heredoc->fd, STDIN_FILENO);
+	else if (ast->head->prev_exists && heredoc_exists(ast))
+		dup2(*(ast->head->in_fd), STDIN_FILENO);
 	if (ast->head->pipe_exists)
 	{
 		close(ast->head->pipe[READ_END]);
 		dup2(ast->head->pipe[WRITE_END], STDOUT_FILENO);
 		close(ast->head->pipe[WRITE_END]);
 	}
-	if (ast->redir_out->exists)
-		dup2(ast->redir_out->fd, STDOUT_FILENO);
-	else if (ast->redir_append->exists)
-		dup2(ast->redir_append->fd, STDOUT_FILENO);
+	if (out_exists(ast))
+		dup2(*(ast->head->out_fd), STDOUT_FILENO);
+	else if (append_exists(ast))
+		dup2(*(ast->head->out_fd), STDOUT_FILENO);
 	execute_command(cmd, ast, data);
 }
 
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
 	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
-	if (ast->prev_exists && !ast->right->heredoc->exists)
+	if (ast->prev_exists && !heredoc_exists(ast))
 		close(ast->prev_pipe[READ_END]);
-	else if (ast->prev_exists && ast->right->heredoc->exists)
-		close(ast->right->heredoc->fd);
+	else if (ast->prev_exists && heredoc_exists(ast))
+		close(*(ast->in_fd));
+	else if (in_exists(ast))
+		close(*(ast->in_fd));
 	if (ast->pipe_exists)
 		close(ast->pipe[WRITE_END]);
-	if (ast->redir_out->exists)
-		close(ast->redir_out->fd);
-	else if (ast->redir_append->exists)
-		close(ast->redir_append->fd);
+	if (out_exists(ast))
+		close(*(ast->out_fd));
+	else if (append_exists(ast))
+		close(*(ast->out_fd));
 }
 
 int	simple_cmd(t_data *data)
@@ -79,7 +81,7 @@ int	simple_cmd(t_data *data)
 	ast = data->ast;
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
-	if (!check_for_redirs(ast->right))
+	if (!check_for_redirs(ast->right->right))
 		return (free(path), 1);
 	if (is_builtin(data))
 		builtins(data);
