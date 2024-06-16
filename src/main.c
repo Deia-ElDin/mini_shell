@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/29 15:11:17 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/16 15:46:56 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	main(int ac, char **av, char **env)
 		ft_free(&line, 'p');
 		if (!data.line)
 			exit_failure(&data);
-		if (!lexer(&data))
-			continue ;
-		if (!parser(&data))
-			continue ;
-		prepare_heredocs(data.ast, &data);
+		if (lexer(&data) && parser(&data))
+		{
+			prepare_heredocs(data.ast, &data);
+			execution(&data);
+		}
 		// print_ast(data.ast);
 		execution(&data);
 		data_reset(&data);
