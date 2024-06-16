@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/16 15:46:56 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/16 15:54:01 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int ac, char **av, char **env)
 			execution(&data);
 		}
 		// print_ast(data.ast);
-		execution(&data);
 		data_reset(&data);
 	}
 	data_free(&data);
