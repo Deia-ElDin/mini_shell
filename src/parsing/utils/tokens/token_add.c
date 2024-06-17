@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_add.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/28 13:06:15 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:28:31 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ static int	token_type(char *token)
 static t_token	*token_values(t_data *data, char *value, int index)
 {
 	t_token	*token;
+	char	*dollar_sign;
 
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (data_status(data, 1), NULL);
 	token->type = token_type(value);
-	if (ft_strchr(value, '$') && token->type != TOKEN_SINGLE_QUOTE)
+	dollar_sign = ft_strchr(value, '$');
+	if (dollar_sign && *(dollar_sign + 1) != '"' && *(dollar_sign + 1) != ' '
+		&& token->type != TOKEN_SINGLE_QUOTE)
 		token->value = env_expansion(data, value);
 	else
 		token->value = ft_strtrim(value, WHITESPACES);
