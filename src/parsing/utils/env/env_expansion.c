@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/16 15:46:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/17 14:46:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ char	*env_expansion(t_data *data, char *str)
 	result = ft_strdup("");
 	while (*str)
 	{
-		if (!*(str + 1))
-			break ;
 		if (*str == '$')
 		{
 			str++;
@@ -87,4 +85,3 @@ char	*env_expansion(t_data *data, char *str)
 	}
 	return (result);
 }
-

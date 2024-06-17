@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/28 13:03:30 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:23:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	lexer(t_data *data)
 	if (!token_validation(data))
 		return (token_clear(data), false);
 	token_merge(data);
-	// print_tokens(data->tokens);
+	print_tokens(data->tokens);
 	return (true);
 }
 // printf("\ntokens list\n");

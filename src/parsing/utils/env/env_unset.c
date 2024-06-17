@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 20:25:21 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/16 16:14:02 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/16 20:17:40 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	env_unset(t_data *data)
 	key = data->ast->right->cmd[1];
 	if (!data || !key)
 		return ;
-	printf("key %s\n", key);
 	current = data->env_list;
 	previous = NULL;
 	while (current)
