@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/28 16:13:36 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:20:16 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,28 +155,3 @@ t_ast	*parser(t_data *data)
 	head_node->end_flag = 1;
 	return (head_node);
 }
-/*
-ls -la > file.txt | grep "drwxr" file.txt > file2.txt | wc -l && echo "done" && echo "success" && echo "yo" | sort | uniq
-*/
-
-/*
-index: 0 type: 2, value = .ls -la. space = 1
-index: 1 type: 4, value = .>. space = 1
-index: 2 type: 2, value = .file.txt. space = 1
-index: 3 type: 7, value = .|. space = 1
-index: 4 type: 2, value = .grep drwxr file.txt. space = 1
-index: 5 type: 4, value = .>. space = 1
-index: 6 type: 2, value = .file2.txt. space = 1
-index: 7 type: 7, value = .|. space = 1
-index: 8 type: 2, value = .wc -l. space = 1
-index: 9 type: 9, value = .&&. space = 1
-index: 10 type: 2, value = .echo done. space = 1
-index: 11 type: 9, value = .&&. space = 1
-index: 12 type: 2, value = .echo success. space = 1
-index: 13 type: 9, value = .&&. space = 1
-index: 14 type: 2, value = .echo yo. space = 1
-index: 15 type: 7, value = .|. space = 1
-index: 16 type: 2, value = .sort. space = 1
-index: 17 type: 7, value = .|. space = 1
-index: 18 type: 2, value = .uniq. space = 0
-*/

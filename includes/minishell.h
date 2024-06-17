@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/03 09:57:11 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:40:12 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,6 @@ void	data_free(t_data *data);
 
 //	*-> errors
 void	syntax_error(char *err);
-void	export_err(t_data *data, char *err);
 
 //	*-> exit.c
 void	exit_success(t_data *data);

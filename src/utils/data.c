@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/21 18:04:08 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:30:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	data_init(t_data *data, char **env)
 		data->env = env;
 		env_tolst(data);
 		update_shlvl(data);
-		update_shlvl(data);
 		env_toarr(data);
 		path_env = env_get(data, "PATH");
 		if (path_env && path_env->value)
@@ -113,6 +112,5 @@ void	data_free(t_data *data)
 	ft_free(&data->line, 'p');
 	ft_free(&data->line, 'p');
 	ft_free(&data->path, 'a');
-	ft_free(&data->env_arr, 'a');
 	ft_free(&data->env_arr, 'a');
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:20 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/28 11:36:00 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:31:23 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	**sort_arr(char **arr);
 static void	print_arr(char **arr);
 static void	args_cases(t_data *data, char *args);
+static void	export_err(t_data *data, char *err);
 void		export(t_data *data);
 
 static char	**sort_arr(char **arr)
@@ -98,6 +99,15 @@ static	void	args_cases(t_data *data, char *args)
 		env_set(data, args, "", false);
 	ft_free(&key, 'p');
 	ft_free(&value, 'p');
+}
+
+static void	export_err(t_data *data, char *err)
+{
+	ft_putstr_fd(ERR_PROMPT, STDERR_FILENO);
+	ft_putstr_fd("export: `", STDERR_FILENO);
+	ft_putstr_fd(err, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	data_status(data, 2);
 }
 
 /// @brief The export builtin command
