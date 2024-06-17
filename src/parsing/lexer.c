@@ -5,12 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/17 20:14:00 by dehamad          ###   ########.fr       */
+/*   Created: 2024/06/17 20:15:21 by dehamad           #+#    #+#             */
+/*   Updated: 2024/06/17 20:15:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
