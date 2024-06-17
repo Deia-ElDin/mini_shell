@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/16 20:23:53 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/17 20:14:00 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	lexer(t_data *data)
 	if (!token_validation(data))
 		return (token_clear(data), false);
 	token_merge(data);
-	print_tokens(data->tokens);
+	// print_tokens(data->tokens);
 	return (true);
 }
 // printf("\ntokens list\n");
