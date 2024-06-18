@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/17 20:21:12 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 18:51:01 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	echo(t_data *data)
 {
 	int		i;
 	bool	n_flag;
+	char	*print_value;
 
 	i = 1;
 	n_flag = false;
@@ -25,13 +26,11 @@ void	echo(t_data *data)
 		n_flag = true;
 		i++;
 	}
-	while (data->ast->right->cmd[i])
-	{
-		ft_putstr_fd(data->ast->right->cmd[i], STDOUT_FILENO);
-		if (data->ast->right->cmd[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
+	print_value = data->ast->token->value;
+	while (*print_value != ' ')
+		print_value++;
+	ft_putstr_fd(print_value, STDOUT_FILENO);
+	print_value = NULL;
 	if (!n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }

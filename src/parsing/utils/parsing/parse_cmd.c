@@ -3,41 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 10:13:56 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:44:47 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**parse_commands(t_token *token, t_ast *node)
-{
-	char	**cmds;
-	int		i;
-	int	size;
+// static char	**parse_commands(t_token *token, t_ast *node)
+// {
+// 	(void) node;
+// 	char	**cmds;
+// 	int		i;
+// 	int	size;
 		
-	size = 0;
-	i = 0;
-	cmds = ft_split(token->value, ' ');
-	if (token->value[ft_strlen(token->value) - 1] == ' ')
-	{
-		while (cmds[size])
-			size++;
-		node->cmd = (char **)ft_calloc((size + 2), sizeof(char *));
-		while (cmds[i])
-		{
-			node->cmd[i] = ft_strdup(cmds[i]);
-			i++;
-		}
-		node->cmd[i] = ft_strdup("");
-		node->cmd[i + 1] = NULL;
-		ft_free(&cmds, 'a');
-		cmds = node->cmd;
-	}
-	return (cmds);
-}
+// 	size = ft_strlen(token->value);
+// 	i = 0;
+// 	// ft_putstr_fd("token->value: ", 2);
+// 	// ft_putstr_fd(token->value, 2);
+// 	// ft_putstr_fd("\n", 2);
+// 	cmds = (char **)ft_calloc((3), sizeof(char *));
+// 	while (token->value[i] && token->value[i] != ' ')
+// 		i++;
+// 	cmds[0] = ft_substr(token->value, 0, i);
+// 	cmds[1] = ft_substr(token->value, i + 1, size - i);
+// 	cmds[2] = NULL;
+// 	// if (token->value[ft_strlen(token->value) - 1] == ' ')
+// 	// {
+// 	// 	while (cmds[size])
+// 	// 		size++;
+// 	// 	node->cmd = (char **)ft_calloc((size + 2), sizeof(char *));
+// 	// 	while (cmds[i])
+// 	// 	{
+// 	// 		node->cmd[i] = ft_strdup(cmds[i]);
+// 	// 		i++;
+// 	// 	}
+// 	// 	node->cmd[i] = ft_strdup("");
+// 	// 	node->cmd[i + 1] = NULL;
+// 	// 	ft_free(&cmds, 'a');
+// 	// 	cmds = node->cmd;
+// 	// }
+// 	return (cmds);
+// }
 
 static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
 {
@@ -87,7 +96,7 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	}
 	else
 		right_node->type = NODE_WORD;
-	right_node->cmd = parse_commands(token, right_node);
+	right_node->cmd = ft_split(token->value, ' ');
 }
 
 t_ast	*parse_cmd(t_token *token, t_ast *new_node)

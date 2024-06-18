@@ -129,6 +129,7 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
+char	**split_cmds(char const *s);
 
 //	*-> Env Functions
 t_env	*env_get(t_data *data, char *key);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 12:40:20 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 09:30:26 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:45:26 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_ast	*new_ast(t_token *token)
 	new_node->heredoc = heredoc;
 	new_node->heredoc->exists = false;
 	new_node->prev_pipe = NULL;
+	new_node->token = token;
 	new_node->pipe[0] = -1;
 	new_node->pipe[1] = -1;
 	if (new_node->type == NODE_CMD)
