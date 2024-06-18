@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/17 14:46:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:57:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ static char	*extract_var_name(char **str)
 {
 	char	*start;
 
+	if (**str == '?')
+	{
+		(*str)++;
+		return (ft_strdup("?"));
+	}
 	start = *str;
 	while (**str && !ft_isspace(**str) && !ft_isquote(**str))
 		(*str)++;
@@ -69,6 +74,7 @@ char	*env_expansion(t_data *data, char *str)
 {
 	char	*result;
 
+	printf("str: %s\n", str);
 	result = ft_strdup("");
 	while (*str)
 	{
