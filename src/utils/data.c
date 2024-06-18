@@ -99,7 +99,6 @@ void	data_reset(t_data *data)
 	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');
-	// data->exit_status = 0;
 }
 
 /// @brief Used to free the data structure at the end of the program

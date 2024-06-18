@@ -22,7 +22,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 		ft_putstr_fd("child execution FAILED\n", 2);
 		exit(1);
 	}
-	exit(1);
+	exit(data->exit_status);
 }
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
@@ -49,7 +49,10 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
-	data->exit_status = check_for_sleep(data, pid, path, ast->right->end_flag);
+	// ft_putstr_fd("1Testing exit code: ", 2);
+	// ft_putnbr_fd(data->exit_status, 2);
+	// ft_putstr_fd("\n", 2);
+	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
 	if (ast->prev_exists && !ast->right->heredoc->exists)
 		close(ast->prev_pipe[READ_END]);
 	else if (ast->prev_exists && ast->right->heredoc->exists)
@@ -85,5 +88,8 @@ int	simple_cmd(t_data *data)
 		else if (pid > 0)
 			call_parent(pid, path, ast, data);
 	}
+	// ft_putstr_fd("3Testing exit code: ", 2);
+	// ft_putnbr_fd(data->exit_status, 2);
+	// ft_putstr_fd("\n", 2);
 	return (free(path), data->exit_status);
 }

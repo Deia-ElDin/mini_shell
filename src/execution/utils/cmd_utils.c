@@ -12,17 +12,18 @@
 
 #include "minishell.h"
 
-int	check_for_sleep(t_data *data, int pid, char *cmd, int last)
+int	check_for_sleep(int pid, char *cmd, int last)
 {
 	int	status;
 
-	if (data->exit_status)
-		return (data->exit_status);
 	status = 0;
 	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
 		|| last)
 		waitpid(pid, &status, 0);
 	else
 		waitpid(pid, &status, WNOHANG);
+	// ft_putstr_fd("2Testing exit code: ", 2);
+	// ft_putnbr_fd(status, 2);
+	// ft_putstr_fd("\n", 2);
 	return (status);
 }

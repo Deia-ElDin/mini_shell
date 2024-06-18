@@ -186,7 +186,7 @@ int		pipe_cmd(t_data *data);
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
 //	*-> cmd_utils.c
-int		check_for_sleep(t_data *data, int pid, char *cmd, int last);
+int		check_for_sleep(int pid, char *cmd, int last);
 char	*get_cmd_path(char *cmd, t_data *data);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);
