@@ -25,7 +25,7 @@ LIBS = -lreadline
 
 MAIN = main.c delete_me.c
 
-PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c
+PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c custom_split.c
 EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c utils.c
 EXECUTION_UTILS = env_utils.c cmd_utils.c str_join.c pipe_utils.c here_doc.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c
