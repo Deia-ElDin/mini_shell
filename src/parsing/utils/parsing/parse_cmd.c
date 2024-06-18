@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+<<<<<<< HEAD
 // static char	**parse_commands(t_token *token, t_ast *node)
 // {
 // 	(void) node;
@@ -47,6 +48,43 @@
 // 	// }
 // 	return (cmds);
 // }
+=======
+static char	**parse_commands(t_token *token, t_ast *node)
+{
+	(void) node;
+	char	**cmds;
+	int		i;
+	int	size;
+		
+	size = ft_strlen(token->value);
+	i = 0;
+	// ft_putstr_fd("token->value: ", 2);
+	// ft_putstr_fd(token->value, 2);
+	// ft_putstr_fd("\n", 2);
+	cmds = (char **)ft_calloc((3), sizeof(char *));
+	while (token->value[i] && token->value[i] != ' ')
+		i++;
+	cmds[0] = ft_substr(token->value, 0, i);
+	cmds[1] = ft_substr(token->value, i + 1, size - i);
+	cmds[2] = NULL;
+	// if (token->value[ft_strlen(token->value) - 1] == ' ')
+	// {
+	// 	while (cmds[size])
+	// 		size++;
+	// 	node->cmd = (char **)ft_calloc((size + 2), sizeof(char *));
+	// 	while (cmds[i])
+	// 	{
+	// 		node->cmd[i] = ft_strdup(cmds[i]);
+	// 		i++;
+	// 	}
+	// 	node->cmd[i] = ft_strdup("");
+	// 	node->cmd[i + 1] = NULL;
+	// 	ft_free(&cmds, 'a');
+	// 	cmds = node->cmd;
+	// }
+	return (cmds);
+}
+>>>>>>> 8560f237e995b54c6ae69d2cb6f43f2bf9ad47ed
 
 static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
 {
