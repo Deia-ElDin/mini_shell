@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:20 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/17 21:31:23 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:39:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ static	void	args_cases(t_data *data, char *args)
 	}
 	else
 		env_set(data, args, "", false);
+	// printf("new env_arr:\n");
+	// if (data->env_arr)
+	// {
+	// 	print_env_array(data->env_arr);
+	// 	print_env_list(data->env_list);
+	// }
 	ft_free(&key, 'p');
 	ft_free(&value, 'p');
 }

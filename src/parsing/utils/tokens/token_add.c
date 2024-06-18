@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/17 20:28:31 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:45:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 	token->type = token_type(value);
 	dollar_sign = ft_strchr(value, '$');
 	if (dollar_sign && *(dollar_sign + 1) != '"' && *(dollar_sign + 1) != ' '
-		&& token->type != TOKEN_SINGLE_QUOTE)
+		&& token->type != TOKEN_SINGLE_QUOTE && ft_strlen(value) > 1)
 		token->value = env_expansion(data, value);
 	else
 		token->value = ft_strtrim(value, WHITESPACES);
