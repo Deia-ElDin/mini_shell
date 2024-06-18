@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/18 15:55:11 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:45:15 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 		builtins_with_out(data);
 	else if (cmd)
 	{
-		execve(cmd, ast->cmd, data->env);
+		execve(cmd, ast->cmd, data->env_arr);
 		ft_putstr_fd("child execution FAILED\n", 2);
 		exit(1);
 	}
