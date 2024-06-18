@@ -25,6 +25,8 @@ void	builtins(t_data *data)
 		exit_shell(data);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		env_unset(data);
+	else if (ft_strcmp(cmd, "export") == 0)
+		export(data);
 	else
 		return ;
 }

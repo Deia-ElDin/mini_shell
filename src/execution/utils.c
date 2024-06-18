@@ -21,7 +21,8 @@ bool	is_builtin(t_data *data)
 	cmd = data->ast->left->cmd[0];
 	if (!ft_strcmp(cmd, "cd")
 		|| !ft_strcmp(cmd, "exit")
-		|| !ft_strcmp(cmd, "unset"))
+		|| !ft_strcmp(cmd, "unset")
+		|| (!ft_strcmp(cmd, "export") && data->ast->right->cmd[1] != NULL))
 		return (true);
 	return (false);
 }

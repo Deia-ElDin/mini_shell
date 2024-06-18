@@ -97,12 +97,12 @@ static	void	args_cases(t_data *data, char *args)
 	}
 	else
 		env_set(data, args, "", false);
-	// printf("new env_arr:\n");
-	// if (data->env_arr)
-	// {
-	// 	print_env_array(data->env_arr);
-	// 	print_env_list(data->env_list);
-	// }
+	printf("new env_arr:\n");
+	if (data->env_arr)
+	{
+		print_env_array(data->env_arr);
+		print_env_list(data->env_list);
+	}
 	ft_free(&key, 'p');
 	ft_free(&value, 'p');
 }
