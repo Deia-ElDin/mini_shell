@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:37:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/21 13:01:42 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:46:50 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	cd_error(t_data *data, char *msg)
 		ft_putstr_fd(strerror(errno), fd);
 	}
 	ft_putchar_fd('\n', fd);
-	data_status(data, 1);
+	data->exit_status = 1;
 }
 
 static char	*get_path(t_data *data)
@@ -72,10 +72,14 @@ void	cd(t_data *data)
 		return (cd_error(data, "getcwd failed"));
 	env_set(data, "OLDPWD", cwd, true);
 	if (chdir(path) != 0)
-		return (cd_error(data, path), free(path));
+	{
+		cd_error(data, path);
+		free(path);
+		return ;
+	}
 	free(path);
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (cd_error(data, "getcwd failed"));
 	env_set(data, "PWD", cwd, true);
-	data_status(data, 0);
+	data->exit_status = 0;
 }

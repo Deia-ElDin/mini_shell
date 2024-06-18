@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 09:13:33 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:55:11 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
-	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
+	data->exit_status = check_for_sleep(data, pid, path, ast->right->end_flag);
 	if (ast->prev_exists && !ast->right->heredoc->exists)
 		close(ast->prev_pipe[READ_END]);
 	else if (ast->prev_exists && ast->right->heredoc->exists)
@@ -74,14 +74,16 @@ int	simple_cmd(t_data *data)
 	if (is_builtin(data))
 		builtins(data);
 	else
+	{
 		pid = fork();
-	if (pid < 0)
-		ft_putstr_fd("fork failed\n", 2);
-	if (pid < 0)
-		data->exit_status = pid;
-	if (pid == 0)
-		call_child(path, ast->right, data);
-	else if (pid > 0)
-		call_parent(pid, path, ast, data);
+		if (pid < 0)
+			ft_putstr_fd("fork failed\n", 2);
+		if (pid < 0)
+			data->exit_status = pid;
+		if (pid == 0)
+			call_child(path, ast->right, data);
+		else if (pid > 0)
+			call_parent(pid, path, ast, data);
+	}
 	return (free(path), data->exit_status);
 }

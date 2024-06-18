@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/17 21:30:37 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:21:47 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	data_reset(t_data *data)
 	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');
-	data->exit_status = 0;
+	// data->exit_status = 0;
 }
 
 /// @brief Used to free the data structure at the end of the program
