@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 15:55:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:38:19 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,17 +216,11 @@ void	data_free(t_data *data);
 //	*-> errors
 void	syntax_error(char *err);
 
-//	*-> exit.c
-void	exit_success(t_data *data);
-void	exit_failure(t_data *data);
 //	*-> free.c
 void	free_ast(t_ast *ast);
 void	free_data(t_data *data);
 //	*-> init.c
 void	init_data(t_data *data, char **env);
-//	*-> utils.c
-void	skip_spaces(const char *line, int *i);
-void	skip_quotes(const char *line, int *i);
 
 // DELETE ME
 void	print_env_array(char **env);

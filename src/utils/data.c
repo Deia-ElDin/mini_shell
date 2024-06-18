@@ -6,14 +6,12 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 15:21:47 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:39:22 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/// @brief Used to update the SHLVL environment variable
-/// @param data The main struct
 static void	update_shlvl(t_data *data)
 {
 	t_env	*shlvl_env;
@@ -39,9 +37,6 @@ static void	update_shlvl(t_data *data)
 	ft_free(&shlvl_str, 'p');
 }
 
-/// @brief Used to initialize the data structure
-/// @param data The main struct
-/// @param env A double pointer to the environment variables
 void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
@@ -74,24 +69,11 @@ void	data_init(t_data *data, char **env)
 	}
 }
 
-/**
- * The purpose of this function is to initialize the data structure
- * The purpose of the data->error: is to use it as a flag where
- * we need to stop a stage of the execution of the program,
- * i.e if we found a quote error while creating the tokens list,
- * since we can't validate the quotes in the token_validation function
-*/
-
-/// @brief Used to update the exit status in the data structure
-/// @param data The main struct
-/// @param exit_status The exit status to be updated
 void	data_status(t_data *data, int exit_status)
 {
 	data->exit_status = exit_status;
 }
 
-/// @brief Used to reset the data structure after each user input
-/// @param data The main struct
 void	data_reset(t_data *data)
 {
 	// dup2(data->std_fds[1], 1);

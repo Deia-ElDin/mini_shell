@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/18 14:43:48 by dehamad          ###   ########.fr        #
+#    Updated: 2024/06/18 20:38:42 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ PARSING_UTILS_TOKEN = token_add.c token_delone.c token_lstclear.c token_merge.c 
 	token_tolst.c token_validation.c token_last.c
 PARSING_UTILS_AST = ast_lstclear.c ast.c
 
-UTILS = error.c exit.c data.c
+UTILS = error.c data.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \

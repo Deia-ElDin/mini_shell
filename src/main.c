@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 15:35:42 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:37:39 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int ac, char **av, char **env)
 		data.line = ft_strtrim(line, WHITESPACES);
 		ft_free(&line, 'p');
 		if (!data.line)
-			exit_failure(&data);
+			exit_shell(&data);
 		if (lexer(&data) && parser(&data))
 		{
 			prepare_heredocs(data.ast, &data);
