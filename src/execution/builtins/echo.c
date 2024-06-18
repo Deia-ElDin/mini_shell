@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 18:51:01 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 18:55:10 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	echo(t_data *data)
 	print_value = data->ast->token->value;
 	while (*print_value != ' ')
 		print_value++;
+	print_value++;
 	ft_putstr_fd(print_value, STDOUT_FILENO);
 	print_value = NULL;
 	if (!n_flag)
