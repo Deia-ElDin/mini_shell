@@ -12,6 +12,33 @@
 
 #include "minishell.h"
 
+static char	**parse_commands(t_token *token, t_ast *node)
+{
+	char	**cmds;
+	int		i;
+	int	size;
+		
+	size = 0;
+	i = 0;
+	cmds = ft_split(token->value, ' ');
+	if (token->value[ft_strlen(token->value) - 1] == ' ')
+	{
+		while (cmds[size])
+			size++;
+		node->cmd = (char **)ft_calloc((size + 2), sizeof(char *));
+		while (cmds[i])
+		{
+			node->cmd[i] = ft_strdup(cmds[i]);
+			i++;
+		}
+		node->cmd[i] = ft_strdup("");
+		node->cmd[i + 1] = NULL;
+		ft_free(&cmds, 'a');
+		cmds = node->cmd;
+	}
+	return (cmds);
+}
+
 static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
 {
 	t_heredoc	*heredoc;
@@ -26,7 +53,6 @@ static int	check_heredoc_tokens(t_token *next, t_ast *right_node)
 		right_node->type = next->type - 2;
 		if (next->next)
 		{
-			ft_putstr_fd("	FOUND HEREDOC\n", 2);
 			right_node->heredoc->exists = true;
 			right_node->heredoc->stop_key = next->next->value;
 			next->next->is_parsed = true;
@@ -52,7 +78,6 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 		right_node->type = next->type - 2;
 		if (next->next)
 		{
-			ft_putstr_fd("	FOUND REDIRECTION\n", 2);
 			right_node->file = next->next->value;
 			next->next->is_parsed = true;
 		}
@@ -62,7 +87,7 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	}
 	else
 		right_node->type = NODE_WORD;
-	right_node->cmd = ft_split(token->value, ' ');
+	right_node->cmd = parse_commands(token, right_node);
 }
 
 t_ast	*parse_cmd(t_token *token, t_ast *new_node)
