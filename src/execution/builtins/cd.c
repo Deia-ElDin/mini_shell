@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:37:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 15:46:50 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/18 19:55:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	cd(t_data *data)
 	char	*path;
 	char	cwd[1024];
 
+	if (data->ast->right->cmd[2])
+		return (data_status(data, 1));
 	path = get_path(data);
 	if (!path)
 		return ;
