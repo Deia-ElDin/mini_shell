@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:22 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 21:03:49 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 12:53:11 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_shell(t_data *data)
 
 	if (data->ast->right->cmd[2])
 		data->exit_status = 1;
-	else if (ft_isalpha(data->ast->right->cmd[1][0]))
+	else if (data->ast->right->cmd[1] && ft_isalpha(data->ast->right->cmd[1][0]))
 		data->exit_status = 2;
 	else if (data->ast->right->cmd[1])
 	{

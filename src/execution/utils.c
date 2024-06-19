@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:15:25 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/28 11:48:49 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:49:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ bool	is_builtin(t_data *data)
 	if (!ft_strcmp(cmd, "cd")
 		|| !ft_strcmp(cmd, "exit")
 		|| !ft_strcmp(cmd, "unset")
-		|| (!ft_strcmp(cmd, "export") && data->ast->right->cmd[1] != NULL))
+		|| (!ft_strcmp(cmd, "export") && data->ast->right->cmd[1] != NULL
+		&& !data->ast->pipe_exists && !data->ast->right->pipe_exists))
 		return (true);
 	return (false);
 }

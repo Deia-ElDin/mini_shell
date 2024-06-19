@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 20:37:39 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 12:44:38 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	line = NULL;
+	// while (*env)
+	// {
+	// 	printf("%s\n", *env);
+	// 	(env)++;
+	// }
 	data_init(&data, env);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);

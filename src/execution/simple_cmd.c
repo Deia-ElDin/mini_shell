@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/18 20:45:15 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:18:07 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	if (is_builtin_with_out(data))
-		builtins_with_out(data);
-	else if (cmd)
 	{
-		execve(cmd, ast->cmd, data->env_arr);
-		ft_putstr_fd("child execution FAILED\n", 2);
-		exit(1);
+		builtins_with_out(data);
+		exit(data->exit_status);
 	}
-	exit(data->exit_status);
+	else if (cmd)
+		execve(cmd, ast->cmd, data->env_arr);
+	if (ast->cmd[0])
+		print_error(ast->cmd[0], "command not found");
+	else
+		print_error(ast->cmd[0], "command not found");
+	exit(127);
 }
 
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
@@ -49,10 +52,10 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 
 static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
 {
+	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
 	// ft_putstr_fd("1Testing exit code: ", 2);
 	// ft_putnbr_fd(data->exit_status, 2);
 	// ft_putstr_fd("\n", 2);
-	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
 	if (ast->prev_exists && !ast->right->heredoc->exists)
 		close(ast->prev_pipe[READ_END]);
 	else if (ast->prev_exists && ast->right->heredoc->exists)
