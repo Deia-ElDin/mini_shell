@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:20 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 19:41:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:14:40 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ void	export(t_data *data)
 	char	**cmds;
 
 	cmds = data->ast->right->cmd;
-	// if (cmds[1] && cmds[2])
-	// 	return (export_err(data, cmds[2]));
 	oldpwd_env = env_get(data, "OLDPWD");
 	if (!oldpwd_env)
 		env_set(data, "OLDPWD", "", false);
@@ -138,4 +136,5 @@ void	export(t_data *data)
 	}
 	sorted_env = sort_arr(data->env_arr);
 	print_arr(sorted_env);
+	data->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 18:55:10 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:14:15 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	echo(t_data *data)
 	print_value = NULL;
 	if (!n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	data->exit_status = 0;
 }

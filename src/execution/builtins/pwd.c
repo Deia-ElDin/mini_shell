@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 19:35:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:14:46 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	pwd(t_data *data)
 		return (perror("pwd"), data_status(data, errno));
 	ft_putendl_fd(pwd, STDOUT_FILENO);
 	free(pwd);
-	data_status(data, 0);
+	data->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:24 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/18 20:58:36 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:14:29 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	env(t_data *data)
 		}
 		env = env->next;
 	}
+	data->exit_status = 0;
 }
