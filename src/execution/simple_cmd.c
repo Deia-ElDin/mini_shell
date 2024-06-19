@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/19 13:18:07 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:52:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,28 @@
 
 static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
+	struct stat	path_stat;
+
 	if (is_builtin_with_out(data))
 	{
 		builtins_with_out(data);
 		exit(data->exit_status);
 	}
+	else if (!stat(ast->cmd[0], &path_stat) && S_ISDIR(path_stat.st_mode)
+		&& (print_error(ast->cmd[0], "Is a directory"), 1))
+		exit(126);
+	else if (S_ISREG(path_stat.st_mode) && access(cmd, X_OK)
+		&& (print_error(ast->cmd[0], "Permission denied"), 1))
+		exit(126);
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
-	if (ast->cmd[0])
+	if (!ft_strncmp(ast->cmd[0], "/", 1) && !S_ISREG(path_stat.st_mode)
+		&& !S_ISDIR(path_stat.st_mode))
+		print_error(ast->cmd[0], "No such file or directory");
+	else if (ast->cmd[0] && cmd && S_ISREG(path_stat.st_mode))
 		print_error(ast->cmd[0], "command not found");
 	else
-		print_error(ast->cmd[0], "command not found");
+		print_error(NULL, "command not found");
 	exit(127);
 }
 
