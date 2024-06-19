@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/19 15:28:55 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:46:50 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	struct stat	path_stat;
 
-	printf("Command: %s\n", cmd);
-	printf("AST Command: %s\n", ast->cmd[0]);
+
 	if (is_builtin_with_out(data))
 	{
 		builtins_with_out(data);
@@ -26,12 +25,9 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 	else if (!stat(ast->cmd[0], &path_stat) && S_ISDIR(path_stat.st_mode)
 		&& (print_error(ast->cmd[0], "Is a directory"), 1))
 		exit(126);
-	else if (S_ISREG(path_stat.st_mode) && access(cmd, X_OK)
+	else if (S_ISREG(path_stat.st_mode) && access(cmd, X_OK) > 0
 		&& (print_error(ast->cmd[0], "Permission denied"), 1))
-	{
-		printf("path_stat.st_mode: %d\n", path_stat.st_mode);
 		exit(126);
-	}
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
 	if (!ft_strncmp(ast->cmd[0], "/", 1) && !S_ISREG(path_stat.st_mode)
