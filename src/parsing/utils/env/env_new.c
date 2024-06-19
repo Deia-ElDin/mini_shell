@@ -6,14 +6,14 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:49:47 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 17:51:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:51:08 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_env	*env_init(t_data *data, char *key, char *value, bool is_equal );
-void			env_new(t_data *data, char *key, char *value, bool is_equal );
+static t_env	*env_init(t_data *data, char *key, char *value, bool is_equal);
+void			env_new(t_data *data, char *key, char *value, bool is_equal);
 
 /// @brief Used to create a new env node and initialize it
 /// @param data The main struct

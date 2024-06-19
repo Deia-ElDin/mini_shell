@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 20:39:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:39:12 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
 
+	int i = 0;
+	while (env[i])
+	{
+		printf("env[%d]: %s\n", i, env[i]);
+		i++;
+	}
 	data->line = NULL;
 	data->env_list = NULL;
 	data->env = NULL;

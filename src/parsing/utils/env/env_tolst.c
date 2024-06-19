@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 04:28:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 18:24:37 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:56:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /// @param data The main struct
 void	env_tolst(t_data *data)
 {
-	char	**key_value;
-	bool	is_equal;
+	char	*key;
+	char	*value;
 	int		i;
 
 	data->env_list = NULL;
@@ -28,10 +28,13 @@ void	env_tolst(t_data *data)
 	{
 		if (ft_strchr(data->env[i], '='))
 		{
-			key_value = ft_split(data->env[i], '=');
-			is_equal = ft_strchr(data->env[i], '=');
-			env_new(data, key_value[0], key_value[1], is_equal);
-			ft_free(&key_value, 'a');
+			key = ft_strcdup(data->env[i], '=');
+			value = ft_strdup(ft_strchr(data->env[i], '=') + 1);
+			if (!key || !value)
+				return (data_status(data, 1));
+			env_new(data, key, value, true);
+			ft_free(&key, 'p');
+			ft_free(&value, 'p');
 		}
 		else
 			env_new(data, data->env[i], NULL, false);
