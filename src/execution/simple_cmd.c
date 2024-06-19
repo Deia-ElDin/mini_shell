@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:16:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 18:40:29 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 	if (!ft_strncmp(ast->cmd[0], "/", 1) && !S_ISREG(path_stat.st_mode)
 		&& !S_ISDIR(path_stat.st_mode))
 		print_error(ast->cmd[0], "No such file or directory");
-	else if (ast->cmd[0] && cmd && S_ISREG(path_stat.st_mode))
+	else if (ast->cmd[0])
 		print_error(ast->cmd[0], "command not found");
 	else
 		print_error(NULL, "command not found");
@@ -102,8 +102,5 @@ int	simple_cmd(t_data *data)
 		else if (pid > 0)
 			call_parent(pid, path, ast, data);
 	}
-	// ft_putstr_fd("3Testing exit code: ", 2);
-	// ft_putnbr_fd(data->exit_status, 2);
-	// ft_putstr_fd("\n", 2);
 	return (free(path), data->exit_status);
 }
