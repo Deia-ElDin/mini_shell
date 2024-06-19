@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/18 14:58:48 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:14:52 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 		token->value = ft_strtrim(value, WHITESPACES);
 	ft_free(&value, 'p');
 	if (!token->value)
-		return (data_status(data, 1), NULL);
+		return (NULL);
 	if (data->line[index] == ' ')
 		token->is_space = true;
 	else

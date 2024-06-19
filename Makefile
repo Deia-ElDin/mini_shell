@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/19 15:23:09 by dehamad          ###   ########.fr        #
+#    Updated: 2024/06/19 16:10:22 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,6 @@ SRCS = \
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
-	./minishell
 bonus: $(BONUS_NAME)
 sanitize: CFLAGS += -fsanitize=address
 sanitize: all

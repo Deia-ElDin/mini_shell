@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/17 20:20:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:13:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ t_ast	*parser(t_data *data)
 	if (head_token)
 		head_node = new_ast(head_token);
 	else
-		return (head_node);
+		return (print_error(NULL, "command not found"), NULL);
 	if (!head_node)
 		return (head_node);
 	recursive_parsing(data, head_token, head_node);
