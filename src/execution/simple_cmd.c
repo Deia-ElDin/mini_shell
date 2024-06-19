@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/19 14:52:51 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:28:55 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	struct stat	path_stat;
 
+	printf("Command: %s\n", cmd);
+	printf("AST Command: %s\n", ast->cmd[0]);
 	if (is_builtin_with_out(data))
 	{
 		builtins_with_out(data);
@@ -26,7 +28,10 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 		exit(126);
 	else if (S_ISREG(path_stat.st_mode) && access(cmd, X_OK)
 		&& (print_error(ast->cmd[0], "Permission denied"), 1))
+	{
+		printf("path_stat.st_mode: %d\n", path_stat.st_mode);
 		exit(126);
+	}
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
 	if (!ft_strncmp(ast->cmd[0], "/", 1) && !S_ISREG(path_stat.st_mode)
