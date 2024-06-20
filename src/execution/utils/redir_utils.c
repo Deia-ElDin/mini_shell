@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:57:46 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:21:16 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:15:44 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ int	clear_temp(t_ast *ast)
 
 int	in_exists(t_ast *ast)
 {
+	t_ast	*head;
+
+	head = ast;
 	while (ast)
 	{
-		if (ast->type == NODE_REDIR
+		if (ast->type == NODE_REDIR && head->in_fd
 			&& (ast->redir_in->exists || ast->heredoc->exists))
 			return (1);
 		ast = ast->right;
@@ -37,9 +40,12 @@ int	in_exists(t_ast *ast)
 
 int	out_exists(t_ast *ast)
 {
+	t_ast	*head;
+
+	head = ast;
 	while (ast)
 	{
-		if (ast->type == NODE_REDIR
+		if (ast->type == NODE_REDIR && head->out_fd
 			&& (ast->redir_out->exists || ast->redir_append->exists))
 			return (1);
 		ast = ast->right;
