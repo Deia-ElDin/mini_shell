@@ -6,11 +6,24 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 13:59:45 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:26:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_command_validity(char *path, char *cmd, struct stat path_stat)
+{
+	if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
+		&& S_ISDIR(path_stat.st_mode)
+		&& (print_error(cmd, "Is a directory"), 1))
+		return (1);
+	else if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
+		&& !access(path, F_OK) && !(path_stat.st_mode & S_IXUSR)
+		&& !(path_stat.st_mode & S_IXGRP) && !(path_stat.st_mode & S_IXOTH))
+		return (print_error(cmd, "Permission denied"), 1);
+	return (0);
+}
 
 static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
@@ -18,16 +31,13 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 
 	if (data->error)
 		exit(1);
+	stat(cmd, &path_stat);
 	if (is_builtin_with_out(data))
 	{
 		builtins_with_out(data);
 		exit(data->exit_status);
 	}
-	else if (!stat(ast->cmd[0], &path_stat) && S_ISDIR(path_stat.st_mode)
-		&& (print_error(ast->cmd[0], "Is a directory"), 1))
-		exit(126);
-	else if (S_ISREG(path_stat.st_mode) && access(cmd, X_OK) > 0
-		&& (print_error(ast->cmd[0], "Permission denied"), 1))
+	else if (check_command_validity(cmd, ast->cmd[0], path_stat))
 		exit(126);
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
