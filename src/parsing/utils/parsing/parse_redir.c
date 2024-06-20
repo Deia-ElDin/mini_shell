@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:03:47 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:59:28 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:47:33 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,37 +68,35 @@ static void	create_redir_ast_attached(t_token *token, t_ast *node)
 
 void	check_left_for_redir(t_token *token, t_ast *node)
 {
-	while (token && !token->is_parsed)
+	while (token)
 	{
-		token->is_parsed = true;
-		if (token->prev && is_file(token)
+		printf("left Current token is of type: %d", token->type);
+		if (token->prev && is_file(token) && !token->is_parsed
 			&& token->prev->type >= TOKEN_REDIR_IN
 			&& token->prev->type <= TOKEN_HEREDOC)
-			create_redir_ast_attached(token->prev, node);
-		else
 		{
-			node->type = -1;
-			node->type = NODE_WORD;
-			break ;
+			token->is_parsed = true;
+			create_redir_ast_attached(token->prev, node);
 		}
+		else
+			node->type = NODE_WORD;
 		token = token->prev->prev;
 	}
 }
 
 void	check_right_for_redir(t_token *token, t_ast *node)
 {
-	while (token && !token->is_parsed)
+	while (token)
 	{
-		token->is_parsed = true;
-		if (token->next && is_file(token->next)
+		printf("right Current token is of type: %d", token->type);
+		if (token->next && is_file(token->next) && !token->is_parsed
 			&& token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC)
-			create_redir_ast_attached(token, node);
-		else
 		{
-			node->type = -1;
-			node->type = NODE_WORD;
-			break ;
+			token->is_parsed = true;
+			create_redir_ast_attached(token, node);
 		}
+		else
+			node->type = NODE_WORD;
 		token = token->next->next;
 	}
 }
