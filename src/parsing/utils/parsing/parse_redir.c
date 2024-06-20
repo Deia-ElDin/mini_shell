@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:03:47 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/10 15:56:56 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:34:19 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,12 @@ void	check_left_for_redir(t_token *token, t_ast *node)
 	while (token && !token->is_parsed)
 	{
 		token->is_parsed = true;
-		if (token->prev && is_file(token))
+		if (token->prev && is_file(token)
+			&& token->prev->type >= TOKEN_REDIR_IN && token->prev->type <= TOKEN_HEREDOC)
 			create_redir_ast_attached(token->prev, node);
 		else
 		{
 			node->type = -1;
-			ft_putstr_fd("minishell: syntax error near unexpected token\
-			 `newline'", 2);
 			node->type = NODE_WORD;
 			break ;
 		}
@@ -90,13 +89,12 @@ void	check_right_for_redir(t_token *token, t_ast *node)
 	while (token && !token->is_parsed)
 	{
 		token->is_parsed = true;
-		if (token->next && is_file(token->next))
+		if (token->next && is_file(token->next)
+			&& token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC)
 			create_redir_ast_attached(token, node);
 		else
 		{
 			node->type = -1;
-			ft_putstr_fd("minishell: syntax error near unexpected token\
-			 `newline'", 2);
 			node->type = NODE_WORD;
 			break ;
 		}

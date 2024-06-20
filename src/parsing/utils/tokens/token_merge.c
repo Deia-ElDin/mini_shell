@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/20 20:45:47 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:18:18 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void		token_merge(t_data *data);
 static bool	is_token_mergeable(t_token *token)
 {
 	if (!token)
+		return (false);
+	if (token->prev && token->next && token->type == TOKEN_WORD
+		&& token->prev->type >= TOKEN_REDIR_IN
+		&& token->prev->type <= TOKEN_HEREDOC
+		&& token->next->type == TOKEN_WORD)
 		return (false);
 	if (token->type == TOKEN_WORD)
 		return (true);
