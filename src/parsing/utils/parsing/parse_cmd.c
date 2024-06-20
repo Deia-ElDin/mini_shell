@@ -6,21 +6,52 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 11:22:07 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:20:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*join_next_valid_token_words(t_token *token)
+{
+	bool	first;
+	char	*args;
+	char	*temp;
+
+	args = NULL;
+	first = true;
+	while (token && token->type <= TOKEN_WORD)
+	{
+		if (first)
+		{
+			args = ft_strjoin(token->value, NULL);
+			first = false;
+		}
+		else if (token->type == TOKEN_WORD && !is_file(token))
+		{
+			temp = args;
+			args = ft_strjoin(temp, " ");
+			free(temp);
+			temp = args;
+			args = ft_strjoin(temp, token->value);
+			free(temp);
+		}
+		token = token->next;
+	}
+	return (args);
+}
+
 static void	check_redir_tokens(t_token *token, t_ast *right_node)
 {
 	t_token	*next;
 	t_token	*prev;
+	char	*args;
 
 	next = token->next;
 	prev = token->prev;
 	right_node->type = NODE_WORD;
-	right_node->cmd = ft_split(token->value, ' ');
+	args = join_next_valid_token_words(token);
+	right_node->cmd = ft_split(args, ' ');
 	right_node->token = token;
 	if (prev && is_file(prev))
 		check_left_for_redir(prev->prev, right_node);
