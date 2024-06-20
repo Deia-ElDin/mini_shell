@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 10:28:18 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:46:15 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_for_redirs(t_ast *ast)
 	else if (ast->type == NODE_WORD)
 		return (1);
 	if (ast->type < NODE_WORD && ast->head->file_fd == -1)
-		return (ft_putstr_fd("ERR\n", 2), 0);
+		return (print_error(ast->file, "No such file or directory"), 0);
 	return (0);
 }
 

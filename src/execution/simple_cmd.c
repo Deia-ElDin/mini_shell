@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/19 18:40:29 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:56:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	struct stat	path_stat;
 
+	if (data->error)
+		exit(1);
 	if (is_builtin_with_out(data))
 	{
 		builtins_with_out(data);
@@ -87,7 +89,7 @@ int	simple_cmd(t_data *data)
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
 	if (!check_for_redirs(ast->right))
-		return (free(path), ast->right->file_fd);
+		return (free(path), (data->exit_status = 1, 1));
 	if (is_builtin(data))
 		builtins(data);
 	else
@@ -102,5 +104,6 @@ int	simple_cmd(t_data *data)
 		else if (pid > 0)
 			call_parent(pid, path, ast, data);
 	}
+	data->error = false;
 	return (free(path), data->exit_status);
 }

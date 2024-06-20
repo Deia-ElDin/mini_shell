@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/19 13:59:34 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:37:45 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	data_reset(t_data *data)
 {
 	// dup2(data->std_fds[1], 1);
 	// dup2(data->std_fds[0], 0);
+	data->error = false;
 	token_clear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');
