@@ -12,44 +12,54 @@
 
 #include "minishell.h"
 
-
 static t_token	*is_target(t_token *target, t_token *token)
 {
-    if (target)
-        return (target);
+	if (target)
+		return (target);
 	if (token->type == TOKEN_WORD && token->next && is_redirect(token->next))
 		return (token);
 	return (NULL);
 }
 
-void token_reorder(t_data *data) 
+static	bool	is_redirect_case(t_token *token)
 {
-    t_token *token;
-    t_token *target;
-    t_token *redirect;
+	return (token->prev && token->prev->prev
+		&& token->type == TOKEN_WORD
+		&& is_redirect(token->prev->prev));
+}
 
-    token = data->tokens;
-    target = NULL;
-    if (!token)
-        return ;
-    while (token)
-    {
-        target = is_target(target, token);
-        if (token->prev && token->prev->prev
-            && token->type == TOKEN_WORD
-            && is_redirect(token->prev->prev))
-        {
-            redirect = token->prev->prev;
-            token->prev->next = token->next;
-            if (token->next)
-                token->next->prev = token->prev;
-            token->prev = target;
-            token->next = redirect;
-            redirect->prev = token;
-            target->next = token;
-            target = NULL;
-            token = data->tokens;
-        }
-        token = token->next;
-    }
+static void	shift_tokens(t_token *token, t_token *target)
+{
+	t_token	*redirect;
+
+	redirect = token->prev->prev;
+	token->prev->next = token->next;
+	if (token->next)
+		token->next->prev = token->prev;
+	token->prev = target;
+	token->next = redirect;
+	redirect->prev = token;
+	target->next = token;
+}
+
+void	token_reorder(t_data *data)
+{
+	t_token	*token;
+	t_token	*target;
+
+	token = data->tokens;
+	target = NULL;
+	if (!token)
+		return ;
+	while (token)
+	{
+		target = is_target(target, token);
+		if (is_redirect_case(token))
+		{
+			shift_tokens(token, target);
+			target = NULL;
+			token = data->tokens;
+		}
+		token = token->next;
+	}
 }
