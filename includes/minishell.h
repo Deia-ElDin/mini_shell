@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/19 13:13:35 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:37:10 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ enum
 
 enum
 {
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
-	NODE_APPEND,
+	NODE_REDIR,
 	NODE_WORD,
 	NODE_CMD,
 	NODE_PIPE,
@@ -89,20 +87,42 @@ typedef struct s_heredoc
 	bool			exists;
 }	t_heredoc;
 
+typedef struct s_redir_in
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_in;
+
+typedef struct s_redir_out
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_out;
+
+typedef struct s_redir_append
+{
+	char			*file;
+	int				fd;
+	bool			exists;
+}	t_redir_append;
+
 typedef struct s_ast
 {
 	int				end_flag;
 	int				type;
 	int				pipe[2];
+	int				*in_fd;
+	int				*out_fd;
 	int				*prev_pipe;
 	bool			pipe_exists;
 	bool			prev_exists;
-	bool			in_exists;
-	bool			out_exists;
+	t_redir_in		*redir_in;
+	t_redir_out		*redir_out;
+	t_redir_append	*redir_append;
 	t_heredoc		*heredoc;
-	int				file_fd;
 	char			**cmd;
-	char			*file;
 	struct s_ast	*head;
 	struct s_ast	*left;
 	struct s_ast	*right;
@@ -129,6 +149,8 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
+void	check_left_for_redir(t_token *token, t_ast *right_node);
+void	check_right_for_redir(t_token *token, t_ast *right_node);
 
 //	*-> Env Functions
 t_env	*env_get(t_data *data, char *key);
@@ -161,6 +183,8 @@ bool	token_validation(t_data *data);
 void	ast_lstclear(t_data *data);
 // AST Utils Functions
 t_ast	*new_ast(t_token *token);
+t_ast	*ast_mem_allocate(t_ast **new_node);
+t_ast	*set_ast_defaults(t_ast *ast);
 void	add_left_ast(t_ast *ast, t_ast *new_node);
 void	add_right_ast(t_ast *ast, t_ast *new_node);
 // void	free_ast(t_ast *ast);
@@ -171,10 +195,6 @@ void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
 void	prepare_heredocs(t_ast *ast, t_data *data);
 //	*-> redirections.c
-int		redirect_in(t_ast *ast);
-int		redirect_out(t_ast *ast);
-int		here_doc(t_ast *ast);
-int		append(t_ast *ast);
 int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
 // int		or_operator(t_ast *ast, t_data *data);
@@ -191,6 +211,10 @@ char	*get_cmd_path(char *cmd, t_data *data);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);
 int		is_last_pipe(t_ast *ast);
+//	*->redir_utils.c
+int		clear_temp(t_ast *ast);
+int		in_exists(t_ast *ast);
+int		out_exists(t_ast *ast);
 
 // Builtins Functions
 void	builtins(t_data *data);

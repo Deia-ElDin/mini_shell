@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/19 16:10:22 by dehamad          ###   ########.fr        #
+#    Updated: 2024/06/20 11:28:33 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ LIBS = -lreadline
 
 MAIN = main.c delete_me.c
 
-PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c
+PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c parse_redir.c
 EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c utils.c
-EXECUTION_UTILS = env_utils.c cmd_utils.c str_join.c pipe_utils.c here_doc.c
+EXECUTION_UTILS = env_utils.c cmd_utils.c str_join.c pipe_utils.c here_doc.c redir_utils.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c
 UTILS = error.c exit.c data.c
 PARSING = lexer.c parser.c
@@ -50,7 +50,7 @@ SRCS = \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
 	$(addprefix src/execution/builtins/, $(EXECUTION_BUILTINS)) \
-	$(addprefix src/utils/, $(UTILS)) 
+	$(addprefix src/utils/, $(UTILS))
 
 OBJS = $(SRCS:.c=.o)
 

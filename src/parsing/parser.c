@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/19 16:18:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/20 11:19:04 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-static t_token	*get_head_node(t_token *tokens)
+static t_token	*get_head_node(t_token *tokens, int next_high_token)
 {
 	t_token	*token_node;
 	t_token	*nav_token;
-	int		next_high_token;
 
-	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
 	while (next_high_token >= TOKEN_WORD)
@@ -41,13 +39,11 @@ static t_token	*get_head_node(t_token *tokens)
 	return (token_node);
 }
 
-static t_token	*get_next_left_node(t_token *tokens)
+static t_token	*get_next_left_node(t_token *tokens, int next_high_token)
 {
 	t_token	*token_node;
 	t_token	*nav_token;
-	int		next_high_token;
 
-	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
 	while (next_high_token >= TOKEN_WORD)
@@ -75,13 +71,11 @@ static t_token	*get_next_left_node(t_token *tokens)
 /*
 Find next highest token in the precedence and returns next head token
 */
-static t_token	*get_next_right_node(t_token *tokens)
+static t_token	*get_next_right_node(t_token *tokens, int next_high_token)
 {
 	t_token	*token_node;
 	t_token	*nav_token;
-	int		next_high_token;
 
-	next_high_token = TOKEN_AND;
 	nav_token = NULL;
 	token_node = NULL;
 	while (next_high_token >= TOKEN_WORD)
@@ -115,14 +109,14 @@ static int	recursive_parsing(t_data *data, t_token *token, t_ast *node)
 	new_node = NULL;
 	if (!token)
 		return (1);
-	new_token = get_next_left_node(token);
+	new_token = get_next_left_node(token, TOKEN_AND);
 	if (new_token)
 		new_node = new_ast(new_token);
 	if (new_node)
 		add_left_ast(node, new_node);
 	if (new_node && new_token && recursive_parsing(data, new_token, new_node))
 		return (1);
-	new_token = get_next_right_node(token);
+	new_token = get_next_right_node(token, TOKEN_AND);
 	if (new_token)
 		new_node = new_ast(new_token);
 	if (new_node)
@@ -140,17 +134,17 @@ t_ast	*parser(t_data *data)
 	data->ast = NULL;
 	if (!data)
 		return (NULL);
-	head_token = get_head_node(data->tokens);
+	head_token = get_head_node(data->tokens, TOKEN_AND);
 	head_node = NULL;
 	if (head_token)
 		head_node = new_ast(head_token);
 	else
-		return (NULL);
+		return (head_node);
 	if (!head_node)
 		return (head_node);
 	recursive_parsing(data, head_token, head_node);
 	data->ast = head_node;
-	while (head_node->right)
+	while (head_node->right && head_node->type >= NODE_CMD)
 		head_node = head_node->right;
 	head_node->end_flag = 1;
 	return (head_node);
