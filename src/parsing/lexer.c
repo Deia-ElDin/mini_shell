@@ -22,9 +22,10 @@ bool	lexer(t_data *data)
 		return (token_clear(data), false);
 	if (!token_validation(data))
 		return (token_clear(data), false);
-	token_merge(data);
-	print_tokens(data->tokens);
 	token_reorder(data);
-	print_tokens(data->tokens);
+	// print_tokens(data->tokens);
+	token_merge(data);
+	// print_tokens(data->tokens);
+	
 	return (true);
 }
