@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 17:20:59 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:39:48 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*join_next_valid_token_words(t_token *token)
 			temp = args;
 			args = ft_strjoin(temp, token->value);
 			free(temp);
+			token->is_parsed = true;
 		}
 		token = token->next;
 	}
