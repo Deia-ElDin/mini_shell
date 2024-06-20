@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 16:18:18 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:54:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static char	*remove_quotes(t_data *data, t_token *token)
 	len = ft_strlen(token->value);
 	if (len < 2)
 		return (token->value);
-	new = NULL;
 	new = ft_substr(token->value, 1, len - 2);
 	if (!new)
 		return (data_status(data, 1), NULL);
@@ -85,7 +84,7 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 	token->is_space = false;
 	token->prev = NULL;
 	token->next = NULL;
-	if (second->is_space)
+	if (second && second->is_space)
 		token->is_space = true;
 	if (first->prev)
 	{
@@ -94,7 +93,7 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 	}
 	else
 		data->tokens = token;
-	if (second->next)
+	if (second && second->next)
 	{
 		second->next->prev = token;
 		token->next = second->next;
@@ -108,13 +107,19 @@ void	token_merge(t_data *data)
 	t_token	*next;
 
 	token = data->tokens;
-	while (token && token->next)
+	while (token)
 	{
 		token->index = 0;
 		next = token->next;
 		if (is_token_mergeable(token) && is_token_mergeable(next))
 		{
 			new_token(data, token, next);
+			token = data->tokens;
+		}
+		else if (token->type == TOKEN_SINGLE_QUOTE
+			|| token->type == TOKEN_DOUBLE_QUOTE)
+		{
+			new_token(data, token, NULL);
 			token = data->tokens;
 		}
 		else

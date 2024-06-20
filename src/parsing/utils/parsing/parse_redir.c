@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:03:47 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:34:19 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:56:43 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	check_left_for_redir(t_token *token, t_ast *node)
 	{
 		token->is_parsed = true;
 		if (token->prev && is_file(token)
-			&& token->prev->type >= TOKEN_REDIR_IN && token->prev->type <= TOKEN_HEREDOC)
+			&& token->prev->type >= TOKEN_REDIR_IN
+			&& token->prev->type <= TOKEN_HEREDOC)
 			create_redir_ast_attached(token->prev, node);
 		else
 		{
