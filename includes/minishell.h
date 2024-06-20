@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 11:37:10 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:25:28 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
 void	token_clear(t_data *data);
 void	token_merge(t_data *data);
+void	token_reorder(t_data *data);
 bool	token_validation(t_data *data);
 
 // *-> AST Functions
@@ -244,8 +245,12 @@ void	print_error(char *err_name, char *err);
 //	*-> free.c
 void	free_ast(t_ast *ast);
 void	free_data(t_data *data);
+
 //	*-> init.c
 void	init_data(t_data *data, char **env);
+
+//	*-> utils.c
+bool	is_redirect(t_token *token);
 
 // DELETE ME
 void	print_env_array(char **env);
