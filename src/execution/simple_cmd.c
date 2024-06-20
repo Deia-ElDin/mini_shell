@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 15:26:46 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:41:47 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	check_command_validity(char *path, char *cmd, struct stat path_stat)
 		&& (print_error(cmd, "Is a directory"), 1))
 		return (1);
 	else if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
-		&& !access(path, F_OK) && !(path_stat.st_mode & S_IXUSR)
-		&& !(path_stat.st_mode & S_IXGRP) && !(path_stat.st_mode & S_IXOTH))
+		&& !access(path, F_OK) && !(path_stat.st_mode & S_IXUSR))
 		return (print_error(cmd, "Permission denied"), 1);
 	return (0);
 }
