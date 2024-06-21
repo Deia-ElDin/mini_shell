@@ -25,12 +25,9 @@ int	clear_temp(t_ast *ast)
 
 int	in_exists(t_ast *ast)
 {
-	t_ast	*head;
-
-	head = ast;
 	while (ast)
 	{
-		if (ast->type == NODE_REDIR && head->in_fd
+		if (ast->type == NODE_REDIR
 			&& (ast->redir_in->exists || ast->heredoc->exists))
 			return (1);
 		ast = ast->right;
@@ -40,12 +37,9 @@ int	in_exists(t_ast *ast)
 
 int	out_exists(t_ast *ast)
 {
-	t_ast	*head;
-
-	head = ast;
 	while (ast)
 	{
-		if (ast->type == NODE_REDIR && head->out_fd
+		if (ast->type == NODE_REDIR
 			&& (ast->redir_out->exists || ast->redir_append->exists))
 			return (1);
 		ast = ast->right;
