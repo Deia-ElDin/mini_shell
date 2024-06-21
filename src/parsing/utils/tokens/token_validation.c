@@ -36,7 +36,8 @@ static bool	valid_redirect(t_token *crnt)
 {
 	if (!crnt->next)
 		return (false);
-	if (crnt->next->type != TOKEN_WORD)
+	if (crnt->next->type != TOKEN_WORD && crnt->next->type != TOKEN_SINGLE_QUOTE
+		&& crnt->next->type != TOKEN_DOUBLE_QUOTE)
 		return (false);
 	return (true);
 }

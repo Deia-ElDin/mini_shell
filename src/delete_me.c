@@ -51,6 +51,14 @@ void	print_ast(t_ast *ast)
 		printf("\nhead => type = %d ", ast->type);
 		if (ast->head)
 			printf("current nodes head type => %d", ast->head->type);
+		if (ast->heredoc->exists)
+			printf("\nheredoc file: %s\n", ast->heredoc->file);
+		if (ast->redir_in->exists)
+			printf("\nredir_in file: %s\n", ast->redir_in->file);
+		if (ast->redir_out->exists)
+			printf("\nredir_out file: %s\n", ast->redir_out->file);	
+		if (ast->redir_append->exists)
+			printf("\nredir_append file: %s\n", ast->redir_append->file);
 		printf("\n");
 		if (ast->cmd)
 		{
@@ -60,9 +68,13 @@ void	print_ast(t_ast *ast)
 		}
 		printf("\n");
 		if (ast->left && ast->left->head)
+		{
 			printf("	left => type = %d nodes head type => %d\n", ast->left->type, ast->left->head->type);
+		}
 		if (ast->right && ast->right->head)
+		{
 			printf("	right => type = %d nodes head type => %d\n", ast->right->type, ast->right->head->type);
+		}
 		if (ast->left)
 		{
 			printf("\nGoing left ---> \n");

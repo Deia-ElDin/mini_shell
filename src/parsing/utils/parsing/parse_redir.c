@@ -70,7 +70,6 @@ void	check_left_for_redir(t_token *token, t_ast *node)
 {
 	while (token)
 	{
-		printf("left Current token is of type: %d", token->type);
 		if (token->prev && is_file(token) && !token->is_parsed
 			&& token->prev->type >= TOKEN_REDIR_IN
 			&& token->prev->type <= TOKEN_HEREDOC)
@@ -88,7 +87,6 @@ void	check_right_for_redir(t_token *token, t_ast *node)
 {
 	while (token)
 	{
-		printf("right Current token is of type: %d", token->type);
 		if (token->next && is_file(token->next) && !token->is_parsed
 			&& token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC)
 		{
