@@ -28,6 +28,8 @@
 # define WHITESPACES " \t\v\f\r"
 
 # define SYNTAX_ERR "syntax error near unexpected token"
+# define STDIN_FILENO 0
+# define STDOUT_FILENO 1
 
 enum
 {
