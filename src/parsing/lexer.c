@@ -26,6 +26,5 @@ bool	lexer(t_data *data)
 	// print_tokens(data->tokens);
 	token_merge(data);
 	// print_tokens(data->tokens);
-	
 	return (true);
 }

@@ -68,7 +68,7 @@ static void	create_redir_ast_attached(t_token *token, t_ast *node)
 
 void	check_left_for_redir(t_token *token, t_ast *node)
 {
-	while (token)
+	while (token && token->type <= TOKEN_WORD)
 	{
 		if (token->prev && is_file(token) && !token->is_parsed
 			&& token->prev->type >= TOKEN_REDIR_IN
@@ -85,7 +85,7 @@ void	check_left_for_redir(t_token *token, t_ast *node)
 
 void	check_right_for_redir(t_token *token, t_ast *node)
 {
-	while (token)
+	while (token && token->type <= TOKEN_WORD)
 	{
 		if (token->next && is_file(token->next) && !token->is_parsed
 			&& token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC)

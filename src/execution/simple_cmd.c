@@ -110,7 +110,7 @@ int	simple_cmd(t_data *data)
 	pid_t	pid;
 
 	ast = data->ast;
-	// ft_putstr_fd("	SIMPLE CMD cmd:", 2);
+	// ft_putstr_fd("	SIMPLE CMD cmd=", 2);
 	// ft_putstr_fd(ast->left->cmd[0], 2);
 	// ft_putstr_fd("\n", 2);
 	pid = 1;
