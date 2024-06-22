@@ -16,7 +16,9 @@ static t_token	*is_target(t_token *target, t_token *token)
 {
 	if (target)
 		return (target);
-	if (token->type == TOKEN_WORD && token->next && is_redirect(token->next))
+	if ((token->type == TOKEN_WORD || token->type == TOKEN_SINGLE_QUOTE
+		|| token->type == TOKEN_DOUBLE_QUOTE) && token->next
+		&& is_redirect(token->next))
 		return (token);
 	return (NULL);
 }
@@ -24,7 +26,8 @@ static t_token	*is_target(t_token *target, t_token *token)
 static	bool	is_redirect_case(t_token *token)
 {
 	return (token->prev && token->prev->prev
-		&& token->type == TOKEN_WORD
+		&& (token->type == TOKEN_WORD || token->type == TOKEN_SINGLE_QUOTE
+		|| token->type == TOKEN_DOUBLE_QUOTE)
 		&& is_redirect(token->prev->prev));
 }
 
