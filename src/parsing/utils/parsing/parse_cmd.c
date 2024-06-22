@@ -25,6 +25,7 @@ static char	*join_next_valid_token_words(t_token *token)
 		if (first)
 		{
 			args = ft_strjoin(token->value, NULL);
+			token->is_parsed = true;
 			first = false;
 		}
 		else if (token->type == TOKEN_WORD && !is_file(token))
@@ -53,6 +54,7 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	right_node->type = NODE_WORD;
 	args = join_next_valid_token_words(token);
 	right_node->cmd = ft_split(args, ' ');
+	free(args);
 	right_node->token = token;
 	if (prev && is_file(prev))
 		check_left_for_redir(prev->prev, right_node);

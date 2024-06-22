@@ -23,14 +23,12 @@ static int	redirect_heredoc(t_ast *ast, t_ast *head)
 
 static int	redirect_in(t_ast *ast, t_ast *head)
 {
-	// printf("CHECKING REDIR IN (%s)\n", ast->redir_in->file);
 	if (access(ast->redir_in->file, F_OK))
 		return (print_error(ast->redir_in->file,
 				"No such file or directory"), 0);
 	else if (access(ast->redir_in->file, F_OK | R_OK))
 		return (print_error(ast->redir_in->file,
 				"Permission denied"), 0);
-	// printf("PASSED REDIR IN (%s)\n", ast->redir_in->file);
 	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0755);
 	if (ast->redir_in->fd == -1)
 		return (0);
@@ -40,12 +38,10 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 
 static int	redirect_out(t_ast *ast, t_ast *head)
 {
-	// printf("CHECKING REDIR OUT (%s)\n", ast->redir_out->file);
 	if (!access(ast->redir_out->file, F_OK)
 		&& access(ast->redir_out->file, W_OK))
 		return (print_error(ast->redir_out->file,
 				"Permission denied"), 0);
-	// printf("PASSED REDIR OUT (%s)\n", ast->redir_out->file);
 	ast->redir_out->fd = open(ast->redir_out->file,
 			O_CREAT | O_WRONLY | O_TRUNC, 0755);
 	if (ast->redir_out->fd == -1)
@@ -56,12 +52,10 @@ static int	redirect_out(t_ast *ast, t_ast *head)
 
 static int	append(t_ast *ast, t_ast *head)
 {
-	// printf("CHECKING APPEND OUT (%s)\n", ast->redir_append->file);
 	if (!access(ast->redir_append->file, F_OK)
 		&& access(ast->redir_append->file, W_OK))
 		return (print_error(ast->redir_append->file,
 				"Permission denied"), 0);
-	// printf("PASSED APPEND OUT (%s)\n", ast->redir_append->file);
 	ast->redir_append->fd = open(ast->redir_append->file,
 			O_CREAT | O_WRONLY | O_APPEND, 0755);
 	if (ast->redir_append->fd == -1)

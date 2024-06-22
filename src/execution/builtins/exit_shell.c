@@ -17,7 +17,7 @@ void	exit_shell(t_data *data)
 	t_atoi	res;
 	int		exit_code;
 
-	if (data->ast->right->cmd[2])
+	if (data->ast->right->cmd[1] && data->ast->right->cmd[2])
 		data->exit_status = 1;
 	else if (data->ast->right->cmd[1]
 		&& ft_isalpha(data->ast->right->cmd[1][0]))
@@ -34,6 +34,8 @@ void	exit_shell(t_data *data)
 	else if (data->exit_status > 255)
 		data->exit_status %= 256;
 	exit_code = data->exit_status;
+	while (data->ast->head)
+		data->ast = data->ast->head;
 	data_free(data);
 	exit(exit_code);
 }
