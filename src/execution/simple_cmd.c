@@ -56,9 +56,23 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 		close(ast->head->prev_pipe[READ_END]);
 	}
 	else if (ast->head->prev_exists && in_exists(ast))
+	{
+		// ft_putstr_fd("FOUND REDIR IN WITH PREV =", 2);
+		// ft_putstr_fd(cmd, 2);
+		// ft_putstr_fd(" =", 2);
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
+		// ft_putnbr_fd(*(ast->head->in_fd), 2);
+		// ft_putstr_fd("\n", 2);
+	}
 	else if (in_exists(ast))
+	{
+		// ft_putstr_fd("FOUND REDIR IN =", 2);
+		// ft_putstr_fd(cmd, 2);
+		// ft_putstr_fd(" =", 2);
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
+		// ft_putnbr_fd(*(ast->head->in_fd), 2);
+		// ft_putstr_fd("\n", 2);
+	}
 	if (ast->head->pipe_exists)
 	{
 		close(ast->head->pipe[READ_END]);
@@ -96,10 +110,17 @@ int	simple_cmd(t_data *data)
 	pid_t	pid;
 
 	ast = data->ast;
+	// ft_putstr_fd("	SIMPLE CMD cmd:", 2);
+	// ft_putstr_fd(ast->left->cmd[0], 2);
+	// ft_putstr_fd("\n", 2);
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
 	if (!check_for_redirs(ast->right->right))
+	{
+		if (ast->pipe_exists)
+			close(ast->pipe[WRITE_END]);
 		return (free(path), (data->exit_status = 1, 1));
+	}
 	if (is_builtin(data))
 		builtins(data);
 	else

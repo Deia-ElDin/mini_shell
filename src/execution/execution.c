@@ -19,6 +19,9 @@ void	execution(t_data *data)
 	ast = data->ast;
 	if (!data || !ast)
 		return ;
+	// ft_putstr_fd("	EXECUTION type:", 2);
+	// ft_putnbr_fd(ast->type, 2);
+	// ft_putstr_fd("\n", 2);
 	if (data->ast->type == NODE_PIPE)
 		pipe_cmd(data);
 	data->ast = ast->left;
