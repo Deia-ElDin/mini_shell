@@ -16,3 +16,5 @@ bool	is_redirect(t_token *token)
 {
 	return (token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC);
 }
+
+

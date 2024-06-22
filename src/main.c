@@ -12,16 +12,25 @@
 
 #include "minishell.h"
 
-static void	signal_handler(int signo)
+void	disable_ctrl_c_echo(void)
 {
-	if (signo == SIGINT)
+	struct termios	new_term;
+
+	new_term = (struct termios){0};
+	tcgetattr(STDIN_FILENO, &new_term);
+	new_term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
+}
+
+void	handle_sigint(int signal)
+{
+	if (signal == SIGINT)
 	{
-		printf("\n");
+		write(1, "\n", 1);
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (signo == SIGQUIT)
-		printf("Quit: 3\n");
 }
 
 int	main(int ac, char **av, char **env)
@@ -33,8 +42,9 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	line = NULL;
 	data_init(&data, env);
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	disable_ctrl_c_echo();
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline(PROMPT);
