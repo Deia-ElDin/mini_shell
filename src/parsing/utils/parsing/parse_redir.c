@@ -79,6 +79,8 @@ void	check_left_for_redir(t_token *token, t_ast *node)
 		}
 		else
 			node->type = NODE_WORD;
+		if (!token->prev)
+			break ;
 		token = token->prev->prev;
 	}
 }
@@ -95,6 +97,8 @@ void	check_right_for_redir(t_token *token, t_ast *node)
 		}
 		else
 			node->type = NODE_WORD;
+		if (!token->next)
+			break ;
 		token = token->next->next;
 	}
 }

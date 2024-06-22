@@ -59,7 +59,14 @@ void	token_reorder(t_data *data)
 	while (token)
 	{
 		target = is_target(target, token);
-		if (is_redirect_case(token))
+		if (token->type == TOKEN_PIPE)
+		{
+			if (token->next && token->next->type != TOKEN_WORD)
+				target = token;
+			else
+				target = NULL;
+		}
+		if (target && is_redirect_case(token))
 		{
 			shift_tokens(token, target);
 			target = NULL;
