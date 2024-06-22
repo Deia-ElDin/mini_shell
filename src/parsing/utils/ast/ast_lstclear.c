@@ -16,7 +16,6 @@ static void	recursive_free(t_ast **lst)
 {
 	if (*lst)
 	{
-		printf("freeing\n");
 		if ((*lst)->left)
 			recursive_free(&(*lst)->left);
 		if ((*lst)->right)

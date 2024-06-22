@@ -178,7 +178,7 @@ t_token	*token_last(t_data *data);
 void	token_delone(t_token **node);
 void	token_add(t_data *data, t_token **head, int start, int len);
 void	token_tolst(t_data *data, t_token **head, unsigned int start);
-void	token_clear(t_data *data);
+void	token_lstclear(t_data *data);
 void	token_merge(t_data *data);
 void	token_reorder(t_data *data);
 bool	token_validation(t_data *data);

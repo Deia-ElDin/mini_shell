@@ -81,7 +81,7 @@ void	data_reset(t_data *data)
 	while (data->tokens->prev)
 		data->tokens = data->tokens->prev;
 	data->error = false;
-	token_clear(data);
+	token_lstclear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');
 }
@@ -94,7 +94,7 @@ void	data_free(t_data *data)
 		data->ast = data->ast->head;
 	while (data->tokens->prev)
 		data->tokens = data->tokens->prev;
-	token_clear(data);
+	token_lstclear(data);
 	env_lstclear(data);
 	ast_lstclear(data);
 	ft_free(&data->line, 'p');

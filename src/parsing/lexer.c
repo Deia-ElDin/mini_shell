@@ -19,9 +19,9 @@ bool	lexer(t_data *data)
 	token_tolst(data, &data->tokens, 0);
 	// print_tokens(data->tokens);
 	if (data->error)
-		return (token_clear(data), false);
+		return (token_lstclear(data), false);
 	if (!token_validation(data))
-		return (token_clear(data), false);
+		return (token_lstclear(data), false);
 	token_reorder(data);
 	// print_tokens(data->tokens);
 	token_merge(data);

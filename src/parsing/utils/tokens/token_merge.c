@@ -50,7 +50,7 @@ static char	*remove_quotes(t_data *data, t_token *token)
 		return (token->value);
 	new = ft_substr(token->value, 1, len - 2);
 	if (!new)
-		return (data_status(data, 1), NULL);
+		return (data_status(data, 1), token->value);
 	return (new);
 }
 
@@ -67,6 +67,10 @@ static char	*merge_values(t_data *data, t_token *first, t_token *second)
 		merged = ft_strnjoin(3, first_value, " ", second_value);
 	else
 		merged = ft_strjoin(first_value, second_value);
+	if (first_value && first_value != first->value)
+		ft_free(&first_value, 'p');
+	if (second_value && second_value != second->value)
+		ft_free(&second_value, 'p');
 	if (!merged)
 		return (data_status(data, 1), NULL);
 	return (merged);
