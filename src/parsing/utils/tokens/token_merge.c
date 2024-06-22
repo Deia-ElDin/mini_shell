@@ -103,6 +103,7 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 
 void	token_merge(t_data *data)
 {
+	char *old_value;
 	t_token	*token;
 	t_token	*next;
 
@@ -119,8 +120,10 @@ void	token_merge(t_data *data)
 		else if (token->type == TOKEN_SINGLE_QUOTE
 			|| token->type == TOKEN_DOUBLE_QUOTE)
 		{
-			new_token(data, token, NULL);
-			token = data->tokens;
+			old_value = token->value;
+			token->value = remove_quotes(data, token);
+			token->type = TOKEN_WORD;
+			free(old_value);
 		}
 		else
 			token = token->next;

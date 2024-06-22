@@ -28,8 +28,6 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	struct stat	path_stat;
 
-	if (data->error)
-		exit(1);
 	stat(cmd, &path_stat);
 	if (is_builtin_with_out(data))
 	{
@@ -60,12 +58,7 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 	else if (ast->head->prev_exists && in_exists(ast))
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
 	else if (in_exists(ast))
-	{
-		ft_putstr_fd("FOUND REDIR IN\n", 2);
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
-		ft_putnbr_fd(*(ast->head->in_fd), 2);
-		ft_putstr_fd("FOUND REDIR IN\n", 2);
-	}
 	if (ast->head->pipe_exists)
 	{
 		close(ast->head->pipe[READ_END]);
@@ -121,6 +114,5 @@ int	simple_cmd(t_data *data)
 		else if (pid > 0)
 			call_parent(pid, path, ast, data);
 	}
-	data->error = false;
 	return (free(path), data->exit_status);
 }

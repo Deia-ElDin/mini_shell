@@ -30,5 +30,4 @@ void	execution(t_data *data)
 	data->ast = ast;
 	if (ast->type == NODE_CMD)
 		simple_cmd(data);
-	data->error = false;
 }

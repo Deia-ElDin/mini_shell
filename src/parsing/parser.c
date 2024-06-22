@@ -22,9 +22,9 @@ static t_token	*get_head_node(t_token *tokens, int next_high_token)
 	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens;
-		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
+		while (nav_token && !nav_token->is_parsed)
 		{
-			if (nav_token->type == next_high_token)
+			if (nav_token->type == next_high_token && !is_file(nav_token))
 				token_node = nav_token;
 			nav_token = nav_token->next;
 		}
@@ -48,9 +48,9 @@ static t_token	*get_next_left_node(t_token *tokens, int next_high_token)
 	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens->prev;
-		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
+		while (nav_token && !nav_token->is_parsed)
 		{
-			if (nav_token->type == next_high_token)
+			if (nav_token->type == next_high_token && !is_file(nav_token))
 			{
 				token_node = nav_token;
 				break ;
@@ -80,9 +80,9 @@ static t_token	*get_next_right_node(t_token *tokens, int next_high_token)
 	while (next_high_token >= TOKEN_WORD)
 	{
 		nav_token = tokens->next;
-		while (nav_token && !nav_token->is_parsed && !is_file(nav_token))
+		while (nav_token && !nav_token->is_parsed)
 		{
-			if (nav_token->type == next_high_token)
+			if (nav_token->type == next_high_token && !is_file(nav_token))
 			{
 				token_node = nav_token;
 				break ;
