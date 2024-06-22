@@ -25,6 +25,8 @@ static t_token	*is_target(t_token *target, t_token *token)
 
 static	bool	is_redirect_case(t_token *token)
 {
+	if (token->prev && !token->prev->is_space)
+		return (false);
 	return (token->prev && token->prev->prev
 		&& (token->type == TOKEN_WORD || token->type == TOKEN_SINGLE_QUOTE
 		|| token->type == TOKEN_DOUBLE_QUOTE)
