@@ -33,9 +33,10 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 	{
 		builtins_with_out(data);
 		data_free(data);
+		free(cmd);
 		exit(data->exit_status);
 	}
-	else if (check_command_validity(cmd, ast->cmd[0], path_stat) && (data_free(data), 1))
+	else if (check_command_validity(cmd, ast->cmd[0], path_stat) && (data_free(data), free(cmd), 1))
 		exit(126);
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
@@ -46,6 +47,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 		print_error(ast->cmd[0], "command not found");
 	else
 		print_error(NULL, "command not found");
+	free(cmd);
 	data_free(data);
 	exit(127);
 }
