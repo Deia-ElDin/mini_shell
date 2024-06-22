@@ -34,8 +34,6 @@ void	exit_shell(t_data *data)
 	else if (data->exit_status > 255)
 		data->exit_status %= 256;
 	exit_code = data->exit_status;
-	while (data->ast->head)
-		data->ast = data->ast->head;
 	data_free(data);
 	exit(exit_code);
 }

@@ -16,6 +16,7 @@ static void	recursive_free(t_ast **lst)
 {
 	if (*lst)
 	{
+		printf("freeing\n");
 		if ((*lst)->left)
 			recursive_free(&(*lst)->left);
 		if ((*lst)->right)
@@ -29,13 +30,21 @@ static void	recursive_free(t_ast **lst)
 		if ((*lst)->heredoc && (*lst)->heredoc->exists)
 			unlink((*lst)->heredoc->file);
 		if ((*lst)->heredoc)
+		{
 			free((*lst)->heredoc);
+		}
 		if ((*lst)->redir_in)
+		{
 			free((*lst)->redir_in);
+		}
 		if ((*lst)->redir_out)
+		{
 			free((*lst)->redir_out);
+		}
 		if ((*lst)->redir_append)
+		{
 			free((*lst)->redir_append);
+		}
 		free(*lst);
 		*lst = NULL;
 	}
