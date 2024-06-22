@@ -26,6 +26,8 @@ void	echo(t_data *data)
 		n_flag = true;
 		i++;
 	}
+	if (!data->ast->right->cmd[1])
+		return ((void)ft_putchar_fd('\n', STDOUT_FILENO));
 	print_value = data->ast->token->value;
 	while (*print_value != ' ')
 		print_value++;
