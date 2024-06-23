@@ -76,9 +76,9 @@ void	data_status(t_data *data, int exit_status)
 
 void	data_reset(t_data *data)
 {
-	while (data->ast->head)
+	while (data->ast && data->ast->head)
 		data->ast = data->ast->head;
-	while (data->tokens->prev)
+	while (data->tokens && data->tokens->prev)
 		data->tokens = data->tokens->prev;
 	data->error = false;
 	token_lstclear(data);
@@ -90,9 +90,9 @@ void	data_reset(t_data *data)
 /// @param data The main struct
 void	data_free(t_data *data)
 {
-	while (data->ast->head)
+	while (data->ast && data->ast->head)
 		data->ast = data->ast->head;
-	while (data->tokens->prev)
+	while (data->tokens && data->tokens->prev)
 		data->tokens = data->tokens->prev;
 	token_lstclear(data);
 	env_lstclear(data);
