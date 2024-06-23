@@ -51,6 +51,8 @@ int	main(int ac, char **av, char **env)
 		if (!line)
 			break ;
 		add_history(line);
+		if (!*line && (free(line), 1))
+			continue ;
 		data.line = ft_strtrim(line, WHITESPACES);
 		ft_free(&line, 'p');
 		if (!data.line)
