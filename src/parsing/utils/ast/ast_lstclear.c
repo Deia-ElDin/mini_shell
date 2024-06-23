@@ -21,7 +21,7 @@ static void	recursive_free(t_ast **lst)
 		if ((*lst)->right)
 			recursive_free(&(*lst)->right);
 		ft_free(&(*lst)->cmd, 'a');
-		if ((*lst)->type == NODE_PIPE)
+		if ((*lst)->pipe_exists)
 		{
 			close((*lst)->pipe[0]);
 			close((*lst)->pipe[1]);
@@ -29,21 +29,13 @@ static void	recursive_free(t_ast **lst)
 		if ((*lst)->heredoc && (*lst)->heredoc->exists)
 			unlink((*lst)->heredoc->file);
 		if ((*lst)->heredoc)
-		{
 			free((*lst)->heredoc);
-		}
 		if ((*lst)->redir_in)
-		{
 			free((*lst)->redir_in);
-		}
 		if ((*lst)->redir_out)
-		{
 			free((*lst)->redir_out);
-		}
 		if ((*lst)->redir_append)
-		{
 			free((*lst)->redir_append);
-		}
 		free(*lst);
 		*lst = NULL;
 	}
