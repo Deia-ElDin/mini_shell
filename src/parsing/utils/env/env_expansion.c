@@ -67,6 +67,7 @@ static void	append_char(char **result, char c)
 	*ch = c;
 	new_result = ft_strnjoin(2, *result, ch);
 	ft_free(result, 'p');
+	ft_free(&ch, 'p');
 	*result = new_result;
 }
 
