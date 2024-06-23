@@ -64,7 +64,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 	else
 		token->value = ft_strtrim(value, WHITESPACES);
 	if (!token->value)
-		return (NULL);
+		return (free(token), NULL);
 	if (data->line[index] == ' ')
 		token->is_space = true;
 	else

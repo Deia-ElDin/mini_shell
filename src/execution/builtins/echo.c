@@ -31,7 +31,8 @@ void	echo(t_data *data)
 	print_value = data->ast->token->value;
 	while (*print_value != ' ')
 		print_value++;
-	print_value++;
+	if (print_value++ && n_flag)
+		print_value += 3;
 	ft_putstr_fd(print_value, STDOUT_FILENO);
 	print_value = NULL;
 	if (!n_flag)
