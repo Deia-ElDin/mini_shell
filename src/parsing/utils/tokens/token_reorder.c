@@ -16,8 +16,9 @@ static t_token	*is_target(t_token *target, t_token *token)
 {
 	if (target)
 		return (target);
-	if ((token->type == TOKEN_WORD || token->type == TOKEN_SINGLE_QUOTE
-		|| token->type == TOKEN_DOUBLE_QUOTE) && token->next
+	if ((token->type == TOKEN_WORD
+			|| token->type == TOKEN_SINGLE_QUOTE
+			|| token->type == TOKEN_DOUBLE_QUOTE) && token->next
 		&& is_redirect(token->next))
 		return (token);
 	return (NULL);
@@ -28,8 +29,9 @@ static	bool	is_redirect_case(t_token *token)
 	if (token->prev && !token->prev->is_space)
 		return (false);
 	return (token->prev && token->prev->prev
-		&& (token->type == TOKEN_WORD || token->type == TOKEN_SINGLE_QUOTE
-		|| token->type == TOKEN_DOUBLE_QUOTE)
+		&& (token->type == TOKEN_WORD
+			|| token->type == TOKEN_SINGLE_QUOTE
+			|| token->type == TOKEN_DOUBLE_QUOTE)
 		&& is_redirect(token->prev->prev));
 }
 
@@ -37,7 +39,11 @@ static void	shift_tokens(t_token *token, t_token *target)
 {
 	t_token	*redirect;
 
-	redirect = token->prev->prev;
+	redirect = NULL;
+	if (is_redirect(target->next))
+		redirect = target->next;
+	else
+		return ;
 	token->prev->next = token->next;
 	if (token->next)
 		token->next->prev = token->prev;

@@ -63,7 +63,6 @@ static t_token	*token_values(t_data *data, char *value, int index)
 		token->value = env_expansion(data, value);
 	else
 		token->value = ft_strtrim(value, WHITESPACES);
-	ft_free(&value, 'p');
 	if (!token->value)
 		return (NULL);
 	if (data->line[index] == ' ')
@@ -97,6 +96,7 @@ static t_token	*token_values(t_data *data, char *value, int index)
 static t_token	*token_new(t_data *data, int start, int len)
 {
 	char	*value;
+	t_token	*new;
 
 	if (!data->line || !len)
 		return (NULL);
@@ -105,7 +105,11 @@ static t_token	*token_new(t_data *data, int start, int len)
 		return (data_status(data, 1), NULL);
 	if (ft_isempty_str(value))
 		return (ft_free(&value, 'p'), NULL);
-	return (token_values(data, value, start + len));
+	new = token_values(data, value, start + len);
+	ft_free(&value, 'p');
+	if (!new)
+		return (NULL);
+	return (new);
 }
 
 /**
