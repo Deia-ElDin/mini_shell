@@ -24,8 +24,8 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 # $(readline_header_path)
 # CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 -fsanitize=address
 
 LIBFT = includes/libft/libft.a
-# LIBS = -lreadline
-LIBS = $(readline_lib_path) -lreadline
+LIBS = -lreadline
+# LIBS = $(readline_lib_path) -lreadline
 
 MAIN = main.c delete_me.c
 

@@ -22,6 +22,7 @@ int	pipe_cmd(t_data *data)
 	if (left->type <= NODE_CMD)
 	{
 		prepare_pipe(left);
+		// close(left->pipe[WRITE_END]);
 		left->pipe_exists = true;
 		ast->right->prev_exists = true;
 		ast->right->prev_pipe = left->pipe;
@@ -30,6 +31,7 @@ int	pipe_cmd(t_data *data)
 	{
 		left = left->right;
 		prepare_pipe(left);
+		// close(left->pipe[WRITE_END]);
 		left->pipe_exists = true;
 		ast->right->prev_exists = true;
 		ast->right->prev_pipe = left->pipe;

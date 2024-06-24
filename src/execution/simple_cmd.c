@@ -55,38 +55,14 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 static void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
 	if (ast->head->prev_exists && !in_exists(ast))
-	{
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
-		close(ast->head->prev_pipe[READ_END]);
-	}
-	else if (ast->head->prev_exists && in_exists(ast))
-	{
-		// ft_putstr_fd("FOUND REDIR IN WITH PREV =", 2);
-		// ft_putstr_fd(cmd, 2);
-		// ft_putstr_fd(" =", 2);
-		dup2(*(ast->head->in_fd), STDIN_FILENO);
-		// ft_putnbr_fd(*(ast->head->in_fd), 2);
-		// ft_putstr_fd("\n", 2);
-	}
 	else if (in_exists(ast))
-	{
-		// ft_putstr_fd("FOUND REDIR IN =", 2);
-		// ft_putstr_fd(cmd, 2);
-		// ft_putstr_fd(" =", 2);
 		dup2(*(ast->head->in_fd), STDIN_FILENO);
-		// ft_putnbr_fd(*(ast->head->in_fd), 2);
-		// ft_putstr_fd("\n", 2);
-	}
 	if (ast->head->pipe_exists)
-	{
-		close(ast->head->pipe[READ_END]);
 		dup2(ast->head->pipe[WRITE_END], STDOUT_FILENO);
-		close(ast->head->pipe[WRITE_END]);
-	}
 	if (out_exists(ast))
 		dup2(*(ast->head->out_fd), STDOUT_FILENO);
-	else if (out_exists(ast))
-		dup2(*(ast->head->out_fd), STDOUT_FILENO);
+	close_pipes(data);
 	execute_command(cmd, ast, data);
 }
 
@@ -94,7 +70,7 @@ static void	call_parent(pid_t pid, t_ast *ast, t_data *data)
 {
 	data->pids[data->curr_pid].ast = ast;
 	data->pids[data->curr_pid].pid = pid;
-	data->curr_pid++; ;
+	data->curr_pid++;
 	if (ast->prev_exists && !in_exists(ast))
 		close(ast->prev_pipe[READ_END]);
 	else if (ast->prev_exists && in_exists(ast))

@@ -209,6 +209,7 @@ void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
 void	prepare_heredocs(t_ast *ast, t_data *data);
 void	wait_on_pids(t_data *data);
+void	close_pipes(t_data *data);
 //	*-> redirections.c
 int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
