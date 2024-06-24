@@ -34,3 +34,19 @@ void	execution(t_data *data)
 	if (ast->type == NODE_CMD)
 		simple_cmd(data);
 }
+
+void	wait_on_pids(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->curr_pid)
+	{
+		if (data->pids[i].pid == -1)
+			data->exit_status = 1;
+		else
+			data->exit_status = check_for_sleep(data->pids[i].pid, data->pids[i].ast, data->pids[i].ast->right->end_flag);
+		i++;
+	}
+	free(data->pids);
+}

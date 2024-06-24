@@ -143,6 +143,8 @@ t_ast	*parser(t_data *data)
 		return (head_node);
 	recursive_parsing(data, head_token, head_node);
 	data->ast = head_node;
+	data->pids = malloc(sizeof(t_child) * count_cmds(head_node, data));
+	data->ast = head_node;
 	while (head_node->right && head_node->type >= NODE_CMD)
 		head_node = head_node->right;
 	head_node->end_flag = 1;

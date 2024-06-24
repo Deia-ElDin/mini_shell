@@ -23,10 +23,13 @@ static int	redirect_heredoc(t_ast *ast, t_ast *head)
 
 static int	redirect_in(t_ast *ast, t_ast *head)
 {
+	struct stat	path_stat;
+
 	if (access(ast->redir_in->file, F_OK))
 		return (print_error(ast->redir_in->file,
 				"No such file or directory"), 0);
-	else if (access(ast->redir_in->file, F_OK | R_OK))
+	stat(ast->redir_in->file, &path_stat);
+	if (!(path_stat.st_mode & S_IRUSR))
 		return (print_error(ast->redir_in->file,
 				"Permission denied"), 0);
 	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0755);
@@ -38,8 +41,11 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 
 static int	redirect_out(t_ast *ast, t_ast *head)
 {
+	struct stat	path_stat;
+
+	stat(ast->redir_out->file, &path_stat);
 	if (!access(ast->redir_out->file, F_OK)
-		&& access(ast->redir_out->file, W_OK))
+		&& !(path_stat.st_mode & S_IWUSR))
 		return (print_error(ast->redir_out->file,
 				"Permission denied"), 0);
 	ast->redir_out->fd = open(ast->redir_out->file,
@@ -52,8 +58,11 @@ static int	redirect_out(t_ast *ast, t_ast *head)
 
 static int	append(t_ast *ast, t_ast *head)
 {
+	struct stat	path_stat;
+
+	stat(ast->redir_append->file, &path_stat);
 	if (!access(ast->redir_append->file, F_OK)
-		&& access(ast->redir_append->file, W_OK))
+		&& !(path_stat.st_mode & S_IWUSR))
 		return (print_error(ast->redir_append->file,
 				"Permission denied"), 0);
 	ast->redir_append->fd = open(ast->redir_append->file,

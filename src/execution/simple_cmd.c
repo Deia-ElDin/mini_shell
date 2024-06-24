@@ -90,9 +90,11 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 	execute_command(cmd, ast, data);
 }
 
-static void	call_parent(pid_t pid, char *path, t_ast *ast, t_data *data)
+static void	call_parent(pid_t pid, t_ast *ast, t_data *data)
 {
-	data->exit_status = check_for_sleep(pid, path, ast->right->end_flag);
+	data->pids[data->curr_pid].ast = ast;
+	data->pids[data->curr_pid].pid = pid;
+	data->curr_pid++; ;
 	if (ast->prev_exists && !in_exists(ast))
 		close(ast->prev_pipe[READ_END]);
 	else if (ast->prev_exists && in_exists(ast))
@@ -114,15 +116,15 @@ int	simple_cmd(t_data *data)
 	pid_t	pid;
 
 	ast = data->ast;
-	// ft_putstr_fd("	SIMPLE CMD cmd=", 2);
-	// ft_putstr_fd(ast->left->cmd[0], 2);
-	// ft_putstr_fd("\n", 2);
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
 	if (!check_for_redirs(ast->right->right))
 	{
 		if (ast->pipe_exists)
 			close(ast->pipe[WRITE_END]);
+		data->pids[data->curr_pid].ast = NULL;
+		data->pids[data->curr_pid].pid = -1;
+		data->curr_pid++;
 		return (free(path), (data->exit_status = 1, 1));
 	}
 	if (is_builtin(data))
@@ -137,7 +139,7 @@ int	simple_cmd(t_data *data)
 		if (pid == 0)
 			call_child(path, ast->right, data);
 		else if (pid > 0)
-			call_parent(pid, path, ast, data);
+			call_parent(pid, ast, data);
 	}
 	return (free(path), data->exit_status);
 }
