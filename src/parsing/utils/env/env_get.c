@@ -25,7 +25,7 @@ t_env	*env_get(t_data *data, char *key)
 	node = data->env_list;
 	while (node)
 	{
-		if (!ft_strcmp(node->key, key))
+		if (!ft_strncmp(node->key, key, ft_strlen(node->key)))
 			return (node);
 		node = node->next;
 	}

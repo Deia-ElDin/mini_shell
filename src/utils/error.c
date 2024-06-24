@@ -21,6 +21,7 @@ void	syntax_error(char *err)
 	ft_putstr_fd(" `", STDERR_FILENO);
 	ft_putstr_fd(err, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
+	// data->exit_status = 258;
 }
 
 void	print_error(char *err_name, char *err)

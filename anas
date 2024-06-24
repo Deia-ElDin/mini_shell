@@ -1,0 +1,30 @@
+echo "$USER '>| | file > fddf' $USER> > $142$USER''''"
+
+=================================
+
+echo anas_echo > h | << her cat >> h | cat h
+
+=================================
+
+
+cat /dev/urandom | cat << her | head
+
+=================================
+
+mini-shell$ ls > test
+mini-shell$ ./test
+
+=================================
+
+mini-shell$ export PATH=""
+mini-shell$ ls
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+
+
+=================================
+
+cat | ls 
+cat | cat | ls
+
+=================================
