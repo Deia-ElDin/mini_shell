@@ -62,6 +62,7 @@ int	main(int ac, char **av, char **env)
 			// print_ast(data.ast);
 			prepare_heredocs(data.ast, &data);
 			execution(&data);
+			wait_on_pids(&data);
 		}
 		data_reset(&data);
 	}

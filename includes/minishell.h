@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <unistd.h>
 
 # define PROMPT "mini-shell$ "
 # define ERR_PROMPT "mini-shell: "
@@ -132,9 +133,17 @@ typedef struct s_ast
 	t_token			*token;
 }	t_ast;
 
+typedef struct s_child
+{
+	t_ast			*ast;
+	pid_t			pid;
+}	t_child ;
+
 typedef struct s_data
 {
-	int				std_fds[2];
+	int				curr_pid;
+	int				cmd_count;
+	t_child			*pids;
 	bool			error;
 	char			*line;
 	char			**path;
@@ -152,6 +161,7 @@ t_ast	*parser(t_data *data);
 
 // ***** Parsing Utils Functions ***** //
 t_ast	*parse_cmd(t_token *token, t_ast *new_node);
+int		count_cmds(t_ast *ast, t_data *data);
 void	check_left_for_redir(t_token *token, t_ast *right_node);
 void	check_right_for_redir(t_token *token, t_ast *right_node);
 
@@ -198,6 +208,7 @@ int		is_file(t_token *token);
 void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
 void	prepare_heredocs(t_ast *ast, t_data *data);
+void	wait_on_pids(t_data *data);
 //	*-> redirections.c
 int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
@@ -210,7 +221,7 @@ int		pipe_cmd(t_data *data);
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
 //	*-> cmd_utils.c
-int		check_for_sleep(int pid, char *cmd, int last);
+int		check_for_sleep(int pid, t_ast *ast, int last);
 char	*get_cmd_path(char *cmd, t_data *data);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);

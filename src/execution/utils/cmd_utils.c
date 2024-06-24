@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
-int	check_for_sleep(int pid, char *cmd, int last)
+int	check_for_sleep(int pid, t_ast *ast, int last)
 {
 	int	status;
+	char *cmd;
 
+	cmd = ast->left->cmd[0];
 	status = 0;
 	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
 		|| last)
 		waitpid(pid, &status, 0);
 	else
-		waitpid(pid, &status, WNOHANG);
-	// ft_putstr_fd("2Testing exit code: ", 2);
-	// ft_putnbr_fd(status, 2);
-	// ft_putstr_fd("\n", 2);
+		waitpid(pid, &status, WCONTINUED);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

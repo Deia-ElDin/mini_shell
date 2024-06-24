@@ -98,3 +98,15 @@ int	is_file(t_token *token)
 	else
 		return (0);
 }
+
+int	count_cmds(t_ast *ast, t_data *data)
+{
+	if (!ast)
+		return (data->cmd_count);
+	data->ast = ast;
+	if (is_builtin_with_out(data) || ast->type == NODE_CMD)
+		return (data->cmd_count++);
+	count_cmds(ast->left, data);
+	count_cmds(ast->right, data);
+	return (data->cmd_count);
+}

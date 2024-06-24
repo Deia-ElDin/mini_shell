@@ -41,6 +41,9 @@ void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
 
+	data->curr_pid = 0;
+	data->cmd_count = 0;
+	data->pids = NULL;
 	data->line = NULL;
 	data->env_list = NULL;
 	data->env = NULL;
@@ -51,8 +54,6 @@ void	data_init(t_data *data, char **env)
 	data->ast = NULL;
 	data->error = false;
 	data->exit_status = 0;
-	// dup2(data->std_fds[0], 0);
-	// dup2(data->std_fds[1], 1);
 	if (env)
 	{
 		data->env = env;
@@ -80,6 +81,9 @@ void	data_reset(t_data *data)
 		data->ast = data->ast->head;
 	while (data->tokens && data->tokens->prev)
 		data->tokens = data->tokens->prev;
+	data->curr_pid = 0;
+	data->cmd_count = 0;
+	data->pids = NULL;
 	data->error = false;
 	token_lstclear(data);
 	ast_lstclear(data);
