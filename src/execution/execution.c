@@ -42,7 +42,7 @@ void	wait_on_pids(t_data *data)
 	i = 0;
 	while (i < data->curr_pid)
 	{
-		if (data->pids[i].pid == -1)
+		if (!data->pids[i].ast)
 			data->exit_status = 1;
 		else
 			data->exit_status = check_for_sleep(data->pids[i].pid, data->pids[i].ast, data->pids[i].ast->right->end_flag);

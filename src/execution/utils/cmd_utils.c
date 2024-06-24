@@ -24,7 +24,7 @@ int	check_for_sleep(int pid, t_ast *ast, int last)
 		|| last)
 		waitpid(pid, &status, 0);
 	else
-		waitpid(pid, &status, WNOHANG);
+		waitpid(pid, &status, WCONTINUED);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
