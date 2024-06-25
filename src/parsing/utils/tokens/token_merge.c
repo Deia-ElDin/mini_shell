@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_merge.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 02:42:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 16:54:59 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:09:36 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_token_mergeable(t_token *token);
-static char	*remove_quotes(t_data *data, t_token *token);
-static char	*merge_values(t_data *data, t_token *first, t_token *second);
-static void	new_token(t_data *data, t_token *first, t_token *second);
-void		token_merge(t_data *data);
-
-static bool	is_token_mergeable(t_token *token)
-{
-	if (!token)
-		return (false);
-	if (token->prev && token->next && token->type == TOKEN_WORD
-		&& token->prev->type >= TOKEN_REDIR_IN
-		&& token->prev->type <= TOKEN_HEREDOC
-		&& token->next->type == TOKEN_WORD)
-		return (false);
-	if (token->type == TOKEN_WORD)
-		return (true);
-	if (token->type == TOKEN_SINGLE_QUOTE)
-		return (true);
-	if (token->type == TOKEN_DOUBLE_QUOTE)
-		return (true);
-	return (false);
-}
 
 static char	*remove_quotes(t_data *data, t_token *token)
 {
@@ -52,6 +28,17 @@ static char	*remove_quotes(t_data *data, t_token *token)
 	if (!new)
 		return (data_status(data, 1), token->value);
 	return (new);
+}
+
+static	void	handle_remove_qoutes(t_data *data, t_token *token)
+
+{
+	char	*old_value;
+
+	old_value = token->value;
+	token->value = remove_quotes(data, token);
+	token->type = TOKEN_WORD;
+	free(old_value);
 }
 
 static char	*merge_values(t_data *data, t_token *first, t_token *second)
@@ -107,7 +94,6 @@ static void	new_token(t_data *data, t_token *first, t_token *second)
 
 void	token_merge(t_data *data)
 {
-	char *old_value;
 	t_token	*token;
 	t_token	*next;
 
@@ -121,24 +107,10 @@ void	token_merge(t_data *data)
 			new_token(data, token, next);
 			token = data->tokens;
 		}
-		else if (token->type == TOKEN_SINGLE_QUOTE
-			|| token->type == TOKEN_DOUBLE_QUOTE)
-		{
-			old_value = token->value;
-			token->value = remove_quotes(data, token);
-			token->type = TOKEN_WORD;
-			free(old_value);
-		}
+		else if (is_quotes(token))
+			handle_remove_qoutes(data, token);
 		else
 			token = token->next;
 	}
-	token = data->tokens;
-	while (token)
-	{
-		if (!token->prev)
-			token->index = 0;
-		else
-			token->index = token->prev->index + 1;
-		token = token->next;
-	}
+	reset_tokens_index(data);
 }

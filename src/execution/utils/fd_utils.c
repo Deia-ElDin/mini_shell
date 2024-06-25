@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:07:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 15:09:08 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:52:54 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,28 @@ void	close_files(t_data *data)
 	while (ast->head)
 		ast = ast->head;
 	recursive_closing_fd(ast);
+}
+
+int	is_file(t_token *token)
+{
+	if (token->type != TOKEN_WORD)
+		return (0);
+	else if (token->prev && token->prev->type < TOKEN_WORD)
+		return (1);
+	else
+		return (0);
+}
+
+int	command_redirs(t_data *data, t_ast *ast)
+{
+	if (!check_for_redirs(ast->right->right))
+	{
+		if (ast->pipe_exists)
+			close(ast->pipe[WRITE_END]);
+		data->pids[data->curr_pid].ast = NULL;
+		data->pids[data->curr_pid].pid = -1;
+		data->curr_pid++;
+		return ((data->exit_status = 1, 0));
+	}
+	return (1);
 }

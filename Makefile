@@ -6,31 +6,27 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/25 15:10:49 by melshafi         ###   ########.fr        #
+#    Updated: 2024/06/25 17:13:31 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-# Delete the removing of .o files in the make rule
-# Delete the CFLAGS -g3 -fsanitize=address
-
 NAME = minishell
 
-# readline_header_path = -I /Users/dehamad/homebrew/opt/readline/include
-# readline_lib_path = -L /Users/dehamad/homebrew/opt/readline/lib
+readline_header_path = -I /Users/dehamad/homebrew/opt/readline/include
+readline_lib_path = -L /Users/dehamad/homebrew/opt/readline/lib
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 # $(readline_header_path)
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 $(readline_header_path)
 # CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 -fsanitize=address
 
 LIBFT = includes/libft/libft.a
-LIBS = -lreadline
-# LIBS = $(readline_lib_path) -lreadline
+# LIBS = -lreadline
+LIBS = $(readline_lib_path) -lreadline
 
-MAIN = main.c delete_me.c
+MAIN = main.c
 
 PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c parse_redir.c
-EXECUTION = execution.c and_or_exec.c redirections.c simple_cmd.c pipe_cmd.c utils.c
+EXECUTION = execution.c redirections.c simple_cmd.c pipe_cmd.c utils.c
 EXECUTION_UTILS = env_utils.c cmd_utils.c str_join.c pipe_utils.c here_doc.c redir_utils.c fd_utils.c
 EXECUTION_BUILTINS = builtins.c cd.c echo.c env.c exit_shell.c export.c pwd.c
 UTILS = error.c exit.c data.c

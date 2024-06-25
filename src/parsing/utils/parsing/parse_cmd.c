@@ -6,11 +6,19 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 14:05:54 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:56:39 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*is_first(char *args, t_token *token, bool *first)
+{
+	args = ft_strjoin(token->value, NULL);
+	token->is_parsed = true;
+	*first = false;
+	return (args);
+}
 
 static char	*join_next_valid_token_words(t_token *token)
 {
@@ -23,11 +31,7 @@ static char	*join_next_valid_token_words(t_token *token)
 	while (token && token->type <= TOKEN_WORD)
 	{
 		if (first)
-		{
-			args = ft_strjoin(token->value, NULL);
-			token->is_parsed = true;
-			first = false;
-		}
+			args = is_first(args, token, &first);
 		else if (token->type == TOKEN_WORD && !is_file(token))
 		{
 			temp = args;
@@ -87,16 +91,6 @@ t_ast	*parse_cmd(t_token *token, t_ast *new_node)
 	new_node->left = left_node;
 	new_node->right = right_node;
 	return (new_node);
-}
-
-int	is_file(t_token *token)
-{
-	if (token->type != TOKEN_WORD)
-		return (0);
-	else if (token->prev && token->prev->type < TOKEN_WORD)
-		return (1);
-	else
-		return (0);
 }
 
 int	count_cmds(t_ast *ast, t_data *data)

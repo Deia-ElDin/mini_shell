@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_set.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 12:43:14 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/17 21:42:23 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:51:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,5 @@ void	env_set(t_data *data, char *key, char *value, bool is_equal)
 	}
 	else
 		env_new(data, key, value, is_equal);
-	// printf("previous env_arr:\n");
-	// if (data->env_arr)
-	// 	print_env_array(data->env_arr);
 	env_toarr(data);
 }

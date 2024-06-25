@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 11:27:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:35:36 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static int	check_for_heredoc(t_ast *ast, t_data *data)
 	return (read_heredoc(file, ast), 1);
 }
 
-void	prepare_heredocs(t_ast *ast, t_data *data)
+void	prep_heredocs(t_ast *ast, t_data *data)
 {
 	if (!ast || !data)
 		return ;
 	if (ast->type == NODE_REDIR && ast->heredoc->exists)
 		check_for_heredoc(ast, data);
-	prepare_heredocs(ast->left, data);
-	prepare_heredocs(ast->right, data);
+	prep_heredocs(ast->left, data);
+	prep_heredocs(ast->right, data);
 }

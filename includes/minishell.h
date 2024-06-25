@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 15:09:23 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:12:12 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <unistd.h>
+# include <unistd.h>
 
 # define PROMPT "mini-shell$ "
 # define ERR_PROMPT "mini-shell: "
@@ -137,7 +137,7 @@ typedef struct s_child
 {
 	t_ast			*ast;
 	pid_t			pid;
-}	t_child ;
+}	t_child;
 
 typedef struct s_data
 {
@@ -207,12 +207,13 @@ int		is_file(t_token *token);
 // Execution Function
 void	execution(t_data *data);
 void	prepare_pipe(t_ast *new_node);
-void	prepare_heredocs(t_ast *ast, t_data *data);
+void	prep_heredocs(t_ast *ast, t_data *data);
 void	wait_on_pids(t_data *data);
 void	close_pipes(t_data *data);
 void	close_files(t_data *data);
 //	*-> redirections.c
 int		check_for_redirs(t_ast *ast);
+int		command_redirs(t_data *data, t_ast *ast);
 //	*-> and_or_exec.c
 // int		or_operator(t_ast *ast, t_data *data);
 // int		and_operator(t_ast *ast, t_data *data);
@@ -266,6 +267,10 @@ void	init_data(t_data *data, char **env);
 
 //	*-> utils.c
 bool	is_redirect(t_token *token);
+void	set_data_init_null(t_data *data);
+bool	is_quotes(t_token *token);
+bool	is_token_mergeable(t_token *token);
+void	reset_tokens_index(t_data *data);
 
 // DELETE ME
 void	print_env_array(char **env);

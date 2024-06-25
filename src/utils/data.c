@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 16:09:20 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:02:59 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,7 @@ void	data_init(t_data *data, char **env)
 {
 	t_env	*path_env;
 
-	data->curr_pid = 0;
-	data->cmd_count = 0;
-	data->pids = NULL;
-	data->line = NULL;
-	data->env_list = NULL;
-	data->env = NULL;
-	data->env_arr = NULL;
-	data->env_arr = NULL;
-	data->path = NULL;
-	data->tokens = NULL;
-	data->ast = NULL;
-	data->error = false;
-	data->exit_status = 0;
+	set_data_init_null(data);
 	if (env)
 	{
 		data->env = env;

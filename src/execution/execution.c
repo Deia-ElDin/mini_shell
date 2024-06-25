@@ -42,7 +42,10 @@ void	wait_on_pids(t_data *data)
 		if (!data->pids[i].ast)
 			data->exit_status = 1;
 		else
-			data->exit_status = check_for_sleep(data->pids[i].pid, data->pids[i].ast, data->pids[i].ast->right->end_flag);
+		{
+			data->exit_status = check_for_sleep(data->pids[i].pid,
+					data->pids[i].ast, data->pids[i].ast->right->end_flag);
+		}
 		i++;
 	}
 	free(data->pids);

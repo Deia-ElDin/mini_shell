@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:15:37 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/03 08:36:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:43:23 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	pipe_cmd(t_data *data)
 	if (left->type <= NODE_CMD)
 	{
 		prepare_pipe(left);
-		// close(left->pipe[WRITE_END]);
 		left->pipe_exists = true;
 		ast->right->prev_exists = true;
 		ast->right->prev_pipe = left->pipe;
@@ -31,7 +30,6 @@ int	pipe_cmd(t_data *data)
 	{
 		left = left->right;
 		prepare_pipe(left);
-		// close(left->pipe[WRITE_END]);
 		left->pipe_exists = true;
 		ast->right->prev_exists = true;
 		ast->right->prev_pipe = left->pipe;

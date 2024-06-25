@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 16:14:02 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:46:53 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int	execute_command(char *cmd, t_ast *ast, t_data *data)
 		data_free(data);
 		return (free(cmd), exit(data->exit_status), 0);
 	}
-	else if (check_command_validity(cmd, ast->cmd[0], path_stat) && (data_free(data), free(cmd), 1))
+	else if (check_command_validity(cmd, ast->cmd[0], path_stat)
+		&& (data_free(data), free(cmd), 1))
 		exit(126);
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
@@ -89,15 +90,8 @@ int	simple_cmd(t_data *data)
 	ast = data->ast;
 	pid = 1;
 	path = get_cmd_path(ast->left->cmd[0], data);
-	if (!check_for_redirs(ast->right->right))
-	{
-		if (ast->pipe_exists)
-			close(ast->pipe[WRITE_END]);
-		data->pids[data->curr_pid].ast = NULL;
-		data->pids[data->curr_pid].pid = -1;
-		data->curr_pid++;
-		return (free(path), (data->exit_status = 1, 1));
-	}
+	if (!command_redirs(data, ast))
+		return (free(path), data->exit_status);
 	if (is_builtin(data))
 		builtins(data);
 	else
