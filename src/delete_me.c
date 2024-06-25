@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:57:01 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 18:29:18 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:00:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	print_ast(t_ast *ast)
 	{
 		// printf("type: %d\n", ast->type);
 		printf("\nhead => type = %d ", ast->type);
+		if (ast->pipe_exists)
+			printf("PIPE EXISTS HERE\n");
 		if (ast->head)
 			printf("current nodes head type => %d", ast->head->type);
 		if (ast->heredoc->exists)
@@ -56,7 +58,7 @@ void	print_ast(t_ast *ast)
 		if (ast->redir_in->exists)
 			printf("\nredir_in file: %s\n", ast->redir_in->file);
 		if (ast->redir_out->exists)
-			printf("\nredir_out file: %s\n", ast->redir_out->file);	
+			printf("\nredir_out file: %s\n", ast->redir_out->file);
 		if (ast->redir_append->exists)
 			printf("\nredir_append file: %s\n", ast->redir_append->file);
 		printf("\n");

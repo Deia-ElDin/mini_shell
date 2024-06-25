@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 15:01:01 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:50:52 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	redirect_heredoc(t_ast *ast, t_ast *head)
 {
-	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0755);
+	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0775);
 	if (ast->heredoc->fd == -1)
 		return (0);
 	head->in_fd = &(ast->heredoc->fd);

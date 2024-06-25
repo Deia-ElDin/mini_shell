@@ -6,44 +6,22 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:14:17 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 15:04:10 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:16:56 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static char	*get_all_paths(char **envp, char *var)
-{
-	int		i;
-	int		j;
-	char	*path;
-
-	i = 0;
-	while (envp[i])
-	{
-		j = 0;
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		path = ft_substr(envp[i], 0, j);
-		if (ft_strcmp(path, var) == 0)
-		{
-			free(path);
-			return (&envp[i][j + 1]);
-		}
-		free(path);
-		i++;
-	}
-	return (NULL);
-}
-
-static char	*get_path(char **envp, char *cmd, char *var)
+static char	*get_path(t_data *data, char *cmd, char *var)
 {
 	char	**paths_split;
 	char	*path;
 	int		i;
 
 	i = -1;
-	paths_split = ft_split(get_all_paths(envp, var), ':');
+	if (!env_get(data, var) || !env_get(data, var)->value)
+		return (NULL);
+	paths_split = ft_split(env_get(data, var)->value, ':');
 	if (!paths_split)
 		return (NULL);
 	while (paths_split[++i])
@@ -72,6 +50,6 @@ char	*get_cmd_path(char *cmd, t_data *data)
 	else if (cmd && !ft_strncmp(cmd, "/", 1))
 		path = ft_strdup(cmd);
 	else
-		path = get_path(data->env, cmd, "PATH");
+		path = get_path(data, cmd, "PATH");
 	return (path);
 }

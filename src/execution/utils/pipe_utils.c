@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:54:07 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 14:48:29 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:30:54 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ int	is_last_pipe(t_ast *ast)
 
 static void	close_pipe(t_ast *ast)
 {
-	if (ast->prev_exists && ast->prev_pipe)
-	{
-		close(ast->prev_pipe[WRITE_END]);
-		close(ast->prev_pipe[READ_END]);
-	}
 	if (ast->pipe_exists)
 	{
 		close(ast->pipe[WRITE_END]);
 		close(ast->pipe[READ_END]);
 	}
+	if (ast->in_fd)
+		close(*(ast->in_fd));
+	if (ast->out_fd)
+		close(*(ast->out_fd));
 }
 
 static void	recursive_closing(t_ast	*ast)
