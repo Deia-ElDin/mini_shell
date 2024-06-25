@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 19:25:28 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:09:23 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ void	prepare_pipe(t_ast *new_node);
 void	prepare_heredocs(t_ast *ast, t_data *data);
 void	wait_on_pids(t_data *data);
 void	close_pipes(t_data *data);
+void	close_files(t_data *data);
 //	*-> redirections.c
 int		check_for_redirs(t_ast *ast);
 //	*-> and_or_exec.c
@@ -228,7 +229,6 @@ char	*get_cmd_path(char *cmd, t_data *data);
 int		is_first_pipe(t_ast *ast);
 int		is_last_pipe(t_ast *ast);
 //	*->redir_utils.c
-int		clear_temp(t_ast *ast);
 int		in_exists(t_ast *ast);
 int		out_exists(t_ast *ast);
 

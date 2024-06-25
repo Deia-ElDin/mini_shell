@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 13:57:46 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 14:44:17 by melshafi         ###   ########.fr       */
+/*   Created: 2024/06/25 15:07:25 by melshafi          #+#    #+#             */
+/*   Updated: 2024/06/25 15:09:08 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	in_exists(t_ast *ast)
+static void	close_fd(t_ast *ast)
 {
-	while (ast)
-	{
-		if (ast->type == NODE_REDIR
-			&& (ast->redir_in->exists || ast->heredoc->exists))
-			return (1);
-		ast = ast->right;
-	}
-	return (0);
+	if (ast->in_fd)
+		close(*(ast->in_fd));
+	if (ast->out_fd)
+		close(*(ast->out_fd));
 }
 
-int	out_exists(t_ast *ast)
+static void	recursive_closing_fd(t_ast	*ast)
 {
-	while (ast)
-	{
-		if (ast->type == NODE_REDIR
-			&& (ast->redir_out->exists || ast->redir_append->exists))
-			return (1);
-		ast = ast->right;
-	}
-	return (0);
+	if (!ast)
+		return ;
+	recursive_closing_fd(ast->left);
+	recursive_closing_fd(ast->right);
+	if (ast->type == NODE_CMD)
+		close_fd(ast);
+}
+
+void	close_files(t_data *data)
+{
+	t_ast	*ast;
+
+	ast = data->ast;
+	while (ast->head)
+		ast = ast->head;
+	recursive_closing_fd(ast);
 }

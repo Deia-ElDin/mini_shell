@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:41:47 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:15:48 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_command_validity(char *path, char *cmd, struct stat path_stat)
 	return (0);
 }
 
-static void	execute_command(char *cmd, t_ast *ast, t_data *data)
+static int	execute_command(char *cmd, t_ast *ast, t_data *data)
 {
 	struct stat	path_stat;
 
@@ -33,8 +33,7 @@ static void	execute_command(char *cmd, t_ast *ast, t_data *data)
 	{
 		builtins_with_out(data);
 		data_free(data);
-		free(cmd);
-		exit(data->exit_status);
+		return (free(cmd), exit(data->exit_status), 0);
 	}
 	else if (check_command_validity(cmd, ast->cmd[0], path_stat) && (data_free(data), free(cmd), 1))
 		exit(126);
@@ -73,15 +72,11 @@ static void	call_parent(pid_t pid, t_ast *ast, t_data *data)
 	data->curr_pid++;
 	if (ast->prev_exists && !in_exists(ast))
 		close(ast->prev_pipe[READ_END]);
-	else if (ast->prev_exists && in_exists(ast))
-		close(*(ast->in_fd));
 	else if (in_exists(ast))
 		close(*(ast->in_fd));
 	if (ast->pipe_exists)
 		close(ast->pipe[WRITE_END]);
 	if (out_exists(ast))
-		close(*(ast->out_fd));
-	else if (out_exists(ast))
 		close(*(ast->out_fd));
 }
 
