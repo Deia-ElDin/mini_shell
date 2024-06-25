@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:15:25 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 16:48:05 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:06:43 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	is_builtin(t_data *data)
 {
 	char	*cmd;
 
-	if (!data->ast || data->ast->type != NODE_CMD)
+	if (!data->ast || data->ast->type != NODE_CMD || !data->ast->left->cmd)
 		return (false);
 	cmd = data->ast->left->cmd[0];
 	if (!ft_strcmp(cmd, "cd")

@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:36:22 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 16:35:36 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:04:14 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*set_file_name(t_ast *ast, char *file)
 		ast = ast->head;
 	if (ast->type == NODE_CMD)
 	{
-		while (ast->right->cmd[i])
+		while (ast->right->cmd && ast->right->cmd[i])
 			file = ft_strjoin(file, ast->right->cmd[i++]);
 		file = ft_strjoin(file, ft_itoa(ast->right->token->index));
 	}

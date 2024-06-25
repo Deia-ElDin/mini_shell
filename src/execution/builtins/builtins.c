@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:45:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/19 15:14:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:08:36 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	builtins(t_data *data)
 {
 	char	*cmd;
 
+	if (!data->ast->right->cmd)
+		return ;
 	cmd = data->ast->right->cmd[0];
 	if (!cmd)
 		return (data_status(data, 1));

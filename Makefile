@@ -6,14 +6,14 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/25 17:13:31 by melshafi         ###   ########.fr        #
+#    Updated: 2024/06/25 18:41:19 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-readline_header_path = -I /Users/dehamad/homebrew/opt/readline/include
-readline_lib_path = -L /Users/dehamad/homebrew/opt/readline/lib
+readline_header_path = -I /Users/melshafi/homebrew/opt/readline/include
+readline_lib_path = -L /Users/melshafi/homebrew/opt/readline/lib
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 $(readline_header_path)

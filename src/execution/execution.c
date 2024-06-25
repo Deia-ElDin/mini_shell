@@ -48,5 +48,4 @@ void	wait_on_pids(t_data *data)
 		}
 		i++;
 	}
-	free(data->pids);
 }
