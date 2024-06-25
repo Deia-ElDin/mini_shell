@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/20 16:36:59 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 14:06:04 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ t_ast	*parser(t_data *data)
 		return (head_node);
 	recursive_parsing(data, head_token, head_node);
 	data->ast = head_node;
-	data->pids = malloc(sizeof(t_child) * count_cmds(head_node, data));
+	count_cmds(head_node, data);
+	data->pids = malloc(sizeof(t_child) * data->cmd_count);
 	data->ast = head_node;
 	while (head_node->right && head_node->type >= NODE_CMD)
 		head_node = head_node->right;

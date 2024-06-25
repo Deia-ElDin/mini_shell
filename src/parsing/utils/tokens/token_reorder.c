@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_reorder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 18:34:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/20 19:58:26 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/25 14:19:22 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,11 @@
 static	bool	is_redirect_case(t_token *token)
 {
 	int		type;
-	// if (token->prev && !token->prev->is_space)
-	// 	return (false);
 	if (!token->next || !token->next->next)
 		return (false);
 	type = token->next->next->type;
-	return (type == TOKEN_WORD || type == TOKEN_SINGLE_QUOTE
-		|| type == TOKEN_DOUBLE_QUOTE);
+	return (token->next->is_space && (type == TOKEN_WORD || type == TOKEN_SINGLE_QUOTE
+		|| type == TOKEN_DOUBLE_QUOTE));
 }
 
 static	void	shift_tokens(t_data *data, t_token *token)
@@ -103,7 +101,8 @@ static	void	shift_tokens(t_data *data, t_token *token)
 	replace = token->next->next;
 	redirect = token;
 	replace->prev->next = replace->next;
-	replace->next->prev = replace->prev;
+	if (replace->next)
+		replace->next->prev = replace->prev;
 	if (redirect->prev)
 		redirect->prev->next = replace;
 	replace->prev = redirect->prev;
@@ -116,16 +115,16 @@ static	void	shift_tokens(t_data *data, t_token *token)
 void	token_reorder(t_data *data)
 {
 	t_token	*token;
-	t_token *redirect;
+	// t_token *redirect;
 
 	token = data->tokens;
-	redirect = NULL;
+	// redirect = NULL;
 	if (!token)
 		return ;
 	while (token)
 	{
-		if (token->type == TOKEN_PIPE)
-			redirect = NULL;
+		// if (token->type == TOKEN_PIPE)
+		// 	redirect = NULL;
 		if (is_redirect(token) && is_redirect_case(token))
 		{
 			shift_tokens(data, token);

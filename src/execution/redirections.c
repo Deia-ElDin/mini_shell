@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 18:35:50 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:24:35 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	redirect_heredoc(t_ast *ast, t_ast *head)
 {
-	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0755);
+	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, S_IWUSR | S_IRUSR);
 	if (ast->heredoc->fd == -1)
 		return (0);
 	head->in_fd = &(ast->heredoc->fd);
@@ -32,7 +32,7 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 	if (!(path_stat.st_mode & S_IRUSR))
 		return (print_error(ast->redir_in->file,
 				"Permission denied"), 0);
-	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0755);
+	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, S_IRUSR);
 	if (ast->redir_in->fd == -1)
 		return (0);
 	head->in_fd = &(ast->redir_in->fd);
@@ -49,7 +49,7 @@ static int	redirect_out(t_ast *ast, t_ast *head)
 		return (print_error(ast->redir_out->file,
 				"Permission denied"), 0);
 	ast->redir_out->fd = open(ast->redir_out->file,
-			O_CREAT | O_WRONLY | O_TRUNC, 0755);
+			O_CREAT | O_WRONLY | O_TRUNC, S_IWUSR);
 	if (ast->redir_out->fd == -1)
 		return (0);
 	head->out_fd = &(ast->redir_out->fd);
@@ -66,7 +66,7 @@ static int	append(t_ast *ast, t_ast *head)
 		return (print_error(ast->redir_append->file,
 				"Permission denied"), 0);
 	ast->redir_append->fd = open(ast->redir_append->file,
-			O_CREAT | O_WRONLY | O_APPEND, 0755);
+			O_CREAT | O_WRONLY | O_APPEND, S_IWUSR | S_IRUSR);
 	if (ast->redir_append->fd == -1)
 		return (0);
 	head->out_fd = &(ast->redir_append->fd);

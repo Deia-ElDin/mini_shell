@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/20 18:39:48 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:05:54 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	free(args);
 	right_node->token = token;
 	if (prev && is_file(prev))
-		check_left_for_redir(prev->prev, right_node);
+		check_left_for_redir(prev, right_node);
 	if (next && is_file(next->next))
 		check_right_for_redir(next, right_node);
 }
@@ -102,11 +102,11 @@ int	is_file(t_token *token)
 int	count_cmds(t_ast *ast, t_data *data)
 {
 	if (!ast)
-		return (data->cmd_count);
-	data->ast = ast;
-	if (is_builtin_with_out(data) || ast->type == NODE_CMD)
-		return (data->cmd_count++);
+		return (0);
 	count_cmds(ast->left, data);
 	count_cmds(ast->right, data);
-	return (data->cmd_count);
+	data->ast = ast;
+	if (is_builtin_with_out(data) || ast->type == NODE_CMD)
+		data->cmd_count++;
+	return (1);
 }
