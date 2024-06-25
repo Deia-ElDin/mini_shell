@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 17:47:41 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:00:47 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,18 +214,18 @@ void	close_files(t_data *data);
 //	*-> redirections.c
 int		check_for_redirs(t_ast *ast);
 int		command_redirs(t_data *data, t_ast *ast);
-//	*-> and_or_exec.c
-// int		or_operator(t_ast *ast, t_data *data);
-// int		and_operator(t_ast *ast, t_data *data);
 //	*-> simple_cmd.c
 int		simple_cmd(t_data *data);
 int		pipe_cmd(t_data *data);
+void	call_parent(pid_t pid, t_ast *ast, t_data *data);
+void	call_child(char *cmd, t_ast *ast, t_data *data);
 //	*-> str_join.c
 char	*join_strs(char *str, char *buffer);
 void	free_2dchar(char **str);
 //	*-> cmd_utils.c
 int		check_for_sleep(int pid, t_ast *ast, int last);
 char	*get_cmd_path(char *cmd, t_data *data);
+void	prep_command_execution(pid_t pid, t_data *data, t_ast *ast, char *path);
 //	*-> pipe_utils.c
 int		is_first_pipe(t_ast *ast);
 int		is_last_pipe(t_ast *ast);
@@ -271,12 +271,5 @@ void	set_data_init_null(t_data *data);
 bool	is_quotes(t_token *token);
 bool	is_token_mergeable(t_token *token);
 void	reset_tokens_index(t_data *data);
-
-// DELETE ME
-void	print_env_array(char **env);
-void	print_env_list(t_env *lst);
-void	print_tokens(t_token *lst);
-void	print_ast(t_ast *ast);
-void	print_path(char **path);
 
 #endif

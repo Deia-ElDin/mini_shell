@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 18:15:07 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:00:30 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	execute_command(char *cmd, t_ast *ast, t_data *data)
 	exit(127);
 }
 
-static void	call_child(char *cmd, t_ast *ast, t_data *data)
+void	call_child(char *cmd, t_ast *ast, t_data *data)
 {
 	if (ast->head->prev_exists && !in_exists(ast))
 		dup2(ast->head->prev_pipe[READ_END], STDIN_FILENO);
@@ -67,7 +67,7 @@ static void	call_child(char *cmd, t_ast *ast, t_data *data)
 	execute_command(cmd, ast, data);
 }
 
-static void	call_parent(pid_t pid, t_ast *ast, t_data *data)
+void	call_parent(pid_t pid, t_ast *ast, t_data *data)
 {
 	data->pids[data->curr_pid].ast = ast;
 	data->pids[data->curr_pid].pid = pid;
@@ -90,6 +90,7 @@ int	simple_cmd(t_data *data)
 
 	ast = data->ast;
 	pid = 1;
+	path = NULL;
 	if (!command_redirs(data, ast))
 		return (data->exit_status);
 	if (ast->left->cmd)
@@ -97,16 +98,8 @@ int	simple_cmd(t_data *data)
 	if (is_builtin(data))
 		builtins(data);
 	else if (ast->right->cmd)
-	{
-		pid = fork();
-		if (pid < 0)
-			ft_putstr_fd("fork failed\n", 2);
-		if (pid < 0)
-			data->exit_status = pid;
-		if (pid == 0)
-			call_child(path, ast->right, data);
-		else if (pid > 0)
-			call_parent(pid, ast, data);
-	}
-	return (free(path), data->exit_status);
+		prep_command_execution(pid, data, ast, path);
+	if (path)
+		free(path);
+	return (data->exit_status);
 }
