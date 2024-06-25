@@ -254,7 +254,7 @@ void	data_reset(t_data *data);
 void	data_free(t_data *data);
 
 //	*-> errors
-void	syntax_error(char *err);
+void	syntax_error(t_data *data, char *err);
 void	print_error(char *err_name, char *err);
 
 //	*-> free.c

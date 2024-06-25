@@ -38,7 +38,7 @@ void	token_tolst(t_data *data, t_token **head, unsigned int start)
 		while (data->line[++i] && data->line[i] != data->line[start])
 			;
 		if (!data->line[i])
-			return (data->error = true, syntax_error("quotes"));
+			return (data->error = true, syntax_error(data, "quotes"));
 		token_add(data, head, start, i - start + 1);
 	}
 	token_tolst(data, head, i + 1);

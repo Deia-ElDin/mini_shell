@@ -53,13 +53,13 @@ bool	token_validation(t_data *data)
 	while (crnt)
 	{
 		if (crnt->type == TOKEN_PIPE && !valid_pipe(crnt))
-			return (syntax_error(crnt->value), false);
+			return (syntax_error(data, crnt->value), false);
 		else if ((crnt->type == TOKEN_REDIR_IN
 				|| crnt->type == TOKEN_REDIR_OUT
 				|| crnt->type == TOKEN_APPEND
 				|| crnt->type == TOKEN_HEREDOC)
 			&& !valid_redirect(crnt))
-			return (syntax_error(crnt->value), false);
+			return (syntax_error(data, crnt->value), false);
 		crnt = crnt->next;
 	}
 	return (true);
