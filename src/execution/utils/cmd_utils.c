@@ -13,6 +13,20 @@
 #include "minishell.h"
 #include <stdlib.h>
 
+static bool check_for_urandom(t_ast *ast)
+{
+	int		i;
+
+	i = 0;
+	while (ast->right->cmd && ast->right->cmd[i])
+	{
+		if (ft_strnstr(ast->right->cmd[i], "/dev/urandom", 12))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	prep_command_execution(pid_t pid, t_data *data, t_ast *ast, char *path)
 {
 	pid = fork();
@@ -30,12 +44,18 @@ int	check_for_sleep(int pid, t_ast *ast, int last)
 {
 	int		status;
 	char	*cmd;
+	bool	urandom_exists;
 
-	cmd = ast->left->cmd[0];
+	cmd = NULL;
+	if (ast->right->cmd && ast->right->cmd[0])
+		cmd = ast->right->cmd[0];
+	urandom_exists = check_for_urandom(ast);
 	status = 0;
 	if (ft_strnstr(cmd, "sleep", ft_strlen(cmd))
 		|| last)
 		waitpid(pid, &status, 0);
+	else if (ft_strnstr(cmd, "cat", ft_strlen(cmd)) && urandom_exists)
+		waitpid(pid, &status, WNOHANG);
 	else
 		waitpid(pid, &status, WCONTINUED);
 	if (WIFEXITED(status))
