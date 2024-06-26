@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 12:24:14 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:40:32 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	check_command_validity(char *path, char *cmd, struct stat path_stat)
 {
-	fprintf(stderr, "checking command validity\n");
 	if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
 		&& S_ISDIR(path_stat.st_mode)
 		&& (print_error(cmd, "Is a directory"), 1))
