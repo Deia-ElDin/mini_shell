@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:29:51 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:31:34 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	redirect_heredoc(t_ast *ast, t_ast *head)
 {
-	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0775);
+	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0644);
 	if (ast->heredoc->fd == -1)
 	{
 		head->out_fd = &(ast->heredoc->fd);
@@ -43,7 +43,7 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 		return (print_error(ast->redir_in->file,
 				"Operation not permitted"), 0);
 	}
-	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0755);
+	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0644);
 	if (ast->redir_in->fd == -1)
 	{
 		head->out_fd = &(ast->redir_in->fd);
@@ -67,7 +67,7 @@ static int	redirect_out(t_ast *ast, t_ast *head)
 				"Operation not permitted"), 0);
 	}
 	ast->redir_out->fd = open(ast->redir_out->file,
-			O_CREAT | O_WRONLY | O_TRUNC, 0777);
+			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (ast->redir_out->fd == -1)
 	{
 		head->out_fd = &(ast->redir_out->fd);
@@ -91,7 +91,7 @@ static int	append(t_ast *ast, t_ast *head)
 				"Operation not permitted"), 0);
 	}
 	ast->redir_append->fd = open(ast->redir_append->file,
-			O_CREAT | O_WRONLY | O_APPEND, 0777);
+			O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (ast->redir_append->fd == -1)
 	{
 		head->out_fd = &(ast->redir_append->fd);

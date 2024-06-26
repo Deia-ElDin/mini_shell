@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:57:46 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:32:19 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:33:05 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ void	open_all_redirs(t_data *data)
 		ast = ast->head;
 	recursive_opening_fd(ast);
 }
-

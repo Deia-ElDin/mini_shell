@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:32:07 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:24:14 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	check_command_validity(char *path, char *cmd, struct stat path_stat)
 {
+	fprintf(stderr, "checking command validity\n");
 	if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
 		&& S_ISDIR(path_stat.st_mode)
 		&& (print_error(cmd, "Is a directory"), 1))
@@ -36,21 +37,21 @@ static int	execute_command(char *cmd, t_ast *ast, t_data *data)
 		data_free(data);
 		return (free(cmd), exit(data->exit_status), 0);
 	}
-	else if (check_command_validity(cmd, ast->cmd[0], path_stat)
+	else if (cmd && check_command_validity(cmd, ast->cmd[0], path_stat)
 		&& (data_free(data), free(cmd), 1))
 		exit(126);
 	else if (cmd)
 		execve(cmd, ast->cmd, data->env_arr);
-	if (!ft_strncmp(ast->cmd[0], "/", 1) && !S_ISREG(path_stat.st_mode)
-		&& !S_ISDIR(path_stat.st_mode))
+	if (ast->cmd && ast->cmd[0] && !ft_strncmp(ast->cmd[0], "/", 1)
+		&& !S_ISREG(path_stat.st_mode) && !S_ISDIR(path_stat.st_mode))
 		print_error(ast->cmd[0], "No such file or directory");
-	else if (ast->cmd[0])
+	else if (ast->cmd && ast->cmd[0])
 		print_error(ast->cmd[0], "command not found");
 	else
 		print_error(NULL, "command not found");
-	free(cmd);
-	data_free(data);
-	exit(127);
+	if (cmd)
+		free(cmd);
+	return (data_free(data), exit(127), 0);
 }
 
 void	call_child(char *cmd, t_ast *ast, t_data *data)
@@ -93,11 +94,11 @@ int	simple_cmd(t_data *data)
 	path = NULL;
 	if (!command_redirs(data, ast))
 		return (data->exit_status);
-	if (ast->left->cmd)
-		path = get_cmd_path(ast->left->cmd[0], data);
+	if (ast->right->cmd && ast->right->cmd[0])
+		path = get_cmd_path(ast->right->cmd[0], data);
 	if (is_builtin(data))
 		builtins(data);
-	else if (ast->right->cmd)
+	else
 		prep_command_execution(pid, data, ast, path);
 	if (path)
 		free(path);

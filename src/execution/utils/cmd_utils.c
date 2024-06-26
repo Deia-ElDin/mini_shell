@@ -6,14 +6,13 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:32:54 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:05:38 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:33:24 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
 
-static bool check_for_urandom(t_ast *ast)
+static bool	check_for_urandom(t_ast *ast)
 {
 	int		i;
 
