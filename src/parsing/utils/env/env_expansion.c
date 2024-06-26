@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:11:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/18 15:02:24 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:53:30 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*extract_var_name(char **str)
 	}
 	start = *str;
 	while (**str && !ft_isspace(**str) && !ft_isquote(**str)
-		&& ft_isalpha(**str))
+		&& **str != '$')
 		(*str)++;
 	return (ft_strndup(start, *str - start));
 }

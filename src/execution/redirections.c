@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 12:31:34 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:00:24 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	redirect_heredoc(t_ast *ast, t_ast *head)
 	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0644);
 	if (ast->heredoc->fd == -1)
 	{
-		head->out_fd = &(ast->heredoc->fd);
+		head->in_fd = &(ast->heredoc->fd);
 		return (0);
 	}
 	head->in_fd = &(ast->heredoc->fd);
@@ -31,7 +31,7 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 	if (access(ast->redir_in->file, F_OK))
 	{
 		ast->redir_in->fd = -1;
-		head->out_fd = &(ast->redir_in->fd);
+		head->in_fd = &(ast->redir_in->fd);
 		return (print_error(ast->redir_in->file,
 				"No such file or directory"), 0);
 	}
@@ -39,14 +39,14 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 	if (!(path_stat.st_mode & S_IRUSR))
 	{
 		ast->redir_in->fd = -1;
-		head->out_fd = &(ast->redir_in->fd);
+		head->in_fd = &(ast->redir_in->fd);
 		return (print_error(ast->redir_in->file,
 				"Operation not permitted"), 0);
 	}
 	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0644);
 	if (ast->redir_in->fd == -1)
 	{
-		head->out_fd = &(ast->redir_in->fd);
+		head->in_fd = &(ast->redir_in->fd);
 		return (0);
 	}
 	head->in_fd = &(ast->redir_in->fd);

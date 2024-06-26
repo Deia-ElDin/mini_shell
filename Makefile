@@ -6,7 +6,7 @@
 #    By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/06/25 18:41:19 by melshafi         ###   ########.fr        #
+#    Updated: 2024/06/26 13:39:25 by melshafi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT = includes/libft/libft.a
 # LIBS = -lreadline
 LIBS = $(readline_lib_path) -lreadline
 
-MAIN = main.c
+MAIN = main.c delete_me.c
 
 PARSING_UTILS_PARSING = parse_cmd.c parse_pipe.c parse_redir.c
 EXECUTION = execution.c redirections.c simple_cmd.c pipe_cmd.c utils.c

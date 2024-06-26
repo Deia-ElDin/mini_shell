@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:32:26 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 18:32:54 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:26:09 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	data_reset(t_data *data)
 		data->ast = data->ast->head;
 	while (data->tokens && data->tokens->prev)
 		data->tokens = data->tokens->prev;
+	close_files(data);
+	close_pipes(data);
 	data->curr_pid = 0;
 	data->cmd_count = 0;
 	free(data->pids);
@@ -87,6 +89,8 @@ void	data_free(t_data *data)
 		data->ast = data->ast->head;
 	while (data->tokens && data->tokens->prev)
 		data->tokens = data->tokens->prev;
+	close_files(data);
+	close_pipes(data);
 	free(data->pids);
 	token_lstclear(data);
 	env_lstclear(data);

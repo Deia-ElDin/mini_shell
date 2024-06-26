@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:41:27 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 12:40:32 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:51:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	simple_cmd(t_data *data)
 		path = get_cmd_path(ast->right->cmd[0], data);
 	if (is_builtin(data))
 		builtins(data);
-	else
+	else if (ast->token->value && ast->token->value[0])
 		prep_command_execution(pid, data, ast, path);
 	if (path)
 		free(path);

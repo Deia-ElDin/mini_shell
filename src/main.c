@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/26 12:09:17 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:34:38 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static void	enter_mini(t_data *data)
 		open_all_redirs(data);
 		execution(data);
 		wait_on_pids(data);
-		close_files(data);
-		close_pipes(data);
 	}
 	data_reset(data);
 }

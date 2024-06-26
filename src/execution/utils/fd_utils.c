@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:07:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:26:01 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:34:15 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,25 @@
 
 static void	close_fd(t_ast *ast)
 {
-	if (ast->in_fd)
-		close(*(ast->in_fd));
-	if (ast->out_fd)
-		close(*(ast->out_fd));
+	if (!ast)
+		return ;
+	while (ast && ast->type == NODE_REDIR)
+	{
+		if (ast->redir_out->exists && ast->redir_out->fd >= 3
+			&& close(ast->redir_out->fd))
+			return ;
+		else if (ast->redir_in->exists && ast->redir_in->fd >= 3
+			&& close(ast->redir_in->fd))
+			return ;
+		else if (ast->redir_append->exists && ast->redir_append->fd >= 3
+			&& close(ast->redir_append->fd))
+			return ;
+		else if (ast->heredoc->exists && ast->heredoc->fd >= 3
+			&& close(ast->heredoc->fd))
+			return ;
+		ast = ast->right;
+	}
+	return ;
 }
 
 static void	recursive_closing_fd(t_ast	*ast)
@@ -27,7 +42,7 @@ static void	recursive_closing_fd(t_ast	*ast)
 	recursive_closing_fd(ast->left);
 	recursive_closing_fd(ast->right);
 	if (ast->type == NODE_CMD)
-		close_fd(ast);
+		close_fd(ast->right->right);
 }
 
 void	close_files(t_data *data)
@@ -35,7 +50,7 @@ void	close_files(t_data *data)
 	t_ast	*ast;
 
 	ast = data->ast;
-	while (ast->head)
+	while (ast && ast->head)
 		ast = ast->head;
 	recursive_closing_fd(ast);
 }

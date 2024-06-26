@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:43:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 11:50:23 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:30:18 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ static void	check_redir_tokens(t_token *token, t_ast *right_node)
 	next = token->next;
 	prev = token->prev;
 	right_node->type = NODE_WORD;
-	if (token->value)
+	if (token->value && !token->is_quotes)
 	{
 		args = join_next_valid_token_words(token);
 		right_node->cmd = ft_split(args, ' ');
 		free(args);
+	}
+	else if (token->value && token->is_quotes)
+	{
+		right_node->cmd = (char **)ft_calloc(2, sizeof(char *));
+		right_node->cmd[0] = ft_strdup(token->value);
 	}
 	else
 		right_node->cmd = NULL;

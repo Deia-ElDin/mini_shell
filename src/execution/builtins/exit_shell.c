@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 16:01:22 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/19 13:36:45 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/06/26 14:34:29 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	is_include_letters(char *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+		if (ft_isalpha(cmd[i]))
+			return (print_error(cmd, "numeric argument required"), true);
+	return (false);
+}
 
 void	exit_shell(t_data *data)
 {
@@ -18,9 +29,12 @@ void	exit_shell(t_data *data)
 	int		exit_code;
 
 	if (data->ast->right->cmd[1] && data->ast->right->cmd[2])
+	{
 		data->exit_status = 1;
+		return (print_error("exit", "too many arguments"));
+	}
 	else if (data->ast->right->cmd[1]
-		&& ft_isalpha(data->ast->right->cmd[1][0]))
+		&& is_include_letters(data->ast->right->cmd[1]))
 		data->exit_status = 2;
 	else if (data->ast->right->cmd[1])
 	{

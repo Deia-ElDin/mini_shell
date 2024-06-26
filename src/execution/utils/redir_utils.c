@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:57:46 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/26 12:33:05 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:21:45 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	open_all_redirs(t_data *data)
 	t_ast	*ast;
 
 	ast = data->ast;
-	while (ast->head)
+	while (ast && ast->head)
 		ast = ast->head;
 	recursive_opening_fd(ast);
 }

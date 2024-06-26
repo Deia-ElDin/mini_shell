@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/26 11:03:37 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:34:55 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # define WHITESPACES " \t\v\f\r"
 
 # define SYNTAX_ERR "syntax error near unexpected token"
-# define STDIN_FILENO 0
-# define STDOUT_FILENO 1
 
 enum
 {
@@ -79,6 +77,7 @@ typedef struct s_token
 	int				index;
 	bool			is_parsed;
 	bool			is_space;
+	int				is_quotes;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;

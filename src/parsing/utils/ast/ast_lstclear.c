@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 08:24:06 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/26 12:09:56 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:08:41 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void	recursive_free(t_ast **lst)
 			recursive_free(&(*lst)->right);
 		ft_free(&(*lst)->cmd, 'a');
 		if ((*lst)->heredoc && (*lst)->heredoc->exists)
+		{
 			unlink((*lst)->heredoc->file);
+			free((*lst)->heredoc->file);
+		}
 		if ((*lst)->heredoc)
 			free((*lst)->heredoc);
 		if ((*lst)->redir_in)
