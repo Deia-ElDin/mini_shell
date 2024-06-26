@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:07:25 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 16:52:54 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:26:01 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	is_file(t_token *token)
 
 int	command_redirs(t_data *data, t_ast *ast)
 {
-	if (!check_for_redirs(ast->right->right))
+	if ((ast->in_fd && *(ast->in_fd) == -1)
+		|| (ast->out_fd && *(ast->out_fd) == -1))
 	{
 		if (ast->pipe_exists)
 			close(ast->pipe[WRITE_END]);

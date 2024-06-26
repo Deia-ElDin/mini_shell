@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 02:47:52 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 18:40:15 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:03:46 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	enter_mini(t_data *data)
 	if (lexer(data) && parser(data))
 	{
 		prep_heredocs(data->ast, data);
+		open_all_redirs(data);
 		execution(data);
 		wait_on_pids(data);
 	}

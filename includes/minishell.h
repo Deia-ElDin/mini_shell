@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:43:00 by dehamad           #+#    #+#             */
-/*   Updated: 2024/06/25 19:00:47 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:03:37 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ int		is_last_pipe(t_ast *ast);
 //	*->redir_utils.c
 int		in_exists(t_ast *ast);
 int		out_exists(t_ast *ast);
+void	open_all_redirs(t_data *data);
 
 // Builtins Functions
 void	builtins(t_data *data);

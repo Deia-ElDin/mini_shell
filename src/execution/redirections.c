@@ -6,7 +6,7 @@
 /*   By: melshafi <melshafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:41:55 by melshafi          #+#    #+#             */
-/*   Updated: 2024/06/25 15:50:52 by melshafi         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:29:51 by melshafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static int	redirect_heredoc(t_ast *ast, t_ast *head)
 {
 	ast->heredoc->fd = open(ast->heredoc->file, O_RDONLY, 0775);
 	if (ast->heredoc->fd == -1)
+	{
+		head->out_fd = &(ast->heredoc->fd);
 		return (0);
+	}
 	head->in_fd = &(ast->heredoc->fd);
 	return (1);
 }
@@ -26,15 +29,26 @@ static int	redirect_in(t_ast *ast, t_ast *head)
 	struct stat	path_stat;
 
 	if (access(ast->redir_in->file, F_OK))
+	{
+		ast->redir_in->fd = -1;
+		head->out_fd = &(ast->redir_in->fd);
 		return (print_error(ast->redir_in->file,
 				"No such file or directory"), 0);
+	}
 	stat(ast->redir_in->file, &path_stat);
 	if (!(path_stat.st_mode & S_IRUSR))
+	{
+		ast->redir_in->fd = -1;
+		head->out_fd = &(ast->redir_in->fd);
 		return (print_error(ast->redir_in->file,
 				"Operation not permitted"), 0);
+	}
 	ast->redir_in->fd = open(ast->redir_in->file, O_RDONLY, 0755);
 	if (ast->redir_in->fd == -1)
+	{
+		head->out_fd = &(ast->redir_in->fd);
 		return (0);
+	}
 	head->in_fd = &(ast->redir_in->fd);
 	return (1);
 }
@@ -46,12 +60,19 @@ static int	redirect_out(t_ast *ast, t_ast *head)
 	stat(ast->redir_out->file, &path_stat);
 	if (!access(ast->redir_out->file, F_OK)
 		&& !(path_stat.st_mode & S_IWUSR))
+	{
+		ast->redir_out->fd = -1;
+		head->out_fd = &(ast->redir_out->fd);
 		return (print_error(ast->redir_out->file,
 				"Operation not permitted"), 0);
+	}
 	ast->redir_out->fd = open(ast->redir_out->file,
 			O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (ast->redir_out->fd == -1)
+	{
+		head->out_fd = &(ast->redir_out->fd);
 		return (0);
+	}
 	head->out_fd = &(ast->redir_out->fd);
 	return (1);
 }
@@ -63,12 +84,19 @@ static int	append(t_ast *ast, t_ast *head)
 	stat(ast->redir_append->file, &path_stat);
 	if (!access(ast->redir_append->file, F_OK)
 		&& !(path_stat.st_mode & S_IWUSR))
+	{
+		ast->redir_append->fd = -1;
+		head->out_fd = &(ast->redir_append->fd);
 		return (print_error(ast->redir_append->file,
 				"Operation not permitted"), 0);
+	}
 	ast->redir_append->fd = open(ast->redir_append->file,
 			O_CREAT | O_WRONLY | O_APPEND, 0777);
 	if (ast->redir_append->fd == -1)
+	{
+		head->out_fd = &(ast->redir_append->fd);
 		return (0);
+	}
 	head->out_fd = &(ast->redir_append->fd);
 	return (1);
 }
